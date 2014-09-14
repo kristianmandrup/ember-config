@@ -22,10 +22,17 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
       message: 'Choose firebase adapter:',
       choices: ['emberfire', 'fireplace'],
       default: 'emberfire'
-    }];
+    }, {
+      type: 'input',
+      name: 'account',
+      message: 'What is the name of your firebase account?',
+      default: 'unknown'     
+    }
+    ];
 
     this.prompt(prompts, function (props) {
       this.firebaseAdapter = props.firebaseAdapter;
+      this.account = props.account;
 
       done();
     }.bind(this));
@@ -42,11 +49,12 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
     },
   },
 
-  install: {
+  install: {    
     installEmberFire: {
       // if emberfire
 
       var done = this.async();
+      // https://www.npmjs.org/package/ember-cli-emberfire
       this.npmInstall(['ember-cli-emberfire'], { 'saveDev': true }, done);      
       // run generator
       this.spawnCommand('emberfire', ['generate']);

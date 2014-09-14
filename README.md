@@ -65,9 +65,33 @@ Select one of the following:
 
 ### Layout
 
-- Twitter Bootstrap 3.x
+- Twitter Bootstrap
+- Zurb Foundation
 
-and many more...
+### Templating
+
+- Handlebars
+- Emblem
+
+### Components
+
+- Bootstrap for ember
+- Ember components
+
+### Adapters
+
+- firebase
+    + emberfire
+    + fireplace
+- local storage
+
+### Auth
+
+- simple auth
+
+### Fonts
+
+- Font awesome
 
 ## Design
 

@@ -27,7 +27,7 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'poisons',
       message: 'Select configurations',
-      choices:['layout', 'script', 'css', 'templating', 'test', 'fonts', 'components', 'adapter', 'auth'], 
+      choices:['layout', 'script', 'css', 'templating', 'test', 'adapter', 'fonts', 'components', 'auth'], 
       default: ['layout', 'script', 'css']
     }];
 
@@ -41,32 +41,14 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
   },
 
   writing: {
-    app: function () {
-      // this.dest.mkdir('app');
-      // this.dest.mkdir('app/templates');
-
-      // this.src.copy('_package.json', 'package.json');
-      // this.src.copy('_bower.json', 'bower.json');
-    },
-
-    projectfiles: function () {
-      // this.src.copy('editorconfig', '.editorconfig');
-      // this.src.copy('jshintrc', '.jshintrc');
-    }
   },
 
   end: {
-    fonts: function () {
-      this.log('fonts');
-      if (!this.opts.contains('fonts')) return;
+    script: function () {
+      this.log('script');
+      if (!this.opts.contains('script')) return;
       
-      this.composeWith('ember-config:fonts');
-    },
-    layout: function () {
-      this.log('layout');
-      if (!this.opts.contains('layout')) return;
-      
-      this.composeWith('ember-config:layout');
+      this.composeWith('ember-config:script');
     },
     css: function () {
       this.log('css');
@@ -74,11 +56,11 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
       
       this.composeWith('ember-config:css');
     },
-    adapter: function () {
-      this.log('adapter');
-      if (!this.opts.contains('adapter')) return;
+    layout: function () {
+      this.log('layout');
+      if (!this.opts.contains('layout')) return;
       
-      this.composeWith('ember-config:adapter');
+      this.composeWith('ember-config:layout');
     },
     templating: function () {
       this.log('templating');
@@ -86,12 +68,30 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
       
       this.composeWith('ember-config:templating');
     },
-    script: function () {
-      this.log('script');
-      if (!this.opts.contains('script')) return;
+    test: function () {
+      this.log('test');
+      if (!this.opts.contains('test')) return;
       
-      this.composeWith('ember-config:script');
-    }
+      this.composeWith('ember-config:test');
+    },
+    adapter: function () {
+      this.log('adapter');
+      if (!this.opts.contains('adapter')) return;
+      
+      this.composeWith('ember-config:adapter');
+    },
+    fonts: function () {
+      this.log('fonts');
+      if (!this.opts.contains('fonts')) return;
+      
+      this.composeWith('ember-config:fonts');
+    },
+    components: function () {
+      this.log('components');
+      if (!this.opts.contains('components')) return;
+      
+      this.composeWith('ember-config:components');
+    }        
   }
 });
 
