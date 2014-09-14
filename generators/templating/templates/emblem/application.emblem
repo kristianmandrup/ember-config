@@ -1,0 +1,5 @@
+h2#title Welcome to Ember.js
+ul
+  li Emblem
+
+== outlet

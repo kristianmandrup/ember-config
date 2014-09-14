@@ -1,0 +1,37 @@
+{
+  "name": "generator-ember-config",
+  "version": "0.0.0",
+  "description": "Yeoman generator",
+  "license": "MIT",
+  "main": "generators/app/index.js",
+  "repository": "kristianmandrup/generator-ember-config",
+  "author": {
+    "name": "Kristian Mandrup",
+    "email": "kmandrup@gmail.com",
+    "url": "https://github.com/kristianmandrup"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "chalk": "^0.5.0",
+    "string": "^2.0.1",
+    "yeoman-generator": "^0.17.0",
+    "yosay": "^0.3.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  }
+}
