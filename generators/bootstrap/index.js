@@ -93,5 +93,3 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
 });
 
 module.exports = EmberConfigBootstrapGenerator;
-
-

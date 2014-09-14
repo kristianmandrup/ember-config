@@ -2,18 +2,16 @@
 
 > [Yeoman](http://yeoman.io) generator
 
-
 ## Getting Started
+
+Use this generator to quickly setup your ember-cli based project :)
+Limit the buggy copy/paste needed to setup asset compilers etc.!
 
 ### What is Yeoman?
 
-Trick question. It's not a thing. It's this guy:
-
 ![](http://i.imgur.com/JHaAlBJ.png)
 
-Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
-
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
+To install Yeoman:
 
 ```bash
 npm install -g yo
@@ -21,9 +19,7 @@ npm install -g yo
 
 ### Yeoman Generators
 
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
-
-To install generator-ember-config from npm, run:
+To install *generator-ember-config* from npm, run:
 
 ```bash
 npm install -g generator-ember-config
@@ -37,10 +33,54 @@ yo ember-config
 
 ### Getting To Know Yeoman
 
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
+If you'd like to get to know Yeoman better: [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
 
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
+## Usage guide
 
+The generator will start with the following:
+
+*Welcome to Ember Configurator*
+
+`Select configurations:`
+
+By default the following are selected: `layout, script, css`
+
+Depending on which configurators you select in the main menu, it will start each one consecutively to allow you to customize your application accordingly :)
+
+### Script
+
+Select one of the following:
+
+- javascript (none - default)
+- coffeescript
+- livescript
+- emberscript (experimental!)
+
+### CSS precompilers
+
+- CSS (none - default)
+- LESS
+- SASS (scss)
+- Compass (SASS + Compass)
+
+### Layout
+
+- Twitter Bootstrap 3.x
+
+and many more...
+
+## Design
+
+`node-fs-extra`, `node-glob` for extra file system utils.
+`string.js` and `string-mutator` for string utils and manipulations.
+
+And much more...
+
+## User config
+
+Storing user configuration options and sharing them between sub-generator is a common task. For example, it is common to share preferences like the language (does the user use CoffeeScript?), style options (indenting with spaces or tabs), etc.
+
+These configuration can be stored in the `.yo-rc.json` file through the Yeoman Storage API. This API is accessible through the `generator.config` object.
 
 ## License
 

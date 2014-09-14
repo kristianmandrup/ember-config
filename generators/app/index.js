@@ -4,22 +4,14 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 
+Array.prototype.contains = function ( needle ) {
+   for (var i in this) {
+       if (this[i] == needle) return true;
+   }
+   return false;
+}
+
 var EmberConfigGenerator = yeoman.generators.Base.extend({
-  // The name `constructor` is important here
-  constructor: function () {
-    // Calling the super constructor is important so our generator is correctly setup
-    yeoman.generators.Base.apply(this, arguments);
-
-
-    // For example, the user would run yo generator --test-framework=jasmine to compose with the generator-jasmine
-
-    this.composeWith('ember-config:font', { options: {
-      fontawesome: true
-    }});
-  
-
-  },
-
   initializing: function () {
   },
 
@@ -35,12 +27,14 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'poisons',
       message: 'Select configurations',
-      choices:['layout', 'script', 'css', 'templating'], 
+      choices:['layout', 'script', 'css', 'templating', 'test', 'fonts', 'components', 'adapter', 'auth'], 
       default: ['layout', 'script', 'css']
     }];
 
     this.prompt(prompts, function (props) {
-      this.boostrap = props.boostrap;
+      console.log('props', props);
+
+      this.opts  = props.poisons;
 
       done();
     }.bind(this));
@@ -61,8 +55,43 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
     }
   },
 
-  end: function () {
-    this.installDependencies();
+  end: {
+    fonts: function () {
+      this.log('fonts');
+      if (!this.opts.contains('fonts')) return;
+      
+      this.composeWith('ember-config:fonts');
+    },
+    layout: function () {
+      this.log('layout');
+      if (!this.opts.contains('layout')) return;
+      
+      this.composeWith('ember-config:layout');
+    },
+    css: function () {
+      this.log('css');
+      if (!this.opts.contains('css')) return;
+      
+      this.composeWith('ember-config:css');
+    },
+    adapter: function () {
+      this.log('adapter');
+      if (!this.opts.contains('adapter')) return;
+      
+      this.composeWith('ember-config:adapter');
+    },
+    templating: function () {
+      this.log('templating');
+      if (!this.opts.contains('templating')) return;
+      
+      this.composeWith('ember-config:templating');
+    },
+    script: function () {
+      this.log('script');
+      if (!this.opts.contains('script')) return;
+      
+      this.composeWith('ember-config:script');
+    }
   }
 });
 

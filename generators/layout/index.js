@@ -18,7 +18,7 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
         type: 'list',
         name: 'layout',
         message: 'Choose your layout framework(s)',
-        choices: ['bootstrap', 'foundation', 'ink', 'pure', 'brick', 'gumby', 'other']],
+        choices: ['bootstrap', 'foundation', 'ink', 'pure', 'brick', 'gumby', 'other'],
         default: 'bootstrap'
       }];
 

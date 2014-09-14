@@ -1,33 +1,46 @@
 'use strict';
-var util = require('util');
-var path = require('path');
-var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var S = require('string');
+var util    = require('util');
+var path    = require('path');
+var fs      = require('fs-extra');
+var yeoman  = require('yeoman-generator');
+var yosay   = require('yosay');
+var S       = require('string');
+require('sugar');
+
+var removeFiles = function(pattern) {
+  var glob = require("glob")
+
+  // options is optional
+  glob(pattern, function (er, files) {
+    if (er) return;
+    // console.log('pattern', pattern)
+    files.forEach(function(file) {
+      // console.log('remove file', file);
+      fs.removeSync(file);
+      console.log("removed", file);
+    })
+  })        
+}
+
+Array.prototype.contains = function ( needle ) {
+   for (var i in this) {
+       if (this[i] == needle) return true;
+   }
+   return false;
+}
+
 
 var EmberConfigCssGenerator = yeoman.generators.Base.extend({
-  // The name `constructor` is important here
-  constructor: function () {
-    // Calling the super constructor is important so our generator is correctly setup
-    yeoman.generators.Base.apply(this, arguments);    
-
-    if (!this.appName)
-      throw new Error("script: appname not defined!!");
-
-    this.appName = S(this.appname).camelize();
-  },
-
   initializing: function () {
+    var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+    
+    this.appname = pjson.name;
+    this.appName = this.appname.camelize(true);
   },
 
   // Choose test framework
   prompting: function () {
     var done = this.async();
-
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Choose your css compiler'
-    ));
 
     var prompts = [{
       type: 'list',
@@ -41,11 +54,14 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
       this.css = props.css;
       this.fileExt = this.css;
 
-      if (S(this.css).include('sass'))
+      if (S(this.css).contains('sass'))
         this.fileExt = 'scss';
 
-      if (S(this.css).include('styl'))
+      if (S(this.css).contains('styl'))
         this.fileExt = 'styl';
+
+      console.log('css', this.css, props);
+      console.log('fileExt', this.fileExt);
 
       done();
     }.bind(this));
@@ -53,47 +69,55 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
 
   writing: {
     removeOldFiles: function() {
-      this.spawnCommand('rm', ['app/styles/app.*']);      
+      removeFiles('app/styles/app.*');
+      // this.spawnCommand('rm', ['app/styles/app.*']);      
     },
 
     copyFiles: function () {
       var fileName = 'app.' + this.fileExt;
+      // this.log('fileName', fileName);
 
-      this.src.template(fileName, 'app/styles/' + fileName);
+      this.template(fileName, 'app/styles/' + fileName);
     }
   },
 
   install: {
     installLessCompiler: function () {
-      // is stylus selected
-      if (!this.fileExt == 'less') return;
+      // is less selected
+      if (this.fileExt !== 'less') return;
+      console.log('installing less', this.fileExt);
+
       this.npmInstall(['broccoli-less-single'], { 'saveDev': true }, this.async());
     },
 
     installSassCompiler: function () {
-      // is stylus selected
-      if (!this.fileExt == 'sass') return;
+      console.log('do less');
+      console.log('css', this.css);
+      console.log('fileExt', this.fileExt);
 
+      // is sass selected
+      if (S(this.css).contains('compass')) return;
+      if (!S(['scss', 'sass']).contains(this.fileExt)) return;
+
+      console.log('installing sass', this.fileExt);
       this.npmInstall(['broccoli-sass'], { 'saveDev': true }, this.async());      
     },
 
     installStylusCompiler: function () {
       // is stylus selected
-      if (!this.fileExt == 'styl') return;
+      if (this.fileExt !== 'styl') return;
 
+      console.log('installing stylus', this.fileExt);
       this.npmInstall(['broccoli-stylus-single'], { 'saveDev': true }, this.async());      
     },
 
     installCompass: function () {
-      // is stylus selected
-      if (!S(this.css).include('compass')) return;
+      // is compass selected
+      if (!S(this.css).contains('compass')) return;
 
+      console.log('installing compass', this.css);
       this.npmInstall(['ember-cli-compass-compiler'], { 'saveDev': true }, this.async());      
     }
-  }
-
-  end: function () {
-    this.installDependencies();
   }
 });
 
