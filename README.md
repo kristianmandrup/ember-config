@@ -30,15 +30,25 @@ Start the generator!
 yo ember-config
 ```
 
+To use the the generator directly from github, do the following:
+
+```
+git clone https://github.com/kristianmandrup/ember-config.git
+cd ember-config
+npm link
+```
+
+Note: This approach is also useful when you want to contribute to _ember-config_, however in that case you should use your own forked version.
+
 ### Getting To Know Yeoman
 
 For more on Yeoman: [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
 
-## Usage guide
+## Usage
 
 The generator should be used right after you have created an _ember-cli_ based *Ember* application. Use this generator to setup your basic app infrastructure.
 
-###
+### Guide
 
 The generator will start with the following:
 
