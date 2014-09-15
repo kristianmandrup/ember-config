@@ -24,8 +24,7 @@ var EmberConfigTestGenerator = yeoman.generators.Base.extend({
       name: 'generate',
       message: 'Would you like to run the Qunit generator?',
       default: true
-    }
-    ];
+    }];
 
     this.prompt(prompts, function (props) {
       this.qunit    = props.qunit;
@@ -39,7 +38,7 @@ var EmberConfigTestGenerator = yeoman.generators.Base.extend({
   },
 
   install: {
-    installQunit: {
+    installQunit: function () {
       if (!this.qunit) return;
 
       // https://github.com/jakecraige/ember-cli-qunit
