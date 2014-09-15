@@ -4,28 +4,27 @@
 
 ## Getting Started
 
-Use this generator to quickly setup your ember-cli based project :)
-Limit the buggy copy/paste needed to setup asset compilers etc.!
+Use this generator to quickly setup your *ember-cli* based *Ember* project :)
 
-### What is Yeoman?
+Limit the buggy copy/paste needed to setup asset compilers, layout frameworks etc.!
+
+Enjoy! (and please help out improve/add sub-generators!)
+
+### Install Yeoman
 
 ![](http://i.imgur.com/JHaAlBJ.png)
-
-To install Yeoman:
 
 ```bash
 npm install -g yo
 ```
 
-### Yeoman Generators
-
-To install *generator-ember-config* from npm, run:
+### Install ember-config
 
 ```bash
 npm install -g generator-ember-config
 ```
 
-Finally, initiate the generator:
+Start the generator!
 
 ```bash
 yo ember-config
@@ -33,7 +32,7 @@ yo ember-config
 
 ### Getting To Know Yeoman
 
-If you'd like to get to know Yeoman better: [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
+For more on Yeoman: [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
 
 ## Usage guide
 
@@ -43,13 +42,22 @@ The generator will start with the following:
 
 `Select configurations:`
 
-By default the following are selected: `layout, script, css`
+By default the following are selected: 
 
-Depending on which configurators you select in the main menu, it will start each one consecutively to allow you to customize your application accordingly :)
+- Scripts (coffee, livescript, ...)
+- CSS (less, sass, compass, ...)
+- Templating (handlebars, emblem)
 
-### Script
+The App config generator will invoke a sub-generator for each configuration chosen in the main menu :)
 
-Select one of the following:
+Note: Currently only the pre-selected options have a fully functional sub-generator. Please help fill in the gaps!
+
+### Scripting language
+
+If you choose a scripting language other than javascript, a precompiler for
+that language will be installed which precompiles to javascript.
+
+Note: The existing main `app` and `router` files will be replaced.
 
 - javascript (none - default)
 - coffeescript
@@ -58,27 +66,53 @@ Select one of the following:
 
 ### CSS precompilers
 
+Installs a precompiler of your choice. The precompiler will compile to CSS.
+
 - CSS (none - default)
 - LESS
 - SASS (scss)
 - Compass (SASS + Compass)
 
-### Layout
-
-- Twitter Bootstrap
-- Zurb Foundation
-
 ### Templating
+
+Installs a templating framework of your choice
 
 - Handlebars
 - Emblem
 
+### Layout
+
+Installs a layout framework
+
+- Twitter Bootstrap
+- Zurb Foundation
+- Ink
+- Pure
+- Brick
+- Gumby
+- Other
+
+Alternative layout frameworks:
+
+- semantic-ui
+- flat-ui
+- ui-kit
+- bootflat
+- cascade
+- skeleton
+
+You are welcome to add your own generator and invoke it from here ;)
+
 ### Components
+
+Adds a component library
 
 - Bootstrap for ember
 - Ember components
 
 ### Adapters
+
+Adds and configures an adapter for data storage/retrieval
 
 - firebase
     + emberfire
@@ -87,18 +121,23 @@ Select one of the following:
 
 ### Auth
 
+Adds authentication
+
 - simple auth
 
 ### Fonts
 
+Adds font libraries
+
 - Font awesome
+- Icon font
 
 ## Design
 
 `node-fs-extra`, `node-glob` for extra file system utils.
 `string.js` and `string-mutator` for string utils and manipulations.
 
-And much more...
+And many more...
 
 ## User config
 

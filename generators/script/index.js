@@ -1,15 +1,16 @@
 'use strict';
-var util = require('util');
-var path = require('path');
-var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var S = require('string');
+var util    = require('util');
+var path    = require('path');
+var yeoman  = require('yeoman-generator');
+var sync    = require('sync');
+var helper = require ('../../lib/aid');
+var aid;
+require('sugar');
 
-var EmberConfigFontGenerator = yeoman.generators.Base.extend({
+var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
   initializing: function () {
+    aid = helper(this);
   },
-
-  // Choose test framework
   prompting: function () {
     var done = this.async();
 
@@ -22,20 +23,21 @@ var EmberConfigFontGenerator = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (props) {
-      console.log('props', props);
-      this.log('collecting prompts');
+      var calcFileExt = function(scriptName) {
+        switch (scriptName) {
+          case 'coffeescript': 
+            return 'coffee';
+          case 'livescript': 
+            return 'ls';
+          case 'emberscript': 
+            return 'em';
+          default: 
+            return 'js';
+        };
+      };      
 
-      this.script = props.script;
-      this.fileExt = switch (props.script) {
-        case 'coffeescript': 
-          'coffee'; break;
-        case 'livescript': 
-          'ls'; break;
-        case 'emberscript': 
-          'em'; break;
-        default: 
-          'js';
-      };
+      this.script   = props.script;
+      this.fileExt  = calcFileExt(props.script);
 
       done();
     }.bind(this));
@@ -43,64 +45,64 @@ var EmberConfigFontGenerator = yeoman.generators.Base.extend({
 
   writing: {
     removeOldFiles: function() {
-      this.log('removeOldFiles');
-      this.spawnCommand('rm', ['app/app.*', 'app/router.*']);      
+      aid.thinline();
+      aid.bold('Removing old script files');
+      aid.removeFiles('app/app.*');
+      aid.removeFiles('app/router.*');
     },
 
     copyFiles: function () {
-      this.log('copyFiles');
-
-      this.sourceRoot('../templates/' + this.script)      
-      var fileName = 'app.' + self.fileExt;
-
-      var self = this;
-      var templateFile = function(name) {
-        self.src.template(self.script + '/' + self.fileName, 'app/' + self.fileName);
-      }
-    
       if (this.script === 'emberscript') return;
 
-      templateFile('app');
-      templateFile('router');
+      aid.thinline();
+      aid.bold('Adding new script files (' + this.script + ')');
+      aid.templateFile('app');
+      aid.templateFile('router');
     }
   },
 
+  default: {
+    uninstallOld: function() {
+      this.log('\nAt the moment Ember CLI (0.0.44) does not support multiple js preprocessors (i.e. you will not be able to use coffeescript and livescript addons at the same time). The patch that adds this functionality is to be added into one of the future versions.');
+      aid.thinline();
+      if (!aid.hasAnyNpm(['ember-cli-coffeescript', 'ember-cli-livescript', 'broccoli-ember-script'])) {
+        aid.info("no other script compilers present :)\n");
+        return;
+      }
+        
+      aid.bold("Uninstalling other script precompilers");
+
+      var uninstallScript = function(name, compiler) {
+        if (self.script !== name)
+          aid.uninstall(name, compiler);
+      };
+
+      sync(function(){
+        uninstallScript('coffeescript');        
+        uninstallScript('livescript');      
+        uninstallScript('emberscript', 'broccoli-ember-script');
+      });
+    }
+  },
   install: {
-    installCoffeescript: function () {
-      this.log('installCoffeescript');
+    installNew: function () {
+      var self = this;
 
-      if (this.script !== 'coffeescript') return;
+      var installScript = function(name, compiler) {
+        if (self.script == name)
+          aid.install(name, compiler);
+      };
 
-      this.npmInstall(['ember-cli-coffeescript'], { 'saveDev': true }, this.async());      
-
-      // uninstall livescript
-      this.spawnCommand('npm', ['uninstall', 'ember-cli-livescript']);
-      this.spawnCommand('npm', ['uninstall', 'broccoli-ember-script']);
-    },
-    installLivescript: function () {
-      this.log('installLivescript');
-
-      if (this.script !== 'livescript') return;
-
-      this.npmInstall(['ember-cli-livescript'], { 'saveDev': true }, this.async());      
-
-      // uninstall coffee
-      this.spawnCommand('npm', ['uninstall', 'ember-cli-coffeescript']);
-      this.spawnCommand('npm', ['uninstall', 'broccoli-ember-script']);
-    },
-
-    installEmberscript: function () {
-      this.log('installEmberscript');
-
-      if (this.script !== 'emberscript') return;
-
-      this.npmInstall(['broccoli-ember-script'], { 'saveDev': true }, this.async());      
-
-      // uninstall coffee
-      this.spawnCommand('npm', ['uninstall', 'ember-cli-coffeescript']);
-      this.spawnCommand('npm', ['uninstall', 'ember-cli-livescript']);
-    },
-    end: function() {
+      sync(function(){
+        installScript('coffeescript');
+        installScript('livescript');
+        installScript('emberscript', 'broccoli-ember-script');
+      });
+    }
+  },
+  end: {
+    scriptInfoMessage: function() {
+      aid.thinline();
       switch (this.script) {
         case 'emberscript':
           this.log('See: https://github.com/ghempton/ember-script/');
@@ -110,12 +112,15 @@ var EmberConfigFontGenerator = yeoman.generators.Base.extend({
           break;
         case 'livescript':
           this.log('See: livescript.net');
+          break;
         case 'coffeescript':
           this.log('See: coffescript.org and coffeescriptlove.com');
       }
+    },
+    writeSuccess: function() {
+      aid.success('Successfully installed ' + this.script + ' precompiler :)')
     }
-
   }
 });
 
-module.exports = EmberConfigFontGenerator;
+module.exports = EmberConfigScriptGenerator;

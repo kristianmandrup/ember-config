@@ -4,20 +4,8 @@ var fs      = require('fs-extra');
 var yeoman  = require('yeoman-generator');
 require('sugar');
 
-var removeFiles = function(pattern) {
-  var glob = require("glob")
-
-  // options is optional
-  glob(pattern, function (er, files) {
-    if (er) return;
-    // console.log('pattern', pattern)
-    files.forEach(function(file) {
-      // console.log('remove file', file);
-      fs.removeSync(file);
-      console.log("removed", file);
-    })
-  })        
-}
+var helper = require ('../../lib/aid');
+var aid;
 
 Array.prototype.contains = function ( needle ) {
    for (var i in this) {
@@ -27,7 +15,14 @@ Array.prototype.contains = function ( needle ) {
 }
 
 var EmberConfigCssGenerator = yeoman.generators.Base.extend({
-  // Choose test framework
+  initializing: function () {
+    var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+    
+    this.appname = pjson.name;
+    this.appName = this._.classify(appname); // .camelize(true);
+    aid = helper(this);
+  },
+
   prompting: function () {
     var done = this.async();
 
@@ -49,65 +44,44 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
       if ((this.css).has('styl'))
         this.fileExt = 'styl';
 
-      console.log('css', this.css, props);
-      console.log('fileExt', this.fileExt);
-
       done();
     }.bind(this));
   },
 
   writing: {
     removeOldFiles: function() {
-      removeFiles('app/styles/app.*');
-      // this.spawnCommand('rm', ['app/styles/app.*']);      
+      aid.removeFiles('app/styles/app.*');
     },
 
     copyFiles: function () {
       var fileName = 'app.' + this.fileExt;
-      // this.log('fileName', fileName);
-
-      this.template(fileName, 'app/styles/' + fileName);
+      this.copy(fileName, 'app/styles/' + fileName);
     }
   },
 
   install: {
     installLessCompiler: function () {
-      // is less selected
       if (this.fileExt !== 'less') return;
-      console.log('installing less', this.fileExt);
-
-      this.npmInstall(['broccoli-less-single'], { 'saveDev': true }, this.async());
+      aid.install('less', 'broccoli-less-single');
     },
 
     installSassCompiler: function () {
-      console.log('do sass');
-      console.log('css', this.css);
-      console.log('fileExt', this.fileExt);
-
-      // is sass selected
       if ((this.css).has('compass')) return;
-      if (['scss', 'sass'].indexOf(this.fileExt) == -1) return;
+      if (!['scss', 'sass'].contains(this.fileExt)) return;
 
-      console.log('installing sass', this.fileExt);
-      this.npmInstall(['broccoli-sass'], { 'saveDev': true }, this.async());      
+      aid.install('sass', 'broccoli-sass');
     },
 
     installStylusCompiler: function () {
-      // is stylus selected
       if (this.fileExt !== 'styl') return;
-
-      console.log('installing stylus', this.fileExt);
-      this.npmInstall(['broccoli-stylus-single'], { 'saveDev': true }, this.async());      
+      aid.install('stylus', 'broccoli-stylus-single');
     },
 
     installCompass: function () {
-      // is compass selected
       if (!(this.css).has('compass')) return;
-
-      console.log('installing compass', this.css);
-      this.npmInstall(['ember-cli-compass-compiler'], { 'saveDev': true }, this.async());      
+      aid.install('compass', 'ember-cli-compass-compiler');
     }
   }
 });
 
-module.exports = EmberConfigCssGenerator;module.exports = EmberConfigCssGenerator;
+module.exports = EmberConfigCssGenerator

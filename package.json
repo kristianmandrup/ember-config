@@ -1,6 +1,6 @@
 {
   "name": "generator-ember-config",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "generators/app/index.js",
@@ -23,6 +23,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "sync": "^0.2.3",
     "chalk": "^0.5.0",
     "fs-extra": "^0.11.0",
     "glob": "^4.0.5",

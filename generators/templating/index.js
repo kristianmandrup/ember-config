@@ -2,14 +2,16 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var S = require('string');
+var sync    = require('sync');
+var helper = require ('../../lib/aid');
+var aid;
+require('sugar');
 
 var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
   initializing: function () {
+    aid = helper(this);
   },
 
-  // Choose test framework
   prompting: function () {
     var done = this.async();
 
@@ -19,10 +21,16 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
       message: 'Choose your templating language',
       choices: ['handlebars', 'emblem'],
       default: 'handlebars'
+    }, {
+      type: 'confirm',
+      name: 'uninstall',
+      message: 'Uninstall other templating languages?',
+      default: false      
     }];
 
     this.prompt(prompts, function (props) {
       this.templating = props.templating;
+      this.uninstall  = props.uninstall;
       this.fileExt = (this.templating == 'emblem') ? 'emblem' : 'hbs';
 
       done();
@@ -31,14 +39,15 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
 
   writing: {
     removeOldFiles: function () {
-      this.spawnCommand('rm', ['app/templates/application.*']);      
+      aid.bold('Remove old application template(s)');
+      aid.removeFiles('app/templates/application.*');   
     },
 
     copyFiles: function () {
-      generator.sourceRoot('../templates/' + this.fileExt);
-      var fileName = 'application.' + this.fileExt;
+      aid.bold('Add new application template');      
 
-      this.src.template(this.fileExt + '/' + this.fileName, 'app/templates/' + this.fileName);
+      var fileName = 'application.' + this.fileExt;
+      this.template(this.fileExt + '/' + fileName, 'app/templates/' + fileName);
     },
   },
 
@@ -46,14 +55,26 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
     installEmblem: function () {
       if (this.templating !== 'emblem') return
       
-      var done = this.async();
+      aid.install('emblem', 'broccoli-emblem-compiler');
 
-      // https://github.com/jakecraige/ember-cli-qunit
-      this.npmInstall(['ember-cli-emblem'], { 'saveDev': true }, done);      
-      
+      // TODO: https://www.npmjs.org/package/ember-cli-emblem
+      // aid.install('emblem');
+
       // uninstall handlebars?
-      // this.spawnCommand('ember', ['generate', 'ember-cli-qunit']);
-    }
+      if (this.uninstall)
+        aid.uninstall('handlebars', 'broccoli-ember-hbs-template-compiler');
+    },
+
+    installHandlebars: function () {
+      if (this.templating !== 'handlebars') return
+      
+      aid.install('handlebars', 'broccoli-ember-hbs-template-compiler');
+
+      // uninstall handlebars?
+      if (this.uninstall)
+        aid.uninstall('emblem', 'broccoli-emblem-compiler');
+    },
+
   }
 });
 

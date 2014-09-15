@@ -27,8 +27,8 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'poisons',
       message: 'Select configurations',
-      choices:['layout', 'script', 'css', 'templating', 'test', 'adapter', 'fonts', 'components', 'auth'], 
-      default: ['layout', 'script', 'css']
+      choices:['script', 'css', 'templating', 'layout', 'test', 'adapter', 'fonts', 'components', 'auth'], 
+      default: ['script', 'css', 'templating']
     }];
 
     this.prompt(prompts, function (props) {
