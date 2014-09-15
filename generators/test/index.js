@@ -2,62 +2,53 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
+var helper = require ('../../lib/aid');
+var aid;
 
 var EmberConfigTestGenerator = yeoman.generators.Base.extend({
-  // The name `constructor` is important here
-  constructor: function () {
-    // Calling the super constructor is important so our generator is correctly setup
-    yeoman.generators.Base.apply(this, arguments);    
-  },
-
   initializing: function () {
+    aid = helper(this);
   },
 
   // Choose test framework
   prompting: function () {
     var done = this.async();
 
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Choose your test framework'
-    ));
-
     var prompts = [{
       type: 'confirm',
       name: 'qunit',
       message: 'Would you like to use Qunit?',
       default: true
-    }];
+    }, {
+      type: 'confirm',
+      name: 'generate',
+      message: 'Would you like to run the Qunit generator?',
+      default: true
+    }
+    ];
 
     this.prompt(prompts, function (props) {
-      this.qunit = props.qunit;
+      this.qunit    = props.qunit;
+      this.generate = props.generate;
 
       done();
     }.bind(this));
   },
 
   writing: {
-    testfiles: function () {
-      // this.dest.mkdir('app');
-      // this.src.copy('jshintrc', '.jshintrc');
-    }
   },
 
   install: {
     installQunit: {
-      // if qunit selected ?
+      if (!this.qunit) return;
 
       // https://github.com/jakecraige/ember-cli-qunit
-      this.npmInstall(['ember-cli-qunit'], { 'saveDev': true }, this.async());      
-      // run generator
-      this.spawnCommand('ember', ['generate', 'ember-cli-qunit']);
+      aid.install('qunit');  
+
+      if (this.generate)
+        this.spawnCommand('ember', ['generate', 'ember-cli-qunit']);
     }
 
-  }
-
-  end: function () {
-    this.installDependencies();
   }
 });
 
