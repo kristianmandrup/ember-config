@@ -1,14 +1,8 @@
 'use strict';
 var util = require('util');
-var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var S = require('string');
 
 var EmberConfigFontsGenerator = yeoman.generators.Base.extend({
-  initializing: function () {
-  },
-
   // Choose test framework
   prompting: function () {
     var done = this.async();
@@ -17,7 +11,7 @@ var EmberConfigFontsGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'fonts',
       message: 'Choose your font frameworks',
-      choices: ['fontawesome', 'other (todo)'],
+      choices: ['fontawesome', 'iconfont'],
       default: ['fontawesome']
     }];
 
@@ -27,13 +21,15 @@ var EmberConfigFontsGenerator = yeoman.generators.Base.extend({
       done();
     }.bind(this));
   },
-
   writing: {
     brocFontAwesome: function () {
       if (this.fonts !== 'fontawesome') return;
       // if fontAwesome 
-      // this.src.template('bootstrap_for_ember/Brocfile.js.tmp', 'Brocfile_boostrap_ember.js.tmp');
+      // this.template('bootstrap_for_ember/Brocfile.js.tmp', 'Brocfile_boostrap_ember.js.tmp');
     },
+
+    // iconFont
+    // http://css-tricks.com/examples/IconFont/
   },
 
   install: {
@@ -43,6 +39,10 @@ var EmberConfigFontsGenerator = yeoman.generators.Base.extend({
       var done = this.async();
 
       this.npmInstall(['ember-cli-font-awesome'], { 'saveDev': true }, done);      
+    },
+
+    installIconFont: function () {
+      
     }
   }
 });

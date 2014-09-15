@@ -1,10 +1,7 @@
 'use strict';
 var util    = require('util');
-var path    = require('path');
 var fs      = require('fs-extra');
 var yeoman  = require('yeoman-generator');
-var yosay   = require('yosay');
-var S       = require('string');
 require('sugar');
 
 var removeFiles = function(pattern) {
@@ -29,15 +26,7 @@ Array.prototype.contains = function ( needle ) {
    return false;
 }
 
-
 var EmberConfigCssGenerator = yeoman.generators.Base.extend({
-  initializing: function () {
-    var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-    
-    this.appname = pjson.name;
-    this.appName = this.appname.camelize(true);
-  },
-
   // Choose test framework
   prompting: function () {
     var done = this.async();
@@ -54,10 +43,10 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
       this.css = props.css;
       this.fileExt = this.css;
 
-      if (S(this.css).contains('sass'))
+      if ((this.css).has('sass'))
         this.fileExt = 'scss';
 
-      if (S(this.css).contains('styl'))
+      if ((this.css).has('styl'))
         this.fileExt = 'styl';
 
       console.log('css', this.css, props);
@@ -91,13 +80,13 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
     },
 
     installSassCompiler: function () {
-      console.log('do less');
+      console.log('do sass');
       console.log('css', this.css);
       console.log('fileExt', this.fileExt);
 
       // is sass selected
-      if (S(this.css).contains('compass')) return;
-      if (!S(['scss', 'sass']).contains(this.fileExt)) return;
+      if ((this.css).has('compass')) return;
+      if (['scss', 'sass'].indexOf(this.fileExt) == -1) return;
 
       console.log('installing sass', this.fileExt);
       this.npmInstall(['broccoli-sass'], { 'saveDev': true }, this.async());      
@@ -113,7 +102,7 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
 
     installCompass: function () {
       // is compass selected
-      if (!S(this.css).contains('compass')) return;
+      if (!(this.css).has('compass')) return;
 
       console.log('installing compass', this.css);
       this.npmInstall(['ember-cli-compass-compiler'], { 'saveDev': true }, this.async());      
@@ -121,4 +110,4 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = EmberConfigCssGenerator;
+module.exports = EmberConfigCssGenerator;module.exports = EmberConfigCssGenerator;

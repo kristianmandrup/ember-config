@@ -27,7 +27,12 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
       name: 'account',
       message: 'What is the name of your firebase account?',
       default: 'unknown'     
-    }
+    }, {
+      type: 'confirm',
+      name: 'rewriteModels',
+      message: 'Do you want to automatically rewrite models if required?',
+      default: true
+    }    
     ];
 
     this.prompt(prompts, function (props) {
@@ -63,14 +68,23 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
     installFireplace: {
       // if fireplace
 
+      // http://jaketrent.com/post/convert-app-from-emberfire-to-fireplace/
       this.npmInstall(['ember-cli-fireplace'], { 'saveDev': true }, done);      
-      // run generator
-      // this.spawnCommand('fireplace', ['generate']);
+
+      // add ember-inflector
+      // https://github.com/stefanpenner/ember-inflector
+
+      // Remove ember-data
+      this.spawnCommand('npm', ['uninstall', 'ember-data']);
     },
   }
 
-  end: function () {
-    this.installDependencies();
+  end: {
+    rewriteModels: function () {
+      // Your models will need to change, but not by much. 
+      // DS.Model becomes FP.Model. DS.attr becomes FP.attr. The changes are pretty much one-to-one in requiring just a namespace change.
+    }
+    
   }
 });
 

@@ -45,7 +45,31 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
 
         done();
       }.bind(this));
-    }      
+    }  
+    // yo generator:subgenerator section
+    // 'use strict';
+    // var util = require('util');
+    // var yeoman = require('yeoman-generator');
+     
+    // var SectionGenerator = yeoman.generators.NamedBase.extend({
+     
+    // });
+     
+    // module.exports = SectionGenerator;
+
+
+    // var files = this.expand("app/sections/*.html") 
+    // this._.classify
+    // this._.chain(files[i]).strRight("_").strLeftBack(".html").humanize().value();
+
+    // this.engine takes a template string as the first parameter and a context object as the second and it will run it through the templating engine and returns the results.
+
+    // this.invoke("onepage:section", {args: ["Demo Section"]}, function(){
+    //     done();
+    // });
+
+    // semantic-ui
+    // <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.12.0/css/semantic.min.css ">   
   }
 });
 

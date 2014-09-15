@@ -45,6 +45,8 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
     localStorage: function () {
       if (!this.opts.contains('localstorage')) return;
       
+      // bower install --save ember-localstorage-adapter
+
       console.log('install localstorage');
       // this.composeWith('ember-config:localstorage');
     }  
