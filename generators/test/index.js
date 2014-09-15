@@ -14,6 +14,7 @@ var EmberConfigTestGenerator = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
+    // TODO: add list of test frameworks to choose from when available...
     var prompts = [{
       type: 'confirm',
       name: 'qunit',

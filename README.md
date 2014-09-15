@@ -36,6 +36,10 @@ For more on Yeoman: [Getting Started Guide](https://github.com/yeoman/yeoman/wik
 
 ## Usage guide
 
+The generator should be used right after you have created an _ember-cli_ based *Ember* application. Use this generator to setup your basic app infrastructure.
+
+###
+
 The generator will start with the following:
 
 *Welcome to Ember Configurator*
