@@ -9,7 +9,7 @@ require('sugar');
 
 var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-    aid = helper(this);
+    aid = helper(this);    
   },
   prompting: function () {
     var done = this.async();
@@ -39,26 +39,39 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
       this.script   = props.script;
       this.fileExt  = calcFileExt(props.script);
 
+      this.appFile    = 'app/app.' + this.fileExt;
+      this.routerFile = 'app/router.' + this.fileExt;
+      this.scriptFiles = [this.appFile, this.routerFile];
+
       done();
     }.bind(this));
   },
 
   writing: {
     removeOldFiles: function() {
+      if (aid.allFilesExist(this.scriptFiles)) return;
       aid.thinline();
+
       aid.bold('Removing old script files');
 
-      aid.removeFiles('app/app.*', aid.excludeOpt('app/app', this.fileExt));
-      aid.removeFiles('app/router.*', aid.excludeOpt('app/router', this.fileExt));
+      aid.removeFiles('app/app.*', aid.excludeOpt(this.appFile));
+      aid.removeFiles('app/router.*', aid.excludeOpt(this.routerFile));
     },
 
     copyFiles: function () {
       if (this.script === 'emberscript') return;
+      if (aid.allFilesExist(this.scriptFiles)) return;
 
       aid.thinline();
       aid.bold('Adding new script files (' + this.script + ')');
-      aid.templateFile('app');
-      aid.templateFile('router');
+
+      var app     = aid.fileExists(this.appFile);
+      var router  = aid.fileExists(this.routerFile);
+
+      if (!app)
+        aid.templateFile('app');
+      if (!router) 
+        aid.templateFile('router');
     }
   },
 
@@ -94,6 +107,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
           aid.install(name, compiler);
       };
 
+      aid.bold("Installing chosen precompiler");
       sync(function(){
         installScript('coffeescript');
         installScript('livescript');
