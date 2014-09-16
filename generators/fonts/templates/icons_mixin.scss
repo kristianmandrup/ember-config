@@ -1,0 +1,42 @@
+// http://chipcullen.com/how-to-use-icomoon-and-icon-fonts-part-3-7-ninja-tricks/
+// https://gist.github.com/chippper/6157025
+
+
+%icon {
+  font-family: $icon-font;  //set as a variable - it's whatever your icon font name is
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+ 
+@mixin icon($content, $position:"") {
+  @if $position == "" {
+    @extend %icon;
+    content: $content;
+  } @else if $position == before {
+    &::before {
+      @extend %icon;
+      content: $content;
+    }
+  } @else if $position == after {
+    &::after {
+      @extend %icon;
+      content: $content;
+    }
+  }
+}
+ 
+//usage:
+//.foo {
+//  @include icon('\e001', before);
+//}
+//or
+//.bar {
+//  &::after {
+//     @include icon('\e001');
+//     -- other styles
+//  }
+//}
