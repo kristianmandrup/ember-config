@@ -2,10 +2,16 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
+require('sugar');
+
+var helper = require ('../../lib/aid');
+var aid;
+var selected;
 
 var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
   initializing: function () {
+    aid = helper(this);
+    selected = aid.containsSelector(this, 'adapters');
   },
 
   // Choose test framework
@@ -29,25 +35,28 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
 
   },
 
+  // TODO: ???
   writing: {
   },
 
   install: {
+    localStorage: function () {
+      if (!selected('localstorage')) return;
+      
+      aid.bowerInstall('localstorage', 'ember-localstorage-adapter');
+    }  
   },
 
   end: {
     firebase: function () {
-      if (!this.opts.contains('firebase')) return;
+      if (!selected('firebase')) return;
       
       this.composeWith('ember-config:firebase');
 
     },
     localStorage: function () {
-      if (!this.opts.contains('localstorage')) return;
+      if (!selected('localstorage')) return;
       
-      // bower install --save ember-localstorage-adapter
-
-      console.log('install localstorage');
       // this.composeWith('ember-config:localstorage');
     }  
   }

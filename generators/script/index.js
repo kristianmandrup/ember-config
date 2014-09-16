@@ -24,11 +24,13 @@ var appNamer = function(ctx) {
 }
 
 var setAppName;
+var selected;
 
 var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);    
 
+    selected = aid.eqSelector(this, 'script');
     setAppName = appNamer(this);
   },
   prompting: function () {
@@ -86,7 +88,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
     },
 
     copyFiles: function () {
-      if (this.script === 'emberscript') return;
+      if (selected('emberscript') return;
       if (aid.allFilesExist(this.scriptFiles)) return;
 
       aid.thinline();

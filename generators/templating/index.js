@@ -6,10 +6,12 @@ var sync    = require('sync');
 var helper = require ('../../lib/aid');
 var aid;
 require('sugar');
+var selected;
 
 var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
+    selected = aid.containsSelector(this, 'fonts');
   },
 
   prompting: function () {
@@ -54,7 +56,7 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
 
   install: {
     installEmblem: function () {
-      if (this.templating !== 'emblem') return
+      if (!selected('emblem') return
       
       aid.install('emblem', 'broccoli-emblem-compiler');
 
@@ -67,7 +69,7 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
     },
 
     installHandlebars: function () {
-      if (this.templating !== 'handlebars') return
+      if (!selected('handlebars') return
       
       aid.install('handlebars', 'broccoli-ember-hbs-template-compiler');
 

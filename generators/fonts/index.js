@@ -8,7 +8,6 @@ var selected;
 var EmberConfigFontsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-
     selected = aid.containsSelector(this, 'fonts');
   },
 

@@ -2,23 +2,26 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var S = require('string');
+var helper    = require('../../lib/aid');
+var aid;
+var selected;
 
 var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
   initializing: function () {
+    aid = helper(this);
+    selected = aid.containsSelector(this, 'adapter');
   },
 
   // Choose test framework
   prompting: function () {
     var done = this.async();
 
-    // TODO: We also need a fireplace model generator!!!
+    // TODO: Someone please create fireplace model generator!!!
     // https://github.com/rlivsey/fireplace
 
     var prompts = [{
       type: 'list',
-      name: 'firebaseAdapter',
+      name: 'adapter',
       message: 'Choose firebase adapter:',
       choices: ['emberfire', 'fireplace'],
       default: 'emberfire'
@@ -36,7 +39,7 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      this.firebaseAdapter = props.firebaseAdapter;
+      this.adapter = props.adapter;
       this.account = props.account;
 
       done();
@@ -44,47 +47,48 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
   },
 
   writing: {
-    removeOldFiles: function() {
-      // this.spawnCommand('rm', ['app/templates/application.*']);      
+    configEmberfire: function() {
+      if (!selected('emberfire')) return;
     },
 
-    copyFiles: function () {
-      // generator.sourceRoot('../templates/' + this.hbs);
-      // this.src.template(this.hbs + 'handlebars/application.' + this.hbs, 'templates/application.' + this.hbs);
+    configFireplace: function () {
+      if (!selected('fireplace')) return;      
     },
   },
 
   install: {    
-    installEmberFire: {
-      // if emberfire
+    emberFire: {
+      if (!selected('emberfire')) return;
 
-      var done = this.async();
       // https://www.npmjs.org/package/ember-cli-emberfire
-      this.npmInstall(['ember-cli-emberfire'], { 'saveDev': true }, done);      
+      aid.install('emberfire');
       // run generator
-      this.spawnCommand('emberfire', ['generate']);
+      aid.generate('emberfire');
     },
 
-    installFireplace: {
-      // if fireplace
+    fireplace: {
+      if (!selected('fireplace')) return;
 
       // http://jaketrent.com/post/convert-app-from-emberfire-to-fireplace/
-      this.npmInstall(['ember-cli-fireplace'], { 'saveDev': true }, done);      
+      aid.install('fireplace');
 
       // add ember-inflector
       // https://github.com/stefanpenner/ember-inflector
+      aid.info('add ember-inflector');
+      aid.install('ember-inflector', 'ember-inflector');
 
       // Remove ember-data
-      this.spawnCommand('npm', ['uninstall', 'ember-data']);
-    },
+      aid.uninstall('ember-data', 'ember-data');
+    }
   }
 
   end: {
-    rewriteModels: function () {
-      // Your models will need to change, but not by much. 
-      // DS.Model becomes FP.Model. DS.attr becomes FP.attr. The changes are pretty much one-to-one in requiring just a namespace change.
-    }
-    
+    rewriteModelsFireplace: function () {
+      if (!selected('fireplace')) return;
+
+      aid.info('Remember to rewrite your models...');
+      aid.info('DS.Model becomes FP.Model. DS.attr becomes FP.attr');
+    }    
   }
 });
 
