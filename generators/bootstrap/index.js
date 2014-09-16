@@ -26,6 +26,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     aid = helper(this);
     selected    = aid.containsSelector(this, 'bootstrapFeatures');
     cssSelected = aid.containsSelector(this, 'cssType'); 
+    this.brocFileContent = aid.fileContent('Brocfile.js');
   },
 
   // Choose test framework
@@ -60,15 +61,22 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     configureBootstrapCss: function () {          
       if (cssSelected('sass')) {
         // http://www.octolabs.com/blogs/octoblog/2014/05/10/ember-cli-broccoli-bootstrap-sass-part-2/
+        var sassFileContent = aid.fileContent('app/styles/app.scss');
+
+        var import_sass_bootstrap = "@import 'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';";
+        if (sassFileContent.has(import_sass_bootstrap)) return;
+
         sass_file.app(function() {
-          this.prependTxt("@import 'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';");
+          this.prependTxt(import_sass_bootstrap);
         });
         aid.info('bootstrap for sass configured');
       } else {     
-        var css_import = "app.import('bower_components/bootstrap/dist/css/bootstrap.css');\n";
+        var css_import = "app.import('bower_components/bootstrap/dist/css/bootstrap.css');";
+
+        if (this.brocFileContent.has(css_import)) return;
 
         broc_file(function() {
-          return this.before('module.exports').prependTxt(css_import);
+          return this.last('module.exports').prependLine(css_import + '\n');
         }).write();
 
         aid.info('bootstrap for css configured');
@@ -79,8 +87,11 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       if (!selected('javascript')) return;
       
       var js_import = "app.import('vendor/bootstrap/dist/js/bootstrap.js');";   
+
+      if (this.brocFileContent.has(js_import)) return;
+
       broc_file(function() {
-        return this.before('module.exports').prependTxt(js_import);  
+        return this.last('module.exports').prependLine(js_import + '\n');  
       }).write();
       aid.info('bootstrap js configured');
     },
@@ -92,10 +103,18 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     configureBootstrapFonts: function () {    
       if (!selected('fonts')) return;  
 
-      var replaceStr = aid.fileContent('/templates/merge-bootstrapFonts.js');
+      var replaceStr = this.read('merge-bootstrapFonts.js');
+
+      if (this.brocFileContent.has(replaceStr)) return;
 
       broc_file(function() {
-        return this.last(/module\.exports = mergeTrees\(.*\);/).replaceWith(replaceStr);  
+        if (this.result.match('exports = mergeTrees')) {
+          return this.last(/module\.exports = mergeTrees\(.*\);/).replaceWithLine(replaceStr + '\n');  
+        } else if (this.result.match('exports = app')) {          
+          return this.last(/module\.exports = app.toTree\(.*\);/).replaceWithLine(replaceStr + '\n');
+        } else {
+          throw new Error("No 'valid' module.exports found!");
+        }
       }).write();
 
       // referenced from main Brocfile :)
