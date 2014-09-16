@@ -33,7 +33,9 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.templating = props.templating;
       this.uninstall  = props.uninstall;
-      this.fileExt = (this.templating == 'emblem') ? 'emblem' : 'hbs';
+      this.fileExt    = (this.templating == 'emblem') ? 'emblem' : 'hbs';
+      this.fileName = 'application.' + this.fileExt;
+      this.filePath   = 'app/templates/' + this.fileName;
 
       done();
     }.bind(this));
@@ -42,21 +44,23 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
   writing: {
     removeOldFiles: function () {
       aid.bold('Remove old application template(s)');
-      aid.removeFiles('app/templates/application.*', aid.excludeOpt('app/templates/application', this.fileExt));
+
+      if (aid.fileExists(this.filePath)) return;
+      aid.removeFiles('app/templates/application.*', aid.excludeOpt(this.fileName));
     },
 
     // TODO: only if not present
     copyFiles: function () {
       aid.bold('Add new application template');      
-
-      var fileName = 'application.' + this.fileExt;
-      this.template(this.fileExt + '/' + fileName, 'app/templates/' + fileName);
+      
+      if (aid.fileExists(this.filePath)) return;
+      this.template(this.fileExt + '/' + this.fileName, this.filePath);
     },
   },
 
   install: {
     installEmblem: function () {
-      if (!selected('emblem') return
+      if (!selected('emblem')) return
       
       aid.install('emblem', 'broccoli-emblem-compiler');
 
@@ -69,7 +73,7 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
     },
 
     installHandlebars: function () {
-      if (!selected('handlebars') return
+      if (!selected('handlebars')) return
       
       aid.install('handlebars', 'broccoli-ember-hbs-template-compiler');
 

@@ -39,7 +39,8 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
       if ((this.css).has('stylus'))
         this.fileExt = 'styl';
 
-      this.appCssFile = 'app/styles/app.' + this.fileExt;
+      this.fileName = 'app' + '.' + this.fileExt;
+      this.appCssFile = 'app/styles/' + this.fileName;
 
       done();
     }.bind(this));
@@ -53,7 +54,7 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
     // only copy if not present!
     copyFiles: function () {
       if (aid.fileExists(this.appCssFile)) return;
-      this.copy(fileName, this.appCssFile);
+      this.copy(this.fileName, this.appCssFile);
     }
   },
 
