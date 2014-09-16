@@ -21,7 +21,9 @@ var sass_file = require('../../lib/sass_file');
 var aid;
 var selected, cssSelected;
 
-var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
+// https://github.com/JDillon522/ember-foundation-fun
+
+var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     selected    = aid.containsSelector(this, 'features');
@@ -29,7 +31,6 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     this.brocFileContent = aid.fileContent('Brocfile.js');
   },
 
-  // Choose test framework
   prompting: function () {
     var done = this.async();
 
@@ -40,17 +41,11 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       message: 'Which styling language for bootstrap would you like?',
       choices: ['less', 'sass'],
       default: ['css']
-    }, {
-      type: 'checkbox',
-      name: 'features',
-      message: 'Which features of Twitter bootstrap would you like?',
-      choices: ['css', 'javascript', 'fonts'],
-      default: ['css', 'javascript']
     }];
 
     this.prompt(prompts, function (props) {
       this.cssType = props.cssType;
-      this.bootstrapFeatures = props.bootstrapFeatures;
+      this.features = props.bootstrapFeatures;
 
       // TODO: replace with real app name!
       this.appName = 'App';
@@ -84,6 +79,9 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   install: function () {
     aid.install('ember-foundation');
     aid.success('Zurb Foundation 5 successfully installed :)');
+  },
+  end: function() {
+    // TODO: Use foundation blueprint!
   }
 });
 

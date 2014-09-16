@@ -2,28 +2,24 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var S = require('string');
+var helper = require ('../../lib/aid');
+var aid;
 
 var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
   initializing: function () {
+    aid = helper(this);    
   },
 
   // Choose test framework
   prompting: function () {
     var done = this.async();
 
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Choose your authentication framework :)'
-    ));
-
     var prompts = [{
-      type: 'checkbox',
+      type: 'list',
       name: 'auth',
       message: 'Choose your auth framework:',
-      choices: ['simple-auth', 'other (todo: add more...)'],
-      default: ['simple-auth']
+      choices: ['simple-auth'],
+      default: 'simple-auth'
     }];
 
     this.prompt(prompts, function (props) {
@@ -35,17 +31,15 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
 
   writing: {
     configureSimpleAuth: function () {
-      // if bootstrap_for_ember
-      // generator.sourceRoot('../templates/bootstrap_for_ember');
-      // this.src.template('bootstrap_for_ember/Brocfile.js.tmp', 'Brocfile_boostrap_ember.js.tmp');
-    },
+      // TODO: ...
+    }
   },
 
   install: {
     simpleAuth: function () {
-      // if bootstrap_for_ember
-      var done = this.async();
-      this.npmInstall(['ember-cli-simple-auth'], { 'saveDev': true }, done);      
+      if (!selected('simple-auth')) return;
+
+      aid.install('simple-auth')
     }
   }
 });

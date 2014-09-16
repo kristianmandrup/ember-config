@@ -9,8 +9,17 @@ var selected;
 var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    selected = aid.containsSelector(this, 'adapter');
+    selected        = aid.containsSelector(this, 'adapter');
+    isAuthSelected  = aid.isSelector(this, 'auth'); 
   },
+
+  // TODO: fireplace - rewrite models (auto search/replace!)
+  // {
+  //   type: 'confirm',
+  //   name: 'rewriteModels',
+  //   message: 'Do you want to automatically rewrite models if required (fireplace)?',
+  //   default: true
+  // },
 
   // Choose test framework
   prompting: function () {
@@ -32,28 +41,37 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
       default: 'unknown'     
     }, {
       type: 'confirm',
-      name: 'rewriteModels',
-      message: 'Do you want to automatically rewrite models if required?',
+      name: 'auth',
+      message: 'Configure firebase authentication?',
       default: true
-    }    
+    }
     ];
 
     this.prompt(prompts, function (props) {
       this.adapter = props.adapter;
       this.account = props.account;
+      this.auth    = props.auth;
 
       done();
     }.bind(this));
   },
 
   writing: {
+    // TODO:
     configEmberfire: function() {
       if (!selected('emberfire')) return;
+
+      aid.info('Example ember-cli app using emberfire');
+      aid.info('See https://github.com/stefanpenner/ember-cli-ember-fire')
+      aid.thinline()
+      aid.info('See https://www.firebase.com/blog/2013-12-16-emberfire-guest-blog.html')
     },
 
+    // TODO:
     configFireplace: function () {
-      if (!selected('fireplace')) return;      
-    },
+      if (!selected('fireplace')) return;   
+      aid.info('No fireplace config implemented yet...');   
+    }
   },
 
   install: {    
@@ -74,11 +92,10 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
 
       // add ember-inflector
       // https://github.com/stefanpenner/ember-inflector
-      aid.info('add ember-inflector');
-      aid.install('ember-inflector', 'ember-inflector');
+      aid.installNpm('ember-inflector');
 
       // Remove ember-data
-      aid.uninstall('ember-data', 'ember-data');
+      aid.uninstallNpm('ember-data');
     }
   }
 
@@ -88,7 +105,12 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
 
       aid.info('Remember to rewrite your models...');
       aid.info('DS.Model becomes FP.Model. DS.attr becomes FP.attr');
-    }    
+    },
+    emberFire: {
+      if (!selected('emberfire')) return;
+      if (isAuthSelected())
+        this.composeWith('ember-config:emberfireauth');
+    }     
   }
 });
 

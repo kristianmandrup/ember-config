@@ -63,7 +63,7 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
         this.composeWith('ember-config:foundation');
         break;  
       default:
-        aid.warning('Generator not implemented for : ' + this.layout);
+        aid.warning('Generator not yet implemented for : ' + this.layout);
     }    
   }
 
