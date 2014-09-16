@@ -9,6 +9,15 @@ var selected;
 
 var availableConfigs = ['script', 'css', 'templating', 'layout', 'test', 'adapter', 'fonts', 'components', 'auth'];
 
+var endScripts = {};
+availableConfigs.forEach(function(config) {
+  endScripts[config] = function() {
+    if (!selected(config)) return;    
+    this.composeWith('ember-config:' + config);
+  }  
+});
+
+
 var EmberConfigGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
@@ -28,7 +37,7 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
       name: 'configs',
       message: 'Select configurations',
       choices: availableConfigs,
-      default: availableConfigs.slice(0, 2)
+      default: availableConfigs.slice(0, 3)
     }];
 
     this.prompt(prompts, function (props) {
@@ -38,16 +47,8 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  end: {
-  }
+  end: endScripts
 });
-
-availableConfigs.forEach(function(config)) {
-  EmberConfigGenerator.end[config] = function() {
-    if (!selected(config)) return;    
-    this.composeWith('ember-config:' + config);
-  }  
-}
 
 
 module.exports = EmberConfigGenerator;
