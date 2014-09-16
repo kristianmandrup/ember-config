@@ -2,10 +2,6 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var sync    = require('sync');
-
-var helper = require ('../../lib/aid');
-var aid;
 
 var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
   initializing: function () {
@@ -20,7 +16,7 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
       var prompts = [{
         type: 'list',
         name: 'layout',
-        message: 'Choose your layout framework(s)',
+        message: 'Choose a popular layout framework',
         choices: ['bootstrap', 'foundation', 'ink', 'pure', 'brick', 'gumby', 'other'],
         default: 'bootstrap'
       }];
@@ -38,7 +34,7 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
       var prompts = [{
         type: 'list',
         name: 'layout',
-        message: 'Choose your layout framework:',
+        message: 'Choose an alternative layout framework',
         choices: ['semantic-ui', 'flat-ui', 'ui-kit', 'bootflat' , 'cascade', 'skeleton'],
         default: 'semantic-ui'
       }];  

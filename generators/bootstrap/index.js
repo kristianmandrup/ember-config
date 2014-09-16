@@ -3,14 +3,11 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var sm = require('string-mutator');
+require('sugar');
 
-var readFile = function(fileName) {
-  return fs.readSync(fileName, 'utf8');
-}
-
-var writeFile = function(fileName) {
-  return fs.writeSync(fileName, 'utf8');
-}
+var helper    = require('../../lib/aid');
+var sass_file = require('../../lib/sass_file');
+var aid;
 
 var prependFile = function(fileName, prependTxt) {
   var content = readFile(fileName);
@@ -18,7 +15,7 @@ var prependFile = function(fileName, prependTxt) {
 }
 
 var usingSass = function (ctx) {
-  return S(ctx.css).include('sass');
+  return (ctx.css).has('sass');
 }
 
 var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
@@ -30,7 +27,14 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
+    // TODO: should detect app is using sass and change default!
     var prompts = [{
+      type: 'list',
+      name: 'cssType',
+      message: 'Which styling language for bootstrap would you like?',
+      choices: ['less', 'sass'],
+      default: 'css'
+    }, {
       type: 'checkbox',
       name: 'parts',
       message: 'Which features of Twitter bootstrap would you like?',
@@ -49,16 +53,16 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     // TODO: Find example of correct full installation of bootstrap
     // better as a separate ember-cli or similar
 
-    configureBootstrapCss: function () {
-      // add to app.scss
-      var appSassFile = 'app/styles/app.scss';
-
+    configureBootstrapCss: function () {          
       if (usingSass(this)) {
-        var prependLine = "@import '/bower_components/bootstrap/css/bootstrap.css'\n";
-        prependFile(appSassFile, prependLine);  
-      } else {        
-        var importLine = "app.import('bower_components/bootstrap/dist/css/bootstrap.css');\n";
-        sm.first(/module\.exports/).prepend(importLine, this.brocfileContent);  
+        sass_file.app(function() {
+          this.prependTxt("@import 'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';");
+        })
+      } else {     
+        var js_import = "app.import('vendor/bootstrap/dist/js/bootstrap.js');";   
+        var css_import = "app.import('bower_components/bootstrap/dist/css/bootstrap.css');\n";
+        broc_file(function() {
+          this.before('module.exports').prepend(app_import);  
       }            
     },
     configureBootstrapJs: function () {    

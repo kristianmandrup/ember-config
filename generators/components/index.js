@@ -2,46 +2,54 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
-var S = require('string');
+var helper = require ('../../lib/aid');
+var aid;
 
 var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
+    aid = helper(this);
   },
 
-  // Choose test framework
   prompting: function () {
     var done = this.async();
 
     var prompts = [{
       type: 'checkbox',
-      name: 'components',
+      name: 'componentLib',
       message: 'Choose your components framework',
-      choices: ['bootstrap for ember', 'ember components'],
+      choices: ['none', 'bootstrap for ember', 'ember components'],
       default: ['ember components']
     }];
 
     this.prompt(prompts, function (props) {
-      this.components = props.components;
+      this.componentLib = props.componentLib;
 
       done();
     }.bind(this));
   },
 
-  writing: {
-    configureBrocfileForBootstrap: function () {
-      // if bootstrap_for_ember
-      generator.sourceRoot('../templates/bootstrap_for_ember');
-      this.src.template('bootstrap_for_ember/Brocfile.js.tmp', 'Brocfile_boostrap_ember.js.tmp');
-    },
-  },
-
   install: {
     bootstrapComponents: function () {
-      // if bootstrap_for_ember
-      var done = this.async();
-      this.npmInstall(['ember-cli-bootstrap'], { 'saveDev': true }, done);      
-    }
+      if (this.componentLib == 'bootstrap for ember')
+        aid.install('bootstrap');
+    },
+    emberComponents: function() {
+      if (this.componentLib == 'ember components')
+        aid.install('components');  
+    }    
+  },
+  end: {
+    switch (this.componentLib) {
+      case 'none':
+        aid.success("You can run ember-config:components later ;)")
+        return;
+      case 'bootstrap for ember':
+        this.composeWith('ember-config:bootstrap_for_ember')
+        break;
+      case 'ember components':                
+        aid.success('You successfully installed Ember Components');
+        aid.info('For docs, see: http://indexiatech.github.io/ember-components');        
+    }    
   }
 });
 
