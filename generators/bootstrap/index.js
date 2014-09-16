@@ -14,13 +14,14 @@ var prependFile = function(fileName, prependTxt) {
   writeFile(fileName, prependTxt.concat(prependTxt));
 }
 
+// TODO: Somehow check if app is using SASS
 var usingSass = function (ctx) {
-  return (ctx.css).has('sass');
+  true;
 }
 
 var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-    this.brocfileContent = readFile('Brocfile.js');
+
   },
 
   // Choose test framework
@@ -36,7 +37,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       default: 'css'
     }, {
       type: 'checkbox',
-      name: 'parts',
+      name: 'bootstrapFeatures',
       message: 'Which features of Twitter bootstrap would you like?',
       choices: ['css', 'javascript', 'fonts'],
       default: ['css', 'javascript']
@@ -50,47 +51,60 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   },
 
   writing: {
-    // TODO: Find example of correct full installation of bootstrap
-    // better as a separate ember-cli or similar
 
     configureBootstrapCss: function () {          
-      if (usingSass(this)) {
+      if (!contains(this.bootstrapFeatures, 'css')) return;
+
+      if (usingSass()) {
+        // http://www.octolabs.com/blogs/octoblog/2014/05/10/ember-cli-broccoli-bootstrap-sass-part-2/
         sass_file.app(function() {
           this.prependTxt("@import 'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';");
         })
       } else {     
-        var js_import = "app.import('vendor/bootstrap/dist/js/bootstrap.js');";   
         var css_import = "app.import('bower_components/bootstrap/dist/css/bootstrap.css');\n";
         broc_file(function() {
-          this.before('module.exports').prepend(app_import);  
+          this.before('module.exports').prepend(css_import);  
+        }
       }            
     },
-    configureBootstrapJs: function () {    
-      var appFile = findFile('app/app.*');
-      if (!appFile) return;
 
-      prependScript(appFile, '/bower_components/bootstrap/js/bootstrap.js')
+    configureBootstrapJs: function () {  
+      if (!contains(this.bootstrapFeatures, 'javascript')) return;
+      
+      var js_import = "app.import('vendor/bootstrap/dist/js/bootstrap.js');";   
+      broc_file(function() {
+        this.before('module.exports').prepend(js_import);  
+      }
     },
+
+    // TODO: Move to fonts generator as an option 
+    // if bootstrap is detected?
+
     // http://www.octolabs.com/blogs/octoblog/2014/05/25/bootstrap-glyphicons-with-ember-cli/
     configureBootstrapFonts: function () {    
-      first('module.exports = mergeTrees(app.toTree());').remove();
-      var replaceStr = fileContent('/templates/Brocfile_compileBootstrapFonts.js');
-      first().append('Brocfile.js', replaceStr, {force: true});
-    },
+      if (!contains(this.bootstrapFeatures, 'fonts')) return;  
+
+      var replaceStr = aid.fileContent('/templates/merge-bootstrapFonts.js');
+
+      broc_file(function() {
+        this.last(/module\.exports = mergeTrees\(.*\);/).replaceWith(replaceStr);  
+      }
+
+      // referenced from main Brocfile :)
+      this.copy('brocs/bootstrap_fonts.js');
+    }
   },
 
   install: {
     installBootstrap: function () {
-      // if bootstrap
-      if (this.layout.indexOf('bootstrap') == -1) return;
-      var bowerSass = usingSass(this) ? 'bootstrap-sass-official' : 'bootstrap';
-      var done = this.async();
-      this.bowerInstall(['bootstrap-sass-official'], { 'saveDev': true }, done);
+      if (!contains(this.layout, 'bootstrap')) return;
+
+      var bootstrapNpm = usingSass() ? 'bootstrap-sass-official' : 'bootstrap';
+      aid.install(bootstrapNpm);
     }
   },
 
   end: function () {
-    this.installDependencies();
   }
 });
 

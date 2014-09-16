@@ -2,6 +2,8 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var helper = require ('../../lib/aid');
+var aid;
 
 var componentList = function(components) {
   var allIndex = components.indexOf('all');
@@ -13,6 +15,8 @@ var componentList = function(components) {
 
 var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
+    aid = helper(this);
+
     this.all_components = ['alert', 'badge', 'bind-tooltip', 
       'breadcrumbs', 'button', 'btn-group', 'flip-switch',
       'label', 'list-group', 'modal', 'notifications', 'page-header',         

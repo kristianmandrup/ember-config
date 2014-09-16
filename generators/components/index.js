@@ -49,7 +49,8 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
       case 'ember components':                
         aid.success('You successfully installed Ember Components');
         aid.info('For docs, see: http://indexiatech.github.io/ember-components');        
-    }    
+    }
+    aid.info('For more info on Ember Components, be sure to check: http://ember-components.com');    
   }
 });
 

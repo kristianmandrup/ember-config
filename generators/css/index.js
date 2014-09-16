@@ -7,13 +7,6 @@ require('sugar');
 var helper = require ('../../lib/aid');
 var aid;
 
-Array.prototype.contains = function ( needle ) {
-   for (var i in this) {
-       if (this[i] == needle) return true;
-   }
-   return false;
-}
-
 var EmberConfigCssGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
@@ -67,7 +60,7 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
 
     installSassCompiler: function () {
       if ((this.css).has('compass')) return;
-      if (!['scss', 'sass'].contains(this.fileExt)) return;
+      if (!contains(['scss', 'sass'], this.fileExt)) return;
 
       aid.install('sass', 'broccoli-sass');
     },
