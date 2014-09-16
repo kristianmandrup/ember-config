@@ -40,9 +40,10 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
   writing: {
     removeOldFiles: function () {
       aid.bold('Remove old application template(s)');
-      aid.removeFiles('app/templates/application.*');   
+      aid.removeFiles('app/templates/application.*', aid.excludeOpt('app/templates/application', this.fileExt));
     },
 
+    // TODO: only if not present
     copyFiles: function () {
       aid.bold('Add new application template');      
 

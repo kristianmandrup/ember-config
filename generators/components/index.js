@@ -4,10 +4,12 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require ('../../lib/aid');
 var aid;
+var selected;
 
 var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
+    selected = aid.containsSelector(this, 'componentLib');
   },
 
   prompting: function () {
@@ -17,7 +19,7 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'componentLib',
       message: 'Choose your components framework',
-      choices: ['none', 'bootstrap for ember', 'ember components'],
+      choices: ['bootstrap for ember', 'ember components'],
       default: ['ember components']
     }];
 
@@ -30,27 +32,27 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
 
   install: {
     bootstrapComponents: function () {
-      if (this.componentLib == 'bootstrap for ember')
+      if (selected('bootstrap for ember'))
         aid.install('bootstrap');
     },
     emberComponents: function() {
-      if (this.componentLib == 'ember components')
+      if (selected('ember components'))
         aid.install('components');  
     }    
   },
   end: {
-    switch (this.componentLib) {
-      case 'none':
-        aid.success("You can run ember-config:components later ;)")
-        return;
-      case 'bootstrap for ember':
-        this.composeWith('ember-config:bootstrap_for_ember')
-        break;
-      case 'ember components':                
-        aid.success('You successfully installed Ember Components');
-        aid.info('For docs, see: http://indexiatech.github.io/ember-components');        
+    bootstrap: function() {
+      if (!selected('bootstrap for ember')) return;
+      this.composeWith('ember-config:bsember');
+    },
+    components: function() {
+      if (!selected('ember components')) return;      
+
+      // assumess install (see above)
+      aid.success('You successfully installed Ember Components');
+      aid.info('For docs, see: http://indexiatech.github.io/ember-components');
+      aid.info('For more info on Ember Components, be sure to check: http://ember-components.com');    
     }
-    aid.info('For more info on Ember Components, be sure to check: http://ember-components.com');    
   }
 });
 

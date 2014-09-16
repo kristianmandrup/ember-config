@@ -7,13 +7,22 @@ require('sugar');
 var helper = require ('../../lib/aid');
 var aid;
 
+var selected, isSelected;
+
 var EmberConfigCssGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
     
     this.appname = pjson.name;
-    this.appName = this._.classify(appname); // .camelize(true);
+    if (!this.appname)
+        throw new Error("Missing name in package.json");
+
+    this.appName = this._.classify(this.appname);
     aid = helper(this);
+
+    selected = aid.matchSelector(this, 'css');
+    isSelected = aid.eqSelector(this, 'fileExt');
+    // selectedAny = aid.anySelector(this, 'css', isSelected);
   },
 
   prompting: function () {
@@ -34,7 +43,7 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
       if ((this.css).has('sass'))
         this.fileExt = 'scss';
 
-      if ((this.css).has('styl'))
+      if ((this.css).has('stylus'))
         this.fileExt = 'styl';
 
       done();
@@ -43,35 +52,35 @@ var EmberConfigCssGenerator = yeoman.generators.Base.extend({
 
   writing: {
     removeOldFiles: function() {
-      aid.removeFiles('app/styles/app.*');
+      aid.removeFiles('app/styles/app.*', aid.excludeOpt('app/styles/app', this.fileExt));
     },
 
+    // TODO: only copy if not present!
     copyFiles: function () {
-      var fileName = 'app.' + this.fileExt;
-      this.copy(fileName, 'app/styles/' + fileName);
+      this.copy(fileName, 'app/styles/app' + this.fileExt);
     }
   },
 
   install: {
     installLessCompiler: function () {
-      if (this.fileExt !== 'less') return;
+      if (!selected('less')) return;
       aid.install('less', 'broccoli-less-single');
     },
 
     installSassCompiler: function () {
-      if ((this.css).has('compass')) return;
-      if (!contains(['scss', 'sass'], this.fileExt)) return;
+      if (selected('compass')) return;
+      if (!isSelected('scss')) return; // fileExt
 
       aid.install('sass', 'broccoli-sass');
     },
 
     installStylusCompiler: function () {
-      if (this.fileExt !== 'styl') return;
+      if (!selected('stylus')) return;
       aid.install('stylus', 'broccoli-stylus-single');
     },
 
     installCompass: function () {
-      if (!(this.css).has('compass')) return;
+      if (!selected('compass')) return;
       aid.install('compass', 'ember-cli-compass-compiler');
     }
   }

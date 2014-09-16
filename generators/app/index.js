@@ -12,6 +12,7 @@ var availableConfigs = ['script', 'css', 'templating', 'layout', 'test', 'adapte
 var endScripts = {};
 availableConfigs.forEach(function(config) {
   endScripts[config] = function() {
+    console.log('config', selected(config));
     if (!selected(config)) return;    
     this.composeWith('ember-config:' + config);
   }  

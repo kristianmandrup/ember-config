@@ -47,8 +47,9 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
     removeOldFiles: function() {
       aid.thinline();
       aid.bold('Removing old script files');
-      aid.removeFiles('app/app.*');
-      aid.removeFiles('app/router.*');
+
+      aid.removeFiles('app/app.*', aid.excludeOpt('app/app', this.fileExt));
+      aid.removeFiles('app/router.*', aid.excludeOpt('app/router', this.fileExt));
     },
 
     copyFiles: function () {

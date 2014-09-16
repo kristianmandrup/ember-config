@@ -5,6 +5,8 @@ var yeoman = require('yeoman-generator');
 var helper = require ('../../lib/aid');
 var aid;
 
+var broc_file = require ('../../lib/broc_file');
+
 var componentList = function(components) {
   var allIndex = components.indexOf('all');
   if (allIndex > -1) {
