@@ -59,8 +59,8 @@ var EmberConfigEmberFireAuthGenerator = yeoman.generators.Base.extend({
       if(!aid.fileExists(indexRoute))
         this.template('index_route.js', indexRoute);      
 
-      this.mkdir('app/templates/auth');
-      var loginFormTemplate = 'app/templates/auth/login_form.hbs';
+      // this.mkdir('app/templates/auth');
+      var loginFormTemplate = 'app/templates/login.hbs';
       if(!aid.fileExists(loginFormTemplate))
         this.template('login_form.hbs', loginFormTemplate);      
     }
