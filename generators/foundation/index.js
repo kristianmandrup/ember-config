@@ -52,6 +52,9 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       this.cssType = props.cssType;
       this.bootstrapFeatures = props.bootstrapFeatures;
 
+      // TODO: replace with real app name!
+      this.appName = 'App';
+
       done();
     }.bind(this));
   },
@@ -59,9 +62,23 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   writing: {
     // https://coderwall.com/p/azjwaq
     // see mfeckie
-    configureView: function () {   
-      this.copy('app_view.js', 'app/views/application_view.js');
+    configureAppView: function () {
+      var appView = 'app/views/application_view.js';
+      if (!aid.fileExists(appView)) {
+        aid.info(appView + ' already exists (skipped)');
+        return;
+      }
+      this.copy('app_view.js', appView);
+    },
+    configureIndexView: function () {
+      var appView = 'app/views/index_view.js';
+      if (!aid.fileExists(indexView)) {
+        aid.info(appView + ' already exists (skipped)');
+        return;
+      }
+      this.copy('index_view.js', indexView);
     }
+
   },
 
   install: function () {

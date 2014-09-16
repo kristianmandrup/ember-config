@@ -9,6 +9,8 @@ require('sugar');
 
 var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
+// TODO: Should use some other way, like reading it via Yeoman User settings
+// or some other project config file
 var appNamer = function(ctx) {
   return function(name) {
     if (!name) {
@@ -148,7 +150,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
           this.log('See: https://github.com/ghempton/ember-script/');
           this.log('Emberscript editor support:');
           this.log('https://github.com/asux/sublime-ember-script');
-          this.log('* Please donate to emberscript to advance the project *');
+          this.log('* Please donate to or help with EmberScript to advance the project *');
           break;
         case 'livescript':
           this.log('See: livescript.net');
