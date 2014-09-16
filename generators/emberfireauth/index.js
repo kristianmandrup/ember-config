@@ -11,7 +11,7 @@ var selected;
 var EmberConfigEmberFireAuthGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    selected = aid.containsSelector(this, 'adapter');
+    selected = aid.eqSelector(this, 'authScheme');
   },
 
   // Choose test framework
@@ -31,18 +31,21 @@ var EmberConfigEmberFireAuthGenerator = yeoman.generators.Base.extend({
       type: 'list',
       name: 'authScheme',
       message: 'Choose your authentication scheme',
-      choices: ['simple-login']
+      choices: ['simple-login'],
       default: 'simple-login'
     }];
 
     this.prompt(prompts, function (props) {
-      this.adapter    = props.adapter;
       this.account    = props.account;
       this.authScheme = props.authScheme;
 
       done();
     }.bind(this));
   },
+
+  // TODO: create ember-config:emberfire generator ;)
+  // TODO: run emberfire generator??
+  // aid.generate('emberfire');
 
   writing: {
     configSimpleLogin: function() {
@@ -67,7 +70,7 @@ var EmberConfigEmberFireAuthGenerator = yeoman.generators.Base.extend({
   },
 
   install: {    
-    simpleLogin: {
+    simpleLogin: function() {
       if (!selected('simple-login')) return;
 
       // http://www.programwitherik.com/ember-cli-with-firebase-simple-login/

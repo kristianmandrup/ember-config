@@ -3,6 +3,7 @@ var util    = require('util');
 var path    = require('path');
 var yeoman  = require('yeoman-generator');
 var sync    = require('sync');
+var fs      = require('fs-extra');
 var helper = require ('../../lib/aid');
 var aid;
 require('sugar');
@@ -18,8 +19,8 @@ var appNamer = function(ctx) {
       if (!name)
           throw new Error("Missing name in package.json");
     } 
-    this.appname = name;
-    this.appName = this._.classify(this.appname);      
+    ctx.appname = name;
+    ctx.appName = ctx._.classify(name);      
   }
 }
 
@@ -32,6 +33,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
 
     selected = aid.eqSelector(this, 'script');
     setAppName = appNamer(this);
+    setAppName();
   },
   prompting: function () {
     var done = this.async();
@@ -88,7 +90,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
     },
 
     copyFiles: function () {
-      if (selected('emberscript') return;
+      if (selected('emberscript')) return;
       if (aid.allFilesExist(this.scriptFiles)) return;
 
       aid.thinline();

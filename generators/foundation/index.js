@@ -58,20 +58,20 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
     // https://coderwall.com/p/azjwaq
     // see mfeckie
     configureAppView: function () {
-      var appView = 'app/views/application_view.js';
+      var appView = 'app/views/application.js';
       if (!aid.fileExists(appView)) {
         aid.info(appView + ' already exists (skipped)');
         return;
       }
-      this.copy('app_view.js', appView);
+      this.copy('views/application.js', appView);
     },
     configureIndexView: function () {
-      var appView = 'app/views/index_view.js';
+      var indexView = 'app/views/index.js';
       if (!aid.fileExists(indexView)) {
-        aid.info(appView + ' already exists (skipped)');
+        aid.info(indexView + ' already exists (skipped)');
         return;
       }
-      this.copy('index_view.js', indexView);
+      this.copy('views/index.js', indexView);
     }
 
   },
@@ -85,5 +85,5 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = EmberConfigBootstrapGenerator;
+module.exports = EmberConfigFoundationGenerator;
 

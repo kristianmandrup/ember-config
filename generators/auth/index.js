@@ -4,12 +4,13 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require('../../lib/aid');
 var aid;
-
+var selected;
 var index_file = require('../../lib/index_file');
 
 var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-    aid = helper(this);    
+    aid = helper(this);   
+    selected = aid.eqSelector(this, 'auth'); 
   },
 
   // Choose Auth framework

@@ -43,7 +43,7 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
     localStorage: function () {
       if (!selected('localstorage')) return;
       
-      aid.bowerInstall('localstorage', 'ember-localstorage-adapter');
+      aid.installBow('localstorage', 'ember-localstorage-adapter');
     }  
   },
 
@@ -56,7 +56,7 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
     },
     localStorage: function () {
       if (!selected('localstorage')) return;
-      
+      aid.info('no localstorage pkg integrated');
       // this.composeWith('ember-config:localstorage');
     }  
   }

@@ -48,6 +48,14 @@ For more on Yeoman: [Getting Started Guide](https://github.com/yeoman/yeoman/wik
 
 The generator should be used right after you have created an _ember-cli_ based *Ember* application. Use this generator to setup your basic app infrastructure.
 
+### TODO
+
+Always use `App` as the application namespace as per the ember-cli namespace/filename conventions. 
+
+Since main Ember application file is `app/app.js` it must be `App`.
+
+Ensure latest `string-mutator` is published and can be referenced correctly from *ember-config* generator ;)
+
 ### Guide
 
 The generator will start with the following:

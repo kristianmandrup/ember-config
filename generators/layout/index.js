@@ -2,6 +2,9 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var helper = require ('../../lib/aid');
+var aid;
+require('sugar');
 
 var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
   initializing: function () {
@@ -10,14 +13,14 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
 
   // Choose test framework
   prompting: {
-    first: function () {
+    popular: function () {
       var done = this.async();
 
       var prompts = [{
         type: 'list',
         name: 'layout',
         message: 'Choose a popular layout framework',
-        choices: ['bootstrap', 'foundation', 'ink', 'pure', 'brick', 'gumby', 'other'],
+        choices: ['bootstrap', 'foundation', 'ink', 'pure', 'brick', 'gumby', '*alternative*'],
         default: 'bootstrap'
       }];
 
@@ -27,28 +30,8 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
         done();
       }.bind(this));
     },
-
-    second: function () {
-      if (!this.layout == 'other') return;
-
-      var prompts = [{
-        type: 'list',
-        name: 'layout',
-        message: 'Choose an alternative layout framework',
-        choices: ['semantic-ui', 'flat-ui', 'ui-kit', 'bootflat' , 'cascade', 'skeleton'],
-        default: 'semantic-ui'
-      }];  
-
-      this.prompt(prompts, function (props) {
-        this.layout = props.layout;
-
-        done();
-      }.bind(this));
-    }  
-
-    // semantic-ui
-    // <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.12.0/css/semantic.min.css ">   
   },
+
   writing: {
   },
 
@@ -61,9 +44,12 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
         break;  
       case 'foundation':
         this.composeWith('ember-config:foundation');
-        break;  
-      default:
-        aid.warning('Generator not yet implemented for : ' + this.layout);
+        break;
+      case '*alternative*':
+        this.composeWith('ember-config:altlayout');
+        break;
+      default:        
+        aid.info("Sorry! Generator for " + this.layout + ' has yet to be implemented...');
     }    
   }
 

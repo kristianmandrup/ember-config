@@ -4,13 +4,13 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper    = require('../../lib/aid');
 var aid;
-var selected;
+var selected, isAuthSelected;
 
 var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    selected        = aid.containsSelector(this, 'adapter');
-    isAuthSelected  = aid.isSelector(this, 'auth'); 
+    selected        = aid.eqSelector(this, 'adapter');
+    isAuthSelected  = aid.yesSelector(this, 'auth'); 
   },
 
   // TODO: fireplace - rewrite models (auto search/replace!)
@@ -75,38 +75,50 @@ var EmberConfigFirebaseGenerator = yeoman.generators.Base.extend({
   },
 
   install: {    
-    emberFire: {
+    emberFire: function() {
       if (!selected('emberfire')) return;
 
       // https://www.npmjs.org/package/ember-cli-emberfire
       aid.install('emberfire');
-      // run generator
-      aid.generate('emberfire');
     },
 
-    fireplace: {
+    fireplace: function() {
       if (!selected('fireplace')) return;
 
       // http://jaketrent.com/post/convert-app-from-emberfire-to-fireplace/
-      aid.install('fireplace');
+      // aid.installNpm('fireplace');
+      aid.info('Sorry! not yet sure how to auto-install "fireplace"')
 
+      aid.bold('Please read: http://jaketrent.com/post/convert-app-from-emberfire-to-fireplace');
+      aid.thinline();
       // add ember-inflector
       // https://github.com/stefanpenner/ember-inflector
-      aid.installNpm('ember-inflector');
+      aid.info('Sorry! not yet sure how to auto-install "ember-inflector"')
+      aid.bold('You may get a recent (Mar 2014) build here: https://gist.github.com/jaketrent/9621891');
+      // aid.installNpm('ember-inflector');
 
       // Remove ember-data
-      aid.uninstallNpm('ember-data');
+      // aid.uninstallNpm('ember-data');
+      aid.bold('Also remember to remove ember-data if you use decide to use the fireplace adapter');
     }
-  }
+  },
 
   end: {
     rewriteModelsFireplace: function () {
       if (!selected('fireplace')) return;
 
-      aid.info('Remember to rewrite your models...');
+      aid.info('Ember-data comes bundled with ember-inflector. But, now that ember-data is gone, we need to fetch this library separately.');
+      aid.info('This is the library responsible for inferring types in your models based on property names.');
+      aid.info('To get it, you’ll need the ember-inflector source.');
+      aid.info('You’ll notice that there isn’t a nice package built for you.'); 
+      aid.info('Instead, you’ll have to build it with Ruby tools.')
+      aid.bold('git clone git@github.com:stefanpenner/ember-inflector.git');
+      aid.thinline();
+
+      aid.bold('Also remember to rewrite your models...');
       aid.info('DS.Model becomes FP.Model. DS.attr becomes FP.attr');
     },
-    emberFire: {
+    emberFireAuth: function() {
       if (!selected('emberfire')) return;
       if (isAuthSelected())
         this.composeWith('ember-config:emberfireauth');

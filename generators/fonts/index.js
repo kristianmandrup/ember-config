@@ -67,17 +67,15 @@ var EmberConfigFontsGenerator = yeoman.generators.Base.extend({
       aid.info('Ninja SASS tricks. Read the last section "Get your SASS on" in part 3 :)');
       aid.info('See this gist: https://gist.github.com/chippper/6157025');
     }
-  }
+  },
 
   writing: {
     // see: https://github.com/kiwiupover/ember-weather/tree/master/public/assets/fonts
     // https://github.com/kiwiupover/ember-weather/blob/master/app/styles/_icons.scss
     iconFont: function () {
       if (!selected('iconfont')) return;
+      aid.info('Please help iconfont support in the generator'); 
     },
-  },
-
-  default: {
     fontelloInfo: function () {
       if (!selected('fontello')) return;
 
@@ -101,10 +99,12 @@ var EmberConfigFontsGenerator = yeoman.generators.Base.extend({
       aid.info('To import css from node_modules, use: https://www.npmjs.org/package/npm-css');
       aid.info('build css file: npm-css /node_modules/puse-icons-feather/feather.css -o app/styles/feather.css')
       aid.install('puse-feather', 'puse-icons-feather');      
-    }
+    },
 
     installIconFont: function () {
+      if (!selected('iconfont')) return;
       // no such installer...
+      aid.info('No iconfont installer exists')
     }
   }
 });
