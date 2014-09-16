@@ -1,1 +1,0 @@
-// http://nytimes.github.io/pourover/
