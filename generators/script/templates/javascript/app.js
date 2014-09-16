@@ -4,9 +4,9 @@ import loadInitializers from 'ember/load-initializers';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
-var App = Ember.Application.extend({
+var <%= appName %> = Ember.Application.extend({
   modulePrefix: '<%= appname %>', // TODO: loaded via config
   Resolver: Resolver
 });
 
-loadInitializers(App, '<%= appname %>');
+loadInitializers(<%= appName %>, '<%= appname %>');

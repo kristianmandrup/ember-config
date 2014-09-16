@@ -7,14 +7,38 @@ var helper = require ('../../lib/aid');
 var aid;
 require('sugar');
 
+var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+var appNamer = function(ctx) {
+  return function(name) {
+    if (!name) {
+      name = pjson.name;
+      if (!name)
+          throw new Error("Missing name in package.json");
+    } 
+    this.appname = name;
+    this.appName = this._.classify(this.appname);      
+  }
+}
+
+var setAppName;
+
 var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);    
+
+    setAppName = appNamer(this);
   },
   prompting: function () {
     var done = this.async();
 
     var prompts = [{
+      type: 'list',
+      name: 'appname',
+      message: 'Choose your Application namespace',
+      choices: ['App', this.appName],
+      default: 'App'
+    },{
       type: 'list',
       name: 'script',
       message: 'Choose your scripting language:',
@@ -36,6 +60,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
         };
       };      
 
+      setAppName(props.appname);
       this.script   = props.script;
       this.fileExt  = calcFileExt(props.script);
 

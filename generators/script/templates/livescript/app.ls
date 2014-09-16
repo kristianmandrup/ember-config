@@ -4,10 +4,10 @@
 
 Ember.MODEL_FACTORY_INJECTIONS = true
 
-App = Ember.Application.extend do
+<%= appName %> = Ember.Application.extend do
   modulePrefix: '<%= appname %>'
   Resolver: Resolver
 
-loadInitializers App, '<%= appname %>'
+loadInitializers <%= appName %>, '<%= appname %>'
 
-``export default App;``
+``export default <%= appName %>;``

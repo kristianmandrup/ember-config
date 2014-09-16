@@ -11,16 +11,6 @@ var sass_file = require('../../lib/sass_file');
 var aid;
 var selected, cssSelected;
 
-var prependFile = function(fileName, prependTxt) {
-  var content = readFile(fileName);
-  writeFile(fileName, prependTxt.concat(prependTxt));
-}
-
-// TODO: Somehow check if app is using SASS
-var usingSass = function (ctx) {
-  true;
-}
-
 var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);

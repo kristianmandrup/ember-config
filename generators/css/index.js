@@ -11,13 +11,6 @@ var selected, isSelected;
 
 var EmberConfigCssGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-    var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-    
-    this.appname = pjson.name;
-    if (!this.appname)
-        throw new Error("Missing name in package.json");
-
-    this.appName = this._.classify(this.appname);
     aid = helper(this);
 
     selected = aid.matchSelector(this, 'css');
