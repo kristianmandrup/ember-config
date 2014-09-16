@@ -6,40 +6,38 @@ var helper = require ('../../lib/aid');
 var aid;
 
 var broc_file = require ('../../lib/broc_file');
+require('sugar')
 
 var componentList = function(components) {
-  var allIndex = components.indexOf('all');
-  if (allIndex > -1) {
-    components.splice(allIndex, 1);
-  }
-  return components.join(',');
+  if (aid.contains(components, 'all')) {
+    components = allComponents;
+  } 
+  return components.map(function(c) { return "'bs-" + c + "'"; }).join(',');
 }
+
+var allComponents = ['alert', 'badge', 'bind-tooltip', 
+  'breadcrumbs', 'button', 'btn-group', 'flip-switch',
+  'label', 'list-group', 'modal', 'notifications', 'page-header',         
+  'panel', 'pills', 'progress', 'tabs', 'tabs-panes', 
+  'well', 'wizard'
+]
 
 var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-
-    this.all_components = ['alert', 'badge', 'bind-tooltip', 
-      'breadcrumbs', 'button', 'btn-group', 'flip-switch',
-      'label', 'list-group', 'modal', 'notifications', 'page-header',         
-      'panel', 'pills', 'progress', 'tabs', 'tabs-panes', 
-      'well', 'wizard'
-    ]
   },
 
   prompting: function () {
     var done = this.async();
 
+    var choices = allComponents.slice(0);
+    choices.unshift('all');
+
     var prompts = [{
       type: 'checkbox',
       name: 'bsComponents',
       message: 'Choose your bootstrap components to include',
-      choices: ['all', 'alert', 'badge', 'bind-tooltip', 
-        'breadcrumbs', 'button', 'btn-group', 'flip-switch',
-        'label', 'list-group', 'modal', 'notifications', 'page-header',         
-        'panel', 'pills', 'progress', 'tabs', 'tabs-panes', 
-        'well', 'wizard'
-      ],
+      choices: choices,
       default: ['all']
     }];
 
@@ -58,11 +56,12 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
       if (bsComponents) {
         var components = componentList(bsComponents);
         var ctx = {components: components};
-        var replaceJs = this.engine('Brocfile_bs_components.js', ctx);
+        var template = this.read('Brocfile_bs_components.js');
+        var replaceJs = this.engine(template, ctx);
 
         // TODO: warn if 'new EmberApp()' is not empty!
         broc_file(function() {
-          this.first(/new EmberApp\(.*\);/).replaceWith(replaceJs);
+          return this.first(/new EmberApp\(.*\);/).replaceWith(replaceJs);
         }).write();        
       }
     },
