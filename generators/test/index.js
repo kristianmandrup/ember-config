@@ -45,8 +45,13 @@ var EmberConfigTestGenerator = yeoman.generators.Base.extend({
       // https://github.com/jakecraige/ember-cli-qunit
       aid.install('qunit');  
 
-      if (this.generate)
+      if (this.generate) {
+        if (aid.hasBower('ember-qunit')) {
+          aid.info('skip generate: already has qunit browser packages installed');
+          return;
+        }
         this.spawnCommand('ember', ['generate', 'ember-cli-qunit']);
+      }        
     }
 
   }

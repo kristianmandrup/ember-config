@@ -3,11 +3,13 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var sm = require('string-mutator');
+var broc_file = require ('../../lib/broc_file');
 require('sugar');
 
 var helper    = require('../../lib/aid');
 var sass_file = require('../../lib/sass_file');
 var aid;
+var selected, cssSelected;
 
 var prependFile = function(fileName, prependTxt) {
   var content = readFile(fileName);
@@ -21,7 +23,9 @@ var usingSass = function (ctx) {
 
 var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-
+    aid = helper(this);
+    selected    = aid.containsSelector(this, 'bootstrapFeatures');
+    cssSelected = aid.containsSelector(this, 'cssType'); 
   },
 
   // Choose test framework
@@ -34,7 +38,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       name: 'cssType',
       message: 'Which styling language for bootstrap would you like?',
       choices: ['less', 'sass'],
-      default: 'css'
+      default: ['css']
     }, {
       type: 'checkbox',
       name: 'bootstrapFeatures',
@@ -44,7 +48,8 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (props) {
-      this.parts = props.parts;
+      this.cssType = props.cssType;
+      this.bootstrapFeatures = props.bootstrapFeatures;
 
       done();
     }.bind(this));
@@ -53,28 +58,31 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   writing: {
 
     configureBootstrapCss: function () {          
-      if (!contains(this.bootstrapFeatures, 'css')) return;
-
-      if (usingSass()) {
+      if (cssSelected('sass')) {
         // http://www.octolabs.com/blogs/octoblog/2014/05/10/ember-cli-broccoli-bootstrap-sass-part-2/
         sass_file.app(function() {
           this.prependTxt("@import 'vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';");
-        })
+        });
+        aid.info('bootstrap for sass configured');
       } else {     
         var css_import = "app.import('bower_components/bootstrap/dist/css/bootstrap.css');\n";
+
         broc_file(function() {
-          this.before('module.exports').prepend(css_import);  
-        }
+          return this.before('module.exports').prependTxt(css_import);
+        }).write();
+
+        aid.info('bootstrap for css configured');
       }            
     },
 
     configureBootstrapJs: function () {  
-      if (!contains(this.bootstrapFeatures, 'javascript')) return;
+      if (!selected('javascript')) return;
       
       var js_import = "app.import('vendor/bootstrap/dist/js/bootstrap.js');";   
       broc_file(function() {
-        this.before('module.exports').prepend(js_import);  
-      }
+        return this.before('module.exports').prependTxt(js_import);  
+      }).write();
+      aid.info('bootstrap js configured');
     },
 
     // TODO: Move to fonts generator as an option 
@@ -82,30 +90,30 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
 
     // http://www.octolabs.com/blogs/octoblog/2014/05/25/bootstrap-glyphicons-with-ember-cli/
     configureBootstrapFonts: function () {    
-      if (!contains(this.bootstrapFeatures, 'fonts')) return;  
+      if (!selected('fonts')) return;  
 
       var replaceStr = aid.fileContent('/templates/merge-bootstrapFonts.js');
 
       broc_file(function() {
-        this.last(/module\.exports = mergeTrees\(.*\);/).replaceWith(replaceStr);  
-      }
+        return this.last(/module\.exports = mergeTrees\(.*\);/).replaceWith(replaceStr);  
+      }).write();
 
       // referenced from main Brocfile :)
       this.copy('brocs/bootstrap_fonts.js');
+      aid.info('bootstrap font glyphs configured');
     }
   },
 
   install: {
     installBootstrap: function () {
-      if (!contains(this.layout, 'bootstrap')) return;
+      if (this.bootstrapFeatures.length == 0) return;
 
-      var bootstrapNpm = usingSass() ? 'bootstrap-sass-official' : 'bootstrap';
+      var bootstrapNpm = cssSelected('sass') ? 'bootstrap-sass-official' : 'bootstrap';
+
       aid.install(bootstrapNpm);
+      aid.success('Bootstrap (' + this.cssType + ') successfully installed with: ' + this.bootstrapFeatures.join(', '))
     }
   },
-
-  end: function () {
-  }
 });
 
 module.exports = EmberConfigBootstrapGenerator;
