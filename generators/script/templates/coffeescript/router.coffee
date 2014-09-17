@@ -1,7 +1,7 @@
 `import Ember from 'ember'`
 
 Router = Ember.Router.extend
-  location: <%= appname %>ENV.locationType
+  location: <%= appName %>ENV.locationType
 
 Router.map ->
 

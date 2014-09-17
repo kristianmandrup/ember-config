@@ -7,8 +7,15 @@ var fs      = require('fs-extra');
 var helper = require ('../../lib/aid');
 var aid;
 require('sugar');
+var avoidWrites;
 
 var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+var avoider = function(ctx) {
+  return function() {
+    return aid.allFilesExist(ctx.scriptFiles) && !ctx.overwrite;
+  }
+}
 
 // TODO: Should use some other way, like reading it via Yeoman User settings
 // or some other project config file
@@ -30,27 +37,31 @@ var selected;
 var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);    
-
+    avoidWrites = avoider(this);
     selected = aid.eqSelector(this, 'script');
+
+    // always use 'App' as per ember-cli convention. 
+    // Makes it much easier to "play around" with app code ;)
     setAppName = appNamer(this);
-    setAppName();
+    setAppName('App');
+
   },
   prompting: function () {
     var done = this.async();
 
     var prompts = [{
       type: 'list',
-      name: 'appname',
-      message: 'Choose your Application namespace',
-      choices: ['App', this.appName],
-      default: 'App'
-    },{
-      type: 'list',
       name: 'script',
       message: 'Choose your scripting language:',
       choices: ['javascript', 'coffeescript', 'livescript', 'emberscript'],
       default: 'javascript'
-    }];
+    }, {
+      type: 'confirm',
+      name: 'overwrite',
+      message: 'Overwrite any existing files?',
+      default: true
+    }
+    ];
 
     this.prompt(prompts, function (props) {
       var calcFileExt = function(scriptName) {
@@ -68,6 +79,8 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
 
       setAppName(props.appname);
       this.script   = props.script;
+      this.overwrite = props.overwrite;
+
       this.fileExt  = calcFileExt(props.script);
 
       this.appFile    = 'app/app.' + this.fileExt;
@@ -80,7 +93,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
 
   writing: {
     removeOldFiles: function() {
-      if (aid.allFilesExist(this.scriptFiles)) return;
+      if (avoidWrites()) return;
       aid.thinline();
 
       aid.bold('Removing old script files');
@@ -91,7 +104,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
 
     copyFiles: function () {
       if (selected('emberscript')) return;
-      if (aid.allFilesExist(this.scriptFiles)) return;
+      if (avoidWrites()) return;
 
       aid.thinline();
       aid.bold('Adding new script files (' + this.script + ')');
@@ -99,16 +112,17 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
       var app     = aid.fileExists(this.appFile);
       var router  = aid.fileExists(this.routerFile);
 
-      if (!app)
+      if (!app || this.overwrite)
         aid.templateFile('app');
-      if (!router) 
+      if (!router || this.overwrite) 
         aid.templateFile('router');
     }
   },
 
   default: {
     uninstallOld: function() {
-      this.log('\nAt the moment Ember CLI (0.0.44) does not support multiple js preprocessors (i.e. you will not be able to use coffeescript and livescript addons at the same time). The patch that adds this functionality is to be added into one of the future versions.');
+      this.log('\nAt the moment Ember CLI (0.0.44) does not support multiple js preprocessors.');
+      this.log('This is to be added in a future version ;)')
       aid.thinline();
       if (!aid.hasAnyNpm(['ember-cli-coffeescript', 'ember-cli-livescript', 'broccoli-ember-script'])) {
         aid.info("no other script compilers present :)\n");
@@ -152,9 +166,11 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
       switch (this.script) {
         case 'emberscript':
           this.log('See: https://github.com/ghempton/ember-script/');
+          aid.thinline();
           this.log('Emberscript editor support:');
           this.log('https://github.com/asux/sublime-ember-script');
-          this.log('* Please donate to or help with EmberScript to advance the project *');
+          aid.thinline();
+          aid.bold('* Please donate to (or help) with EmberScript to advance the project *');
           break;
         case 'livescript':
           this.log('See: livescript.net');

@@ -56,7 +56,7 @@ var EmberConfigEmberFireAuthGenerator = yeoman.generators.Base.extend({
       this.mkdir('app/initializers');
       this.template('auth_init.js', 'app/initializers/auth.js');
 
-      this.template('session_controller.js', 'app/controllers/session_controller.js');
+      this.template('session_controller.js', 'app/controllers/session.js');
 
       var indexRoute = 'app/routes/index.js';
       if(!aid.fileExists(indexRoute))

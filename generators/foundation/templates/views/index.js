@@ -1,4 +1,4 @@
-<%= appname %>.IndexView = Ember.View.extend({
+<%= appName %>.IndexView = Ember.View.extend({
   // Navbar
   didInsertElement: function() {
     this.$().foundation('topbar');

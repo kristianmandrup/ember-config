@@ -7,7 +7,6 @@
 // http://dhartweg.roon.io/foundation-5-sliders-in-dropdowns-using-emberjs
 // https://coderwall.com/p/azjwaq
 
-
 'use strict';
 var util = require('util');
 var path = require('path');
@@ -47,7 +46,7 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
       this.cssType = props.cssType;
       this.features = props.bootstrapFeatures;
 
-      // TODO: replace with real app name!
+      // ember-cli convention ;)
       this.appName = 'App';
 
       done();

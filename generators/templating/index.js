@@ -11,7 +11,7 @@ var selected;
 var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    selected = aid.containsSelector(this, 'fonts');
+    selected = aid.eqSelector(this, 'templating');
   },
 
   prompting: function () {
@@ -62,10 +62,10 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
     installEmblem: function () {
       if (!selected('emblem')) return
       
-      aid.install('emblem', 'broccoli-emblem-compiler');
+      // aid.install('emblem', 'broccoli-emblem-compiler');
 
       // TODO: https://www.npmjs.org/package/ember-cli-emblem
-      // aid.install('emblem');
+      aid.install('emblem');
 
       // uninstall handlebars?
       if (this.uninstall)
