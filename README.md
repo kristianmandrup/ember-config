@@ -73,9 +73,10 @@ Additionally, the following configurators can be chosen:
 - Test (qunit)
 - Adapters (firebase)
 - Fonts (awesome)
-- Components
+- Components (ember, bootstrap)
 - Mobile (cordova)
-- Auth (simple)
+- Auth (simple-auth)
+- Addons (pagination, forms, ...)
 - Libs (TODO)
 
 The App config generator will invoke a sub-generator for each.
@@ -173,6 +174,17 @@ Adds font libraries
 ### Mobile
 
 - cordova
+
+### Addons
+
+- forms
+- i18n
+- pagination
+- auto-properties
+- table
+- data factory
+- 
+
 
 ## Design
 

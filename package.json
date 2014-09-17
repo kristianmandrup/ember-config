@@ -33,7 +33,8 @@
     "firebase",
     "auth",
     "bootstrap",
-    "foundation"
+    "foundation",
+    "adddons"
   ],
   "dependencies": {
     "sync": "^0.2.3",

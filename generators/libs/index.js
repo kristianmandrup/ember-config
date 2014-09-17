@@ -20,7 +20,9 @@ var EmberConfigLibsGenerator = yeoman.generators.Base.extend({
       type: 'list',
       name: 'libs',
       message: 'Which libraries would you like to include?',
-      choices: ['pour-over'],
+      // Waiting for npm/bower : https://github.com/NYTimes/pourover/pull/38
+      // 'pour-over'
+      choices: [],
       default: []
     }];
 
