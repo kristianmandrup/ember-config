@@ -6,10 +6,12 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require ('../../lib/aid');
 var aid;
+var selected;
 
 var EmberConfigLibsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
+    selected = aid.containsSelector(this, 'libs');
   },
 
   prompting: function () {
@@ -17,12 +19,11 @@ var EmberConfigLibsGenerator = yeoman.generators.Base.extend({
 
     // TODO: add list of test frameworks to choose from when available...
     var prompts = [{
-      type: 'list',
+      type: 'checkbox',
       name: 'libs',
       message: 'Which libraries would you like to include?',
       // Waiting for npm/bower : https://github.com/NYTimes/pourover/pull/38
-      // 'pour-over'
-      choices: [],
+      choices: ['pour over'],
       default: []
     }];
 
@@ -36,10 +37,12 @@ var EmberConfigLibsGenerator = yeoman.generators.Base.extend({
   writing: {
   },
 
-  install: {
+  install: function() {
+    if (selected('pour over'))
+      aid.install('pour over', 'git://github.com/NYTimes/pourover.git');
   },
   end: function() {
-    aid.info('Sorry! No libs supported yet ;)')
+    aid.info('Please add more useful libs to the mix ;)')
   }
 });
 
