@@ -6,9 +6,15 @@
 
 Use this generator to quickly setup your *ember-cli* based *Ember* project :)
 
-Limit the buggy copy/paste needed to setup asset compilers, layout frameworks etc.!
+*Limit*
 
-Enjoy! (and please help out improve/add sub-generators!)
+- Copy/paste to configure your project for asset compilers etc.
+- Having to hunt down which `npm` or `bower` commands to execute
+- Having to manually link all the pieces correctly together in various files
+
+*Configure and Enjoy!!*
+
+_Please help out improve/add sub-generators!_
 
 ### Install Yeoman
 
@@ -32,7 +38,7 @@ yo ember-config
 
 To use the the generator directly from github, do the following:
 
-```
+```bash
 git clone https://github.com/kristianmandrup/ember-config.git
 cd ember-config
 npm link
@@ -48,14 +54,6 @@ For more on Yeoman: [Getting Started Guide](https://github.com/yeoman/yeoman/wik
 
 The generator should be used right after you have created an _ember-cli_ based *Ember* application. Use this generator to setup your basic app infrastructure.
 
-### TODO
-
-Always use `App` as the application namespace as per the ember-cli namespace/filename conventions. 
-
-Since main Ember application file is `app/app.js` it must be `App`.
-
-Ensure latest `string-mutator` is published and can be referenced correctly from *ember-config* generator ;)
-
 ### Guide
 
 The generator will start with the following:
@@ -66,20 +64,27 @@ The generator will start with the following:
 
 By default the following are selected: 
 
-- Scripts (coffee, livescript, ...)
-- CSS (less, sass, compass, ...)
+- Script (javascript, coffeescript, livescript)
+- CSS (css, less, sass, compass)
 - Templating (handlebars, emblem)
+- Layout (bootstrap, foundation, ...)
 
-The App config generator will invoke a sub-generator for each configuration chosen in the main menu :)
+Additionally, the following configurators can be chosen:
+- Test (qunit)
+- Adapters (firebase)
+- Fonts (awesome)
+- Components
+- Mobile (cordova)
+- Auth (simple)
+- Libs (TODO)
 
-Note: Currently only the pre-selected options have a fully functional sub-generator. Please help fill in the gaps!
+The App config generator will invoke a sub-generator for each.
+Some of these sub-generators in turn invokes more sub-generators depending on
+your configuration and selections ;)
 
 ### Scripting language
 
-If you choose a scripting language other than javascript, a precompiler for
-that language will be installed which precompiles to javascript.
-
-Note: The existing main `app` and `router` files will be replaced.
+Installs a javascript precompiler of your choice.
 
 - javascript (none - default)
 - coffeescript
@@ -88,7 +93,7 @@ Note: The existing main `app` and `router` files will be replaced.
 
 ### CSS precompilers
 
-Installs a precompiler of your choice. The precompiler will compile to CSS.
+Installs a CSS precompiler of your choice.
 
 - CSS (none - default)
 - LESS
@@ -104,26 +109,29 @@ Installs a templating framework of your choice
 
 ### Layout
 
-Installs a layout framework
+Installs a layout framework of your choice
 
 - Twitter Bootstrap
 - Zurb Foundation
 - Ink
 - Pure
-- Brick
 - Gumby
-- Other
+- *alternative*
 
-Alternative layout frameworks:
+*Alternative layout frameworks*
 
-- semantic-ui
-- flat-ui
-- ui-kit
-- bootflat
-- cascade
-- skeleton
+- Semantic UI
+- Flat UI (bootstrap theme)
+- Brick (web components!?)
 
-You are welcome to add your own generator and invoke it from here ;)
+(TODO)
+- UI-kit
+- Bootflat
+- Cascade
+- Skeleton
+- more... ??
+
+Note: You are most welcome to add your own layout generator and invoke it from here ;)
 
 ### Components
 
@@ -132,6 +140,8 @@ Adds a component library
 - Bootstrap for ember
 - Ember components
 
+TODO: Add more components (and component libs) ;)
+
 ### Adapters
 
 Adds and configures an adapter for data storage/retrieval
@@ -139,20 +149,30 @@ Adds and configures an adapter for data storage/retrieval
 - firebase
     + emberfire
     + fireplace
-- local storage
+- local storage (TODO)
 
 ### Auth
 
 Adds authentication
 
 - simple auth
+- others (TODO)
 
 ### Fonts
 
 Adds font libraries
 
 - Font awesome
-- Icon font
+- others (TODO)
+
+### Test
+
+- Qunit
+- others (TODO: when alternative test adapters are available)
+
+### Mobile
+
+- cordova
 
 ## Design
 
@@ -161,7 +181,7 @@ Adds font libraries
 
 And many more...
 
-## User config
+## User config (TODO)
 
 Storing user configuration options and sharing them between sub-generator is a common task. For example, it is common to share preferences like the language (does the user use CoffeeScript?), style options (indenting with spaces or tabs), etc.
 

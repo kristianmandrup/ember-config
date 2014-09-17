@@ -36,9 +36,9 @@ var EmberConfigGenerator = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'checkbox',
       name: 'configs',
-      message: 'Select configurations',
+      message: 'Select configurations:',
       choices: availableConfigs,
-      default: availableConfigs.slice(0, 3)
+      default: availableConfigs.slice(0, 4)
     }];
 
     this.prompt(prompts, function (props) {

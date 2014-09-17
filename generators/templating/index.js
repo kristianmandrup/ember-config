@@ -66,6 +66,7 @@ var EmberConfigTemplatingGenerator = yeoman.generators.Base.extend({
 
       // TODO: https://www.npmjs.org/package/ember-cli-emblem
       aid.install('emblem');
+      aid.bold('Note: The emblem addon will have blueprints included shortly ;)');
 
       // uninstall handlebars?
       if (this.uninstall)

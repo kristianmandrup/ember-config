@@ -60,8 +60,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
       name: 'overwrite',
       message: 'Overwrite any existing files?',
       default: true
-    }
-    ];
+    }];
 
     this.prompt(prompts, function (props) {
       var calcFileExt = function(scriptName) {

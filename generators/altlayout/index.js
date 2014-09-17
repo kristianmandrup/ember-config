@@ -11,7 +11,6 @@ var EmberConfigAltLayoutGenerator = yeoman.generators.Base.extend({
     aid = helper(this);
   },
 
-  // Choose test framework
   prompting: {
     alternative: function () {
       var done = this.async();
@@ -20,8 +19,9 @@ var EmberConfigAltLayoutGenerator = yeoman.generators.Base.extend({
         type: 'list',
         name: 'layout',
         message: 'Choose an alternative layout framework',
-        choices: ['semantic-ui', 'flat-ui', 'ui-kit', 'bootflat' , 'cascade', 'skeleton'],
-        default: 'semantic-ui'
+        // TODO: 'ui-kit', 'bootflat' , 'cascade', 'skeleton'
+        choices: ['flat-ui', 'brick'], 
+        default: 'flat-ui'
       }];  
 
       this.prompt(prompts, function (props) {
@@ -41,7 +41,19 @@ var EmberConfigAltLayoutGenerator = yeoman.generators.Base.extend({
   install: {
   },
   end: function () {
-    aid.info('Sorry! generator for layout framework ' + this.layout + ' not yet implemented...');
+    switch (this.layout) {
+      case 'semantic-ui':
+        this.composeWith('ember-config:semanticui');
+        break;  
+      case 'flat-ui':
+        this.composeWith('ember-config:flatui');
+        break;   
+      case 'brick':
+        this.composeWith('ember-config:brick');
+        break;                   
+      default:        
+        aid.info('Sorry! generator for layout framework ' + this.layout + ' not yet implemented...');
+    }    
   }
 });
 
