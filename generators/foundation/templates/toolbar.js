@@ -7,7 +7,7 @@ slider.on('mouseup.fndtn.slider touchend.fndtn.slider pointerup.fndtn.slider', f
   $(e.target.parentElement).children('input[type=hidden]').trigger("change");
 });
 
-<%= appName %>.ToolbarView = Ember.View.extend({
+export default = Ember.View.extend({
   didInsertElement: function() {
     // making sure the slider reflows after its dropdown is made visible the first time
     var dropdown = this.$('div .f-dropdown.content');

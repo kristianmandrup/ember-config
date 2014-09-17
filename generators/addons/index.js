@@ -39,8 +39,12 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'addons',
       message: 'Which addons would you like to add?',
-      choices: ['forms', 'list view', 'i18n', 'pagination', 'table', 'auto-properties', 'data-factory'],
-      default: ['forms']
+
+      // TODO: split up into categoreis: Model, View, Util
+      choices: ['i18n', 'pagination', 
+        'auto-properties', 'data-factory', 'velocity', 'validations', 
+        'date helpers', 'notify'],
+      default: ['i18n']
     }];
 
     this.prompt(prompts, function (props) {
@@ -54,29 +58,33 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
   },
 
   install: function() {
-    if (selected('forms'))
-      aid.installBow('forms', 'ember-forms');
-    
-    if (selected('list view'))
-      aid.installBower('list-view');
-
     if (selected('i18n'))    
-      aid.installBow('i18n', 'ember-i18n');
-
-    if (selected('table'))    
-      aid.installBow('table', 'ember-table');
+      aid.install('i18n', 'ember-i18n');
 
     if (selected('auto-properties'))    
-      aid.installBow('auto-properties', 'ember-auto');
+      aid.install('auto-properties', 'ember-auto');
 
     if (selected('data-factory'))    
-      aid.installBow('data-factory', 'ember-data-factory');
+      aid.install('data-factory', 'ember-data-factory');
 
-    // npm
+    if (selected('velocity'))    
+      aid.install('velocity');
+
+    if (selected('validations'))    
+      aid.install('validations', 'ember-validations');
+
+    if (selected('date helpers'))          
+      aid.install('dates');
+
+    // https://www.npmjs.org/package/ember-notify
+    if (selected('notify'))          
+      aid.install('notify', 'ember-notify');
+
     if (selected('pagination'))        
       aid.install('pagination');    
   },
   end: function() {
+    aid.info('Please also add support for ember-easyForms ;)')
   }
 });
 

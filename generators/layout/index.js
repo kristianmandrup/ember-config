@@ -52,15 +52,15 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
       aid.info('Ink configured');      
     },
     pure: function () {
-      if (!selected('pure')) return;
+      // if (!selected('pure')) return;
 
-      var css_import = "app.import('bower_components/ink/build/pure.css');";
+      // var css_import = "app.import('bower_components/ink/build/pure.css');";
 
-      if (this.brocFileContent.has(css_import)) return;
+      // if (this.brocFileContent.has(css_import)) return;
 
-      broc_file(function() {
-        return this.last('module.exports').prepend(css_import + '\n');
-      }).write();
+      // broc_file(function() {
+      //   return this.last('module.exports').prepend(css_import + '\n');
+      // }).write();
 
       aid.info('Pure configured');      
     }
@@ -69,11 +69,14 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
   install: {
     ink: function () {
       if (!selected('ink')) return;
+      aid.bold('Please make an Ink addon similar to the one for pure (to avoid "polluting" the Brocfile)')
+      aid.bold('https://github.com/johnotander/ember-cli-pure');
+
       aid.installBower('ink');
     },
     pure: function () {
       if (!selected('pure')) return;
-      aid.installBower('pure');
+      aid.installBow('pure');
     }
   },
   end: function () {

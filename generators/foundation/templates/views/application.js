@@ -1,5 +1,4 @@
-<%= appName %>.ApplicationView = Ember.View.extend({
-  initFoundation: function () {
-      Ember.$(document).foundation();  
-  }.on('didInsertElement')
-});      
+import Ember from 'ember';
+import FoundationEnabled from 'ember-foundation/mixins/foundation-enabled';
+
+export default Ember.View.extend(FoundationEnabled);

@@ -4,12 +4,13 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require ('../../lib/aid');
 var aid;
-var selected;
+var selected, libSelected;
 
 var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    selected = aid.containsSelector(this, 'componentLib');
+    libSelected = aid.containsSelector(this, 'componentLibs');
+    selected = aid.containsSelector(this, 'components');
   },
 
   prompting: function () {
@@ -17,42 +18,64 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
 
     var prompts = [{
       type: 'checkbox',
-      name: 'componentLib',
+      name: 'componentLibs',
       message: 'Choose your components framework',
-      choices: ['bootstrap for ember', 'ember components'],
+      choices: ['bootstrap for ember', 'ember components', 'forms'],
       default: ['ember components']
+    }, {
+      type: 'checkbox',
+      name: 'components',
+      message: 'Choose individual components',
+      choices: ['date picker', 'list view', 'radio buttons', 'table'],
+      default: ['date picker']
     }];
 
     this.prompt(prompts, function (props) {
-      this.componentLib = props.componentLib;
+      this.componentLibs = props.componentLibs;
+      this.components = props.components;
 
       done();
     }.bind(this));
   },
 
   install: {
-    bootstrapComponents: function () {
-      if (selected('bootstrap for ember'))
+    componentsLibs: function () {
+      if (libSelected('bootstrap for ember'))
         aid.install('bootstrap');
-    },
-    emberComponents: function() {
-      if (selected('ember components'))
+      if (libSelected('ember components'))
         aid.install('components');  
-    }    
+
+    if (selected('forms'))
+      aid.installBow('forms', 'ember-forms');
+    },
+    components: function() {
+      // TODO: For some reason these are not yet published on npm ;()
+      if (selected('list view'))
+        aid.install('list view', 'git://github.com/emberjs/list-view.git');
+
+      if (selected('table'))    
+        aid.install('table', 'git://github.com/Addepar/ember-table.git');
+    
+      if (selected('radio buttons')) 
+        aid.install('radio buttons', 'ember-radio-buttons');
+
+      if (selected('date picker')) 
+        aid.install('date picker', 'ember-cli-datepicker');    
+    }       
   },
   end: {
     bootstrap: function() {
-      if (!selected('bootstrap for ember')) return;
+      if (!libSelected('bootstrap for ember')) return;
       this.composeWith('ember-config:bsember');
     },
     components: function() {
-      if (!selected('ember components')) return;      
+      if (!libSelected('ember components')) return;      
 
       // assumess install (see above)
       aid.success('You successfully installed Ember Components');
       aid.info('For docs, see: http://indexiatech.github.io/ember-components');
       aid.info('For more info on Ember Components, be sure to check: http://ember-components.com');    
-    }
+    },
   }
 });
 

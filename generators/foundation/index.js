@@ -35,6 +35,8 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
     // see mfeckie
     configureAppView: function () {
       var appView = 'app/views/application.js';
+
+      // TODO: allow overwrite option
       if (!aid.fileExists(appView)) {
         aid.info(appView + ' already exists (skipped)');
         return;
@@ -49,19 +51,19 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
       }
       this.copy('views/index.js', indexView);
     }
-
   },
 
   install: function () {
-    aid.install('foundation');
-
+    aid.install('foundation', 'ember-foundation');
+    aid.blueprint('ember-foundation');
   },
   end: function() {
     aid.success('Zurb Foundation successfully installed :)');
     aid.thickline();
+    this.log('https://github.com/joshforisha/ember-foundation');
     this.log('See: https://github.com/JDillon522/ember-foundation-fun')
 
-    // TODO: foundation blueprints?
+
   }
 });
 
