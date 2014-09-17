@@ -4,7 +4,6 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var broc_file = require ('../../lib/broc_file');
 var sass_file = require('../../lib/sass_file');
-
 require('sugar');
 
 var helper    = require('../../lib/aid');
@@ -17,6 +16,8 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     selected    = aid.containsSelector(this, 'features');
     cssSelected = aid.containsSelector(this, 'cssType'); 
     this.brocFileContent = aid.fileContent('Brocfile.js');
+
+    this.bowerDir = aid.bowerDir(); // for templates
   },
 
   // Choose test framework
@@ -53,7 +54,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       // http://www.octolabs.com/blogs/octoblog/2014/05/10/ember-cli-broccoli-bootstrap-sass-part-2/
       var sassFileContent = aid.fileContent('app/styles/app.scss');
 
-      var import_sass = "@import 'bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap';";
+      var import_sass = "@import '" + this.bowerDir + "/bootstrap-sass-official/assets/stylesheets/bootstrap';";
       if (sassFileContent.has(import_sass)) return;
 
       sass_file.app(function() {
@@ -64,7 +65,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     configureCss: function () {                
       if (cssSelected('sass')) return;
 
-      var css_import = "app.import('bower_components/bootstrap/dist/css/bootstrap.css');";
+      var css_import = "app.import('" + this.bowerDir + "/bootstrap/dist/css/bootstrap.css');";
 
       if (this.brocFileContent.has(css_import)) return;
 
@@ -78,7 +79,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     configureJs: function () {  
       if (!selected('javascript')) return;
       
-      var js_import = "app.import('bower_components/bootstrap/dist/js/bootstrap.js');";   
+      var js_import = "app.import('" + this.bowerDir + "/bootstrap/dist/js/bootstrap.js');";   
 
       if (this.brocFileContent.has(js_import)) return;
 
@@ -110,7 +111,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       }).write();
 
       // referenced from main Brocfile :)
-      this.copy('brocs/bootstrap_fonts.js');
+      this.template('brocs/bootstrap_fonts.js');
       aid.info('Bootstrap Font glyphs configured');
     }
   },

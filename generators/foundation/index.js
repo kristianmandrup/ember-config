@@ -55,15 +55,14 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
 
   install: function () {
     aid.install('foundation', 'ember-foundation');
-    aid.blueprint('ember-foundation');
   },
   end: function() {
     aid.success('Zurb Foundation successfully installed :)');
     aid.thickline();
     this.log('https://github.com/joshforisha/ember-foundation');
-    this.log('See: https://github.com/JDillon522/ember-foundation-fun')
-
-
+    this.log('See: https://github.com/JDillon522/ember-foundation-fun');
+    aid.info('Running ember-foundation blueprint...');
+    aid.blueprint('ember-foundation');
   }
 });
 

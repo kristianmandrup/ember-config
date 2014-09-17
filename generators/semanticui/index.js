@@ -5,6 +5,7 @@ var yeoman = require('yeoman-generator');
 var broc_file = require ('../../lib/broc_file');
 // var sass_file = require('../../lib/sass_file');
 require('sugar');
+var bowerDir = require('bower-directory').sync();
 
 var helper = require('../../lib/aid');
 var aid;
@@ -14,6 +15,7 @@ var EmberConfigSemanticUIGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     this.brocFileContent = aid.fileContent('Brocfile.js');
+    this.bowerDir = aid.bowerDir(); // for templates    
     // selected = aid.eqSelector(this, 'features');
   },
 
@@ -24,7 +26,7 @@ var EmberConfigSemanticUIGenerator = yeoman.generators.Base.extend({
   // https://github.com/Semantic-Org/Semantic-UI/blob/master/bower.json
   writing: {
     configureCss: function () {          
-      var css_import = "app.import('bower_components/semantic/build/packaged/css/semantic.css');";
+      var css_import = "app.import('" + this.bowerDir + "/semantic/build/packaged/css/semantic.css');";
 
       if (this.brocFileContent.has(css_import)) return;
 
@@ -38,7 +40,7 @@ var EmberConfigSemanticUIGenerator = yeoman.generators.Base.extend({
     configureJs: function () {  
       // if (!selected('javascript')) return;
       
-      var js_import = "app.import('bower_components/semantic/build/packaged/javascript/semantic.js');";   
+      var js_import = "app.import('" + this.bowerDir + "/semantic/build/packaged/javascript/semantic.js');";   
 
       if (this.brocFileContent.has(js_import)) return;
 

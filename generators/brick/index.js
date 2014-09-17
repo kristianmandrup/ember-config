@@ -13,6 +13,7 @@ var selected;
 var EmberConfigBrickGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
+    this.bowerDir = aid.bowerDir();
     this.brocFileContent = aid.fileContent('Brocfile.js');
   },
 
@@ -20,13 +21,13 @@ var EmberConfigBrickGenerator = yeoman.generators.Base.extend({
   writing: {
     configureWebComponents: function () {          
       aid.warning("Not sure if this is possible in Ember yet or how to add Web Components!!!");
-      aid.info("app.import('bower_components/brick/dist/brick.html');");
+      aid.info("app.import('" + this.bowerDir + "/brick/dist/brick.html');");
       aid.thickline();
       aid.log('Instead for now just add the following to your <head> in app/index.html');
-      aid.bold('<link rel="import" href="bower_components/brick/dist/brick.html">');
+      aid.bold('<link rel="import" href="' + this.bowerDir + '/brick/dist/brick.html">');
       return;
 
-      var wc_import = "app.import('bower_components/brick/dist/brick.html');";
+      var wc_import = "app.import('" + bowerDir + "/brick/dist/brick.html');";
 
       if (this.brocFileContent.has(wc_import)) return;
 
@@ -40,7 +41,7 @@ var EmberConfigBrickGenerator = yeoman.generators.Base.extend({
     configureJs: function () {  
       // if (!selected('javascript')) return;
       
-      var js_import = "app.import('bower_components/brick/dist/platform/platform.js');";   
+      var js_import = "app.import('" + this.bowerDir + "/brick/dist/platform/platform.js');";   
 
       if (this.brocFileContent.has(js_import)) return;
 

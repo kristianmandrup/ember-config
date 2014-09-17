@@ -27,7 +27,7 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     this.brocFileContent = aid.fileContent('Brocfile.js');
-
+    this.bowerDir = aid.bowerDir();
     // selected = aid.eqSelector(this, 'features');
   },
 
@@ -39,7 +39,7 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'confirm',
       name: 'less',
-      message: 'Do you want install the Less (CSS) version?',
+      message: 'Do you want install the Flat-UI LESS version?',
       default: false
     }];
 
@@ -59,7 +59,7 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
 
       var lessFileContent = aid.fileContent('app/styles/app.less');
 
-      var import_less = "@import 'bower_components/flat-ui/dist/css/flat-ui.less';";
+      var import_less = "@import '" + this.bowerDir + "/flat-ui/dist/css/flat-ui.less';";
       if (lessFileContent.has(import_less)) return;
 
       less_file.app(function() {
@@ -70,7 +70,7 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
     configureCss: function () {          
       if (this.less) return;
 
-      var css_import = "app.import('bower_components/flat-ui/dist/css/flat-ui.css');";
+      var css_import = "app.import('" + this.bowerDir + "/flat-ui/dist/css/flat-ui.css');";
 
       if (this.brocFileContent.has(css_import)) return;
 
@@ -84,7 +84,7 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
     configureJs: function () {  
       // if (!selected('javascript')) return;
       
-      var js_import = "app.import('bower_components/flat-ui/dist/js/flat-ui.js');";   
+      var js_import = "app.import('" + this.bowerDir + "/flat-ui/dist/js/flat-ui.js');";   
 
       if (this.brocFileContent.has(js_import)) return;
 
@@ -125,7 +125,7 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
     },
     installCompass: function () {      
       if (this.less) {
-        aid.bold('Please install Less via the CSS generator...');
+        aid.bold('Please install LESS via the CSS generator...');
         this.composeWith('ember-config:css');
       }       
     }    

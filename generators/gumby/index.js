@@ -20,6 +20,7 @@ var EmberConfigGumbyGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     this.brocFileContent = aid.fileContent('Brocfile.js');
+    this.bowerDir = aid.bowerDir();
   },
 
   // Choose test framework
@@ -44,7 +45,7 @@ var EmberConfigGumbyGenerator = yeoman.generators.Base.extend({
   // https://github.com/Semantic-Org/Semantic-UI/blob/master/bower.json
   writing: {
     configureCss: function () {          
-      var css_import = "app.import('bower_components/gumby/css/gumby.css');";
+      var css_import = "app.import('" + this.bowerDir + "/gumby/css/gumby.css');";
 
       if (this.brocFileContent.has(css_import)) return;
 
@@ -58,7 +59,7 @@ var EmberConfigGumbyGenerator = yeoman.generators.Base.extend({
     configureJs: function () {  
       // if (!selected('javascript')) return;
       
-      var js_import = "app.import('bower_components/gumby/js/libs/gumby.min.js');";   
+      var js_import = "app.import('" + this.bowerDir + "/gumby/js/libs/gumby.min.js');";   
 
       if (this.brocFileContent.has(js_import)) return;
 

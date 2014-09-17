@@ -2,7 +2,7 @@
 var pickFiles  = require('broccoli-static-compiler');
 var mergeTrees = require('broccoli-merge-trees');
 
-var bootstrapFonts = pickFiles('bower_components/bootstrap-sass-official/assets/fonts/bootstrap', {
+var bootstrapFonts = pickFiles('<%= bowerDir %>/bootstrap-sass-official/assets/fonts/bootstrap', {
   srcDir: '/',
   destDir: '/assets/bootstrap'
 });

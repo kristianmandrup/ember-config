@@ -13,6 +13,7 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
     aid = helper(this);
     this.brocFileContent = aid.fileContent('Brocfile.js');
     selected = aid.eqSelector(this, 'layout');
+    this.bowerDir = aid.bowerDir();
   },
 
   prompting: {
@@ -41,7 +42,7 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
     ink: function () {
       if (!selected('ink')) return;
 
-      var css_import = "app.import('bower_components/ink/css/ink.css');";
+      var css_import = "app.import('" + this.bowerDir + "/ink/css/ink.css');";
 
       if (this.brocFileContent.has(css_import)) return;
 
