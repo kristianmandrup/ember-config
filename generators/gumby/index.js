@@ -30,7 +30,7 @@ var EmberConfigGumbyGenerator = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'confirm',
       name: 'compass',
-      message: 'Gumby requires compass (sass). Do you want to install compass?',
+      message: 'Gumby requires Compass (SASS). Do you want to install Compass?',
       default: false
     }];
 
@@ -56,7 +56,7 @@ var EmberConfigGumbyGenerator = yeoman.generators.Base.extend({
     },
 
     configureJs: function () {  
-      if (!selected('javascript')) return;
+      // if (!selected('javascript')) return;
       
       var js_import = "app.import('bower_components/gumby/js/libs/gumby.min.js');";   
 
@@ -69,15 +69,12 @@ var EmberConfigGumbyGenerator = yeoman.generators.Base.extend({
     }
   },
   default: function() {
-    aid.info('For some Ember tips, see:');
-    this.log('http://stackoverflow.com/questions/23351792/dynamic-navigation-bar-in-ember');
   },
 
   install: {
     installGumpy: function () {
       aid.installBower('gumby');
-      aid.info('http://gumbyframework.com/docs/#!/');
-      aid.success('Gumby successfully installed :)');
+
     },
     installCompass: function () {      
       if (this.compass) {
@@ -86,6 +83,14 @@ var EmberConfigGumbyGenerator = yeoman.generators.Base.extend({
       }       
     }    
   },
+  end: function() {
+    aid.success('Gumby successfully installed :)');    
+    aid.thickline();
+    aid.info('http://gumbyframework.com/docs/#!/');
+    // aid.thinline();
+    // aid.info('For some Ember Gumby tips, see:');
+    // this.log('http://stackoverflow.com/questions/23351792/dynamic-navigation-bar-in-ember');
+  }
 });
 
 module.exports = EmberConfigGumbyGenerator;

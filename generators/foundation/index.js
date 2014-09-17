@@ -18,39 +18,16 @@ require('sugar');
 var helper    = require('../../lib/aid');
 var sass_file = require('../../lib/sass_file');
 var aid;
-var selected, cssSelected;
+var selected;
 
 // https://github.com/JDillon522/ember-foundation-fun
-
 var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    selected    = aid.containsSelector(this, 'features');
-    cssSelected = aid.containsSelector(this, 'cssType'); 
     this.brocFileContent = aid.fileContent('Brocfile.js');
-  },
 
-  prompting: function () {
-    var done = this.async();
-
-    // TODO: should detect app is using sass and change default!
-    var prompts = [{
-      type: 'list',
-      name: 'cssType',
-      message: 'Which styling language for bootstrap would you like?',
-      choices: ['less', 'sass'],
-      default: ['css']
-    }];
-
-    this.prompt(prompts, function (props) {
-      this.cssType = props.cssType;
-      this.features = props.bootstrapFeatures;
-
-      // ember-cli convention ;)
-      this.appName = 'App';
-
-      done();
-    }.bind(this));
+    // ember-cli convention ;)
+    this.appName = 'App'; // for use in templates
   },
 
   writing: {
@@ -76,11 +53,15 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    aid.install('ember-foundation');
-    aid.success('Zurb Foundation 5 successfully installed :)');
+    aid.install('foundation');
+
   },
   end: function() {
-    // TODO: Use foundation blueprint!
+    aid.success('Zurb Foundation successfully installed :)');
+    aid.thickline();
+    this.log('See: https://github.com/JDillon522/ember-foundation-fun')
+
+    // TODO: foundation blueprints?
   }
 });
 

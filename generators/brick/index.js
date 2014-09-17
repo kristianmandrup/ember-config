@@ -8,6 +8,7 @@ require('sugar');
 
 var helper    = require('../../lib/aid');
 var aid;
+var selected;
 
 var EmberConfigBrickGenerator = yeoman.generators.Base.extend({
   initializing: function () {
@@ -37,7 +38,7 @@ var EmberConfigBrickGenerator = yeoman.generators.Base.extend({
     },
 
     configureJs: function () {  
-      if (!selected('javascript')) return;
+      // if (!selected('javascript')) return;
       
       var js_import = "app.import('bower_components/brick/dist/platform/platform.js');";   
 

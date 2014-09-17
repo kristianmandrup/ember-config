@@ -6,29 +6,19 @@ var broc_file = require ('../../lib/broc_file');
 // var sass_file = require('../../lib/sass_file');
 require('sugar');
 
-var helper    = require('../../lib/aid');
+var helper = require('../../lib/aid');
 var aid;
+var selected;
 
 var EmberConfigSemanticUIGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     this.brocFileContent = aid.fileContent('Brocfile.js');
+    // selected = aid.eqSelector(this, 'features');
   },
 
-  // Choose test framework
   prompting: function () {
-    var done = this.async();
-
-    // TODO: should detect app is using sass and change default!
-    var prompts = [{
-    }];
-
-    // this.prompt(prompts, function (props) {
-    //   this.cssType = props.cssType;
-    //   this.javascript = props.javascript;
-
-    //   done();
-    // }.bind(this));
+    console.log('semantic ui - fully automatic!')
   },
 
   // https://github.com/Semantic-Org/Semantic-UI/blob/master/bower.json
@@ -46,7 +36,7 @@ var EmberConfigSemanticUIGenerator = yeoman.generators.Base.extend({
     },
 
     configureJs: function () {  
-      if (!selected('javascript')) return;
+      // if (!selected('javascript')) return;
       
       var js_import = "app.import('bower_components/semantic/build/packaged/javascript/semantic.js');";   
 
@@ -67,10 +57,12 @@ var EmberConfigSemanticUIGenerator = yeoman.generators.Base.extend({
   install: {
     installBootstrap: function () {
       aid.installBower('semantic');
-
-      aid.success('Semantic-ui successfully installed :)');
     }
   },
+
+  end: function() {
+    aid.success('Semantic-ui successfully installed :)');    
+  }
 });
 
 module.exports = EmberConfigSemanticUIGenerator;

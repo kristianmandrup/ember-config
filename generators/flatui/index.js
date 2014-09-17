@@ -21,11 +21,14 @@ require('sugar');
 
 var helper    = require('../../lib/aid');
 var aid;
+var selected;
 
 var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     this.brocFileContent = aid.fileContent('Brocfile.js');
+
+    // selected = aid.eqSelector(this, 'features');
   },
 
   // Choose test framework
@@ -39,6 +42,8 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
       message: 'Do you want install the Less (CSS) version?',
       default: false
     }];
+
+    // TODO: add features prompt?
 
     this.prompt(prompts, function (props) {
       this.less = props.less;
@@ -77,7 +82,7 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
     },
 
     configureJs: function () {  
-      if (!selected('javascript')) return;
+      // if (!selected('javascript')) return;
       
       var js_import = "app.import('bower_components/flat-ui/dist/js/flat-ui.js');";   
 
@@ -87,11 +92,11 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
         return this.last('module.exports').prepend(js_import + '\n');  
       }).write();
       aid.info('Flat UI javascript configured');
-    }
+    },
 
     // dist/fonts/flat-ui-icons-regular    
     configureFonts: function () {    
-      if (!selected('fonts')) return;  
+      // if (!selected('fonts')) return;  
 
       var replaceStr = this.read('merge-flat-uiFonts.js');
 
@@ -99,9 +104,9 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
 
       broc_file(function() {
         if (this.result.match('exports = mergeTrees')) {
-          return this.last(/module\.exports = mergeTrees\(.*\);/).replaceWithLine(replaceStr + '\n');  
+          return this.last(/module\.exports = mergeTrees\(.*\);/).replaceWith(replaceStr + '\n');  
         } else if (this.result.match('exports = app')) {          
-          return this.last(/module\.exports = app.toTree\(.*\);/).replaceWithLine(replaceStr + '\n');
+          return this.last(/module\.exports = app.toTree\(.*\);/).replaceWith(replaceStr + '\n');
         } else {
           throw new Error("No 'valid' module.exports found!");
         }
@@ -109,7 +114,7 @@ var EmberConfigFlatUIGenerator = yeoman.generators.Base.extend({
 
       // referenced from main Brocfile :)
       this.copy('brocs/flat-ui_fonts.js');
-      aid.info('bootstrap font glyphs configured');
+      aid.info('Flat UI font glyphs configured');
     }    
   },
   install: {

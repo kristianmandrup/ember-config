@@ -101,9 +101,9 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
 
       broc_file(function() {
         if (this.result.match('exports = mergeTrees')) {
-          return this.last(/module\.exports = mergeTrees\(.*\);/).replaceWithLine(replaceStr + '\n');  
+          return this.last(/module\.exports = mergeTrees\(.*\);/).replaceWith(replaceStr + '\n');  
         } else if (this.result.match('exports = app')) {          
-          return this.last(/module\.exports = app.toTree\(.*\);/).replaceWithLine(replaceStr + '\n');
+          return this.last(/module\.exports = app.toTree\(.*\);/).replaceWith(replaceStr + '\n');
         } else {
           throw new Error("No 'valid' module.exports found!");
         }

@@ -3,12 +3,16 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require ('../../lib/aid');
+var broc_file = require ('../../lib/broc_file');
 var aid;
 require('sugar');
+var selected;
 
 var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
+    this.brocFileContent = aid.fileContent('Brocfile.js');
+    selected = aid.eqSelector(this, 'layout');
   },
 
   prompting: {
@@ -35,7 +39,7 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
   // TODO: Refactor to make DRY
   writing: {
     ink: function () {
-      if (!this.layout == 'ink') return;
+      if (!selected('ink')) return;
 
       var css_import = "app.import('bower_components/ink/css/ink.css');";
 
@@ -48,7 +52,7 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
       aid.info('Ink configured');      
     },
     pure: function () {
-      if (!this.layout == 'pure') return;
+      if (!selected('pure')) return;
 
       var css_import = "app.import('bower_components/ink/build/pure.css');";
 
@@ -64,15 +68,16 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
 
   install: {
     ink: function () {
-      if (!this.layout == 'ink') return;
+      if (!selected('ink')) return;
       aid.installBower('ink');
     },
     pure: function () {
-      if (!this.layout == 'pure') return;
+      if (!selected('pure')) return;
       aid.installBower('pure');
     }
   },
   end: function () {
+    console.log('end', this.layout);
     switch (this.layout) {
       case 'bootstrap':
         this.composeWith('ember-config:bootstrap');
@@ -90,10 +95,9 @@ var EmberConfigLayoutGenerator = yeoman.generators.Base.extend({
         this.composeWith('ember-config:altlayout');
         break;
       default:        
-        // aid.info("Sorry! Generator for " + this.layout + ' has yet to be implemented...');
+        aid.info("Sorry! Generator for " + this.layout + ' has yet to be implemented...');
     }    
   }
-
 });
 
 module.exports = EmberConfigLayoutGenerator;
