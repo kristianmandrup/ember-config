@@ -1,7 +1,7 @@
 {
   "name": "generator-ember-config",
-  "version": "0.0.2",
-  "description": "Yeoman generator",
+  "version": "0.1.0",
+  "description": "Ember Configurator to facilitate app configuration",
   "license": "MIT",
   "main": "generators/app/index.js",
   "repository": "kristianmandrup/generator-ember-config",
@@ -20,7 +20,20 @@
     "generators"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "generator",
+    "ember",
+    "configurator",
+    "config",
+    "asset precompiler",
+    "precompiler",
+    "layout",
+    "adapters",
+    "setup",
+    "firebase",
+    "auth",
+    "bootstrap",
+    "foundation"
   ],
   "dependencies": {
     "sync": "^0.2.3",
