@@ -137,6 +137,7 @@ var EmberConfigRatchetGenerator = yeoman.generators.Base.extend({
 
     aid.info('For further configuration: https://gist.github.com/cavneb/26c4a12b1f77ae868232');
     aid.info('Video tutorial at: http://www.youtube.com/watch?v=O7XSeSZ_JNI');
+    aid.info('Sketches for Ratchet components: https://gist.github.com/kristianmandrup/8ec0dc2b9419d9afcbb5#file-ember-ratchet-components-txt');
   }
 });
 

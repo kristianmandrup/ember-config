@@ -22,8 +22,8 @@ var EmberConfigKickAppGenerator = yeoman.generators.Base.extend({
   	imports: function()  {
   		if (this.sass) return;
 
-  		var cssImport = "app.import('" + this.bowerDir + "/kik-app/dist/app.css');\n";
-      var jsImport  = "app.import('" + this.bowerDir + "/kik-app/kik-app.js');\n";
+  		var cssImport = "app.import('" + this.bowerDir + "/app/dist/app.css');\n";
+      var jsImport  = "app.import('" + this.bowerDir + "/app/dist/app.js');\n";
       var imports   = cssImport + jsImport;
 
   		if (this.brocFileContent.has(imports)) return;
@@ -37,15 +37,15 @@ var EmberConfigKickAppGenerator = yeoman.generators.Base.extend({
   },
   install: {
     ratchet: function () {
-      aid.installBower('KikApp', 'kik-app');
+      aid.installBower('app.js', 'app.js');
     },
   },
 
   end: function() {
-    aid.success('KikApp successfully installed :)');    
+    aid.success('App.js successfully installed :)');    
     aid.thickline();
 
-    aid.info('For Ember usage tips, see https://github.com/kristianmandrup/app');
+    aid.info('For Ember usage tips, see https://gist.github.com/kristianmandrup/de70085e910f359148eb');
   }
 });
 

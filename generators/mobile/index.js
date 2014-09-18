@@ -25,7 +25,7 @@ var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
       type: 'list',
       name: 'frameworks',
       message: 'Which mobile frameworks would you like?',
-      choices: ['ratchet', 'kik app'],
+      choices: ['ratchet', 'app.js'],
       default: ['ratchet']
     },{
       type: 'list',
@@ -54,7 +54,7 @@ var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
       this.composeWith('ember-config:ratchet');
     },
     kikApp: {
-      if (!selected('kik app')) return;        
+      if (!selected('app.js')) return;        
       this.composeWith('ember-config:kikapp');
     }    
   },
