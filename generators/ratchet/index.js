@@ -60,7 +60,7 @@ var EmberConfigRatchetGenerator = yeoman.generators.Base.extend({
   	cssImport: function()  {
 		if (this.sass) return;
 
-		var cssImport = "app.import('" + this.bowerDir + "/bootstrap/dist/css/bootstrap.css')";
+		var cssImport = "app.import('" + this.bowerDir + "/ratchet/css/ratchet.css')";
 
 		if (this.brocFileContent.has(css_import)) return;
 
