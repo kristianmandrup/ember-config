@@ -118,7 +118,12 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
     }
   },
 
+
   default: {
+    esNext: function() {
+      if (!selected('javascript')) return;      
+      this.composeWith('ember-config:esnext');
+    },
     uninstallOld: function() {
       this.log('\nAt the moment Ember CLI (0.0.44) does not support multiple js preprocessors.');
       this.log('This is to be added in a future version ;)')
@@ -140,23 +145,21 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
         uninstallScript('livescript');      
         uninstallScript('emberscript', 'broccoli-ember-script');
       });
-    }
+    },
   },
   install: {
     installNew: function () {
-      var self = this;
-
-      var installScript = function(name, compiler) {
-        if (self.script == name)
-          aid.install(name, compiler);
+      // aid.bold("Installing script precompiler");
+      switch(this.script) {
+        case 'coffeescript':
+          aid.install('coffeescript');
+          break;
+        case 'livescript':
+          aid.install('livescript');
+          break
+        case 'emberscript':
+          aid.install('emberscript', 'broccoli-ember-script');
       };
-
-      aid.bold("Installing chosen precompiler");
-      sync(function(){
-        installScript('coffeescript');
-        installScript('livescript');
-        installScript('emberscript', 'broccoli-ember-script');
-      });
     }
   },
   end: {

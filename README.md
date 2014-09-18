@@ -64,7 +64,7 @@ The generator will start with the following:
 
 By default the following are selected: 
 
-- Script (javascript, coffeescript, livescript)
+- Script (javascript (+ esnext), coffeescript, livescript)
 - CSS (css, less, sass, compass)
 - Templating (handlebars, emblem)
 - Layout (bootstrap, foundation, ...)
@@ -78,6 +78,7 @@ Additionally, the following configurators can be chosen:
 - Auth (simple-auth)
 - Addons (pagination, forms, ...)
 - Libs (TODO)
+- ES6 (esnext)
 
 The App config generator will invoke a sub-generator for each.
 Some of these sub-generators in turn invokes more sub-generators depending on
@@ -87,7 +88,7 @@ your configuration and selections ;)
 
 Installs a javascript precompiler of your choice.
 
-- javascript (none - default)
+- javascript (+ esnext option)
 - coffeescript
 - livescript
 - emberscript (experimental!)
@@ -106,7 +107,7 @@ Installs a CSS precompiler of your choice.
 Installs a templating framework of your choice
 
 - Handlebars
-- Emblem
+- Emblem (soon w blueprints)
 
 ### Layout
 
@@ -136,12 +137,18 @@ Note: You are most welcome to add your own layout generator and invoke it from h
 
 ### Components
 
-Adds a component library
+*Component libs*
 
 - Bootstrap for ember
 - Ember components
+- Ember Forms
 
-TODO: Add more components (and component libs) ;)
+*Components*
+
+- date picker
+- list view
+- radio buttons
+- table
 
 ### Adapters
 
@@ -177,27 +184,33 @@ Adds font libraries
 
 ### Addons
 
-- forms
 - i18n
 - pagination
 - auto-properties
-- table
+- date helpers
+- notify
 - data factory
-- 
-
+- validations
+- velocity (animation)
 
 ## Design
 
-`node-fs-extra`, `node-glob` for extra file system utils.
-`string.js` and `string-mutator` for string utils and manipulations.
+Uses an `aid` object found in `lib\aid` for much of the functionality. 
+Needs refactoring!
 
-And many more...
+TODO:
+- Make use of User Config, pass options between generators
+- Create Project stats object, which collects info about the project (what is currently used/installed)
 
 ## User config (TODO)
 
-Storing user configuration options and sharing them between sub-generator is a common task. For example, it is common to share preferences like the language (does the user use CoffeeScript?), style options (indenting with spaces or tabs), etc.
+Would be awesome to take advantage of Yo User Config:
 
-These configuration can be stored in the `.yo-rc.json` file through the Yeoman Storage API. This API is accessible through the `generator.config` object.
+From the "yo generator authoring" site:
+
+_"Storing user configuration options and sharing them between sub-generator is a common task. For example, it is common to share preferences like the language (does the user use CoffeeScript?), style options (indenting with spaces or tabs), etc."_
+
+_"These configuration can be stored in the `.yo-rc.json` file through the Yeoman Storage API. This API is accessible through the `generator.config` object."_
 
 ## License
 
