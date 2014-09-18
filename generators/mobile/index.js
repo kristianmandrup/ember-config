@@ -8,7 +8,7 @@ var aid, selected;
 var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    selected = aid.containsSelector(this, 'framworks');
+    selected = aid.containsSelector(this, 'frameworks');
   },
 
   prompting: function () {
@@ -22,7 +22,7 @@ var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
     },      
     {
       type: 'list',
-      name: 'framworks',
+      name: 'frameworks',
       message: 'Which mobile frameworks would you like?',
       choices: ['ratchet', 'kik app'],
       default: ['ratchet']
@@ -30,7 +30,7 @@ var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.cordova      = props.cordova;
-      this.framworks    = props.framworks;
+      this.frameworks    = props.frameworks;
 
       done();
     }.bind(this));
