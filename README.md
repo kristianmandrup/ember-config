@@ -69,18 +69,21 @@ By default the following are selected:
 - Templating (handlebars, emblem)
 - Layout (bootstrap, foundation, ...)
 
-Additionally, the following configurators can be chosen:
+Additionally, the following configurators are available:
+
 - Test (qunit)
-- Adapters (firebase)
-- Fonts (awesome)
-- Components (ember, bootstrap)
-- Mobile (cordova, ratchet)
+- Adapters (firebase, emberfire, fireplace)
+- Fonts (awesome, ...)
+- Components 
+	- libs (ember, bootstrap)
+	- individual (pagination, forms, ...)
+- Mobile (cordova, ratchet, appjs)
 - Auth (simple-auth)
-- Addons (pagination, forms, ...)
-- Libs (TODO)
-- ES6 (esnext)
-- Animations
-- Gestures (for touch devices!)
+- Addons (i18n, validation, ...)
+- Libs (pour-over, ...)
+- ES6 harmony (esnext)
+- Animations (liquid-fire, velocity)
+- Gestures (hammer, touchy, ... )
 
 The App config generator will invoke a sub-generator for each.
 Some of these sub-generators in turn invokes more sub-generators depending on
@@ -165,7 +168,7 @@ Adds and configures an adapter for data storage/retrieval
 
 Adds authentication
 
-- simple auth
+- Simple auth
 - others (TODO)
 
 ### Fonts
@@ -182,31 +185,31 @@ Adds font libraries
 
 ### Mobile
 
-- cordova
-- ratchet
-- kik app (kikinteractive: App.js)
+- Cordova
+- Ratchet
+- App.js 
 
 ### Animations
 
 - LiquidFire
+- Velocity
 
-See https://github.com/ef4/ember-animation-demo
+See demo @ https://github.com/ef4/ember-animation-demo
 
 ### Addons
 
 - i18n
-- pagination
-- auto-properties
-- date helpers
-- notify
-- data factory
-- validations
-- velocity (animation)
+- Pagination
+- Auto-properties
+- Date helpers
+- Notify
+- Data factory
+- Validations
 
 ## Design
 
 Uses an `aid` object found in `lib\aid` for much of the functionality. 
-Needs refactoring!
+Needs major refactoring!
 
 TODO:
 - Make use of User Config, pass options between generators
