@@ -54,7 +54,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       // http://www.octolabs.com/blogs/octoblog/2014/05/10/ember-cli-broccoli-bootstrap-sass-part-2/
       var sassFileContent = aid.fileContent('app/styles/app.scss');
 
-      var import_sass = "@import '" + this.bowerDir + "/bootstrap-sass-official/assets/stylesheets/bootstrap';";
+      var import_sass = "@import '" + this.bowerDir + "/bootstrap-sass-official/assets/stylesheets/bootstrap'";
       if (sassFileContent.has(import_sass)) return;
 
       sass_file.app(function() {
