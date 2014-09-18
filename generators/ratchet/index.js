@@ -118,7 +118,17 @@ var EmberConfigRatchetGenerator = yeoman.generators.Base.extend({
   install: {
     ratchet: function () {
       aid.installBow('ratchet');
-    }
+    },
+
+    animations: function() {
+    	aid.installBower('animated outlet', 'ember-animated-outlet');
+    	aid.info('Check out: https://github.com/blangslet/ember.js-mobile-animations-gestures');
+    },
+
+    touch: function() {
+		aid.installBower('hammer touch', 'hammerjs');    	
+		aid.info('Be sure to check out: https://gist.github.com/ppcano/7a5f0e551cd9b2db42b0');
+    }    
   },
 
   end: function() {
