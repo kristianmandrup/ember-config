@@ -79,6 +79,8 @@ Additionally, the following configurators can be chosen:
 - Addons (pagination, forms, ...)
 - Libs (TODO)
 - ES6 (esnext)
+- Animations
+- Gestures (for touch devices!)
 
 The App config generator will invoke a sub-generator for each.
 Some of these sub-generators in turn invokes more sub-generators depending on
@@ -182,6 +184,13 @@ Adds font libraries
 
 - cordova
 - ratchet
+- kik app (kikinteractive: App.js)
+
+### Animations
+
+- LiquidFire
+
+See https://github.com/ef4/ember-animation-demo
 
 ### Addons
 

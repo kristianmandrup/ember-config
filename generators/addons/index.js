@@ -42,7 +42,7 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
 
       // TODO: split up into categoreis: Model, View, Util
       choices: ['i18n', 'pagination', 
-        'auto-properties', 'data-factory', 'velocity', 'validations', 
+        'auto-properties', 'data-factory', 'validations', 
         'date helpers', 'notify'],
       default: ['i18n']
     }];
@@ -66,9 +66,6 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
 
     if (selected('data-factory'))    
       aid.install('data-factory', 'ember-data-factory');
-
-    if (selected('velocity'))    
-      aid.install('velocity');
 
     if (selected('validations'))    
       aid.install('validations', 'ember-validations');

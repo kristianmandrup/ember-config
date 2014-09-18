@@ -34,17 +34,18 @@ var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
   },
 
   install: {
-    hammer: {
-      if (!selected('hammer')) return;        
-      // this.composeWith('ember-config:hammer');
+    velocity: {
+      if (!selected('velocity')) return;        
+      aid.install('velocity');
     },
     liquidFire: {
       if (!selected('kik app')) return;        
       // this.composeWith('ember-config:liquidfire');
+      aid.install('liquid-fire', 'liquid-fire');
+      aid.bold('See http://ef4.github.io/liquid-fire');
     }    
   },
-  end: function () {
-    aid.info('TODO: liquidfire, hammer, velocity...');
+  end: function () {    
   }
 });
 
