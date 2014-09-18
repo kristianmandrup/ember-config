@@ -123,6 +123,10 @@ var EmberConfigRatchetGenerator = yeoman.generators.Base.extend({
 
   end: function() {
     aid.success('Rachet successfully installed :)');    
+    aid.thickline();
+
+    aid.info('For further configuration: https://gist.github.com/cavneb/26c4a12b1f77ae868232');
+    aid.info('Video tutorial at: http://www.youtube.com/watch?v=O7XSeSZ_JNI');
   }
 });
 

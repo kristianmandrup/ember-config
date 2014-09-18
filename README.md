@@ -74,7 +74,7 @@ Additionally, the following configurators can be chosen:
 - Adapters (firebase)
 - Fonts (awesome)
 - Components (ember, bootstrap)
-- Mobile (cordova)
+- Mobile (cordova, ratchet)
 - Auth (simple-auth)
 - Addons (pagination, forms, ...)
 - Libs (TODO)
@@ -181,6 +181,7 @@ Adds font libraries
 ### Mobile
 
 - cordova
+- ratchet
 
 ### Addons
 

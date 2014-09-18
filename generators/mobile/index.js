@@ -19,7 +19,7 @@ var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
       type: 'list',
       name: 'mobileFw',
       message: 'Which mobile framework would you like?',
-      choices: ['cordova'],
+      choices: ['cordova', 'ratchet'],
       default: 'cordova'
     },{
       type: 'input',
@@ -64,9 +64,11 @@ var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
           // TODO: aid.spawn
           this.spawnCommand('ember', ['cordova', 'platform', 'add', 'android']);              
         }          
+      }, ratchet: {
+        if (!selected('cordova')) return;        
+
+        this.composeWith('ember-config:ratchet');
       }
-
-
     }
   }
 });
