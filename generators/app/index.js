@@ -7,7 +7,7 @@ var helper = require ('../../lib/aid');
 var aid;
 var selected;
 
-var availableConfigs = ['script', 'css', 'templating', 'layout', 'test', 'adapters', 'mobile', 'fonts', 'components', 'auth', 'addons', 'libs'];
+var availableConfigs = ['script', 'css', 'templating', 'layout', 'test', 'adapters', 'mobile', 'fonts', 'components', 'auth', 'addons', 'libs', 'animations'];
 
 var endScripts = {};
 availableConfigs.forEach(function(config) {
