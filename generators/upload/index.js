@@ -35,7 +35,10 @@ var EmberConfigUploadGenerator = yeoman.generators.Base.extend({
   end: function() {
     aid.success('Droplet successfully installed :)');  	
     aid.thickline();
-    aid.info('https://github.com/Wildhoney/EmberDroplet');
+    aid.info(' - https://github.com/Wildhoney/EmberDroplet');
+    aid.thinline();
+    this.log(' - https://github.com/workmanw/embernati-upload-demo');
+    this.log(' - https://www.youtube.com/watch?v=7Z3HCTFFCKc'); 
   }
 });
 
