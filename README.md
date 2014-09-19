@@ -84,6 +84,7 @@ Additionally, the following configurators are available:
 - ES6 harmony (esnext)
 - Animations (liquid-fire, velocity)
 - Gestures (hammer, touchy, ... )
+- Sails full stack app :)
 
 The App config generator will invoke a sub-generator for each.
 Some of these sub-generators in turn invokes more sub-generators depending on

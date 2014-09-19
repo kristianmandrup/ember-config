@@ -1,0 +1,9 @@
+{
+    "generators" : {
+        "modules" : {
+            "ember-app": "sails-generate-new-ember",
+            "frontend": "sails-generate-frontend-ember",
+            "backend": "sails-generate-backend-ember"
+        }
+    }
+}
