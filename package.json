@@ -1,10 +1,10 @@
 {
   "name": "generator-ember-config",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Ember Configurator to facilitate app configuration",
   "license": "MIT",
   "main": "generators/app/index.js",
-  "repository": "kristianmandrup/generator-ember-config",
+  "repository": "kristianmandrup/ember-config",
   "author": {
     "name": "Kristian Mandrup",
     "email": "kmandrup@gmail.com",
@@ -34,7 +34,13 @@
     "auth",
     "bootstrap",
     "foundation",
-    "adddons"
+    "adddons",
+    "sails",
+    "full stack",
+    "animations",
+    "gestures",
+    "blueprints",
+    "components"
   ],
   "dependencies": {
     "sync": "^0.2.3",

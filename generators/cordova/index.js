@@ -45,7 +45,7 @@ var EmberConfigCordovaGenerator = yeoman.generators.Base.extend({
   	installCordova: function () {
 	  	if (!this.cordova) return;
 		// TODO: only install if none (or old) version present
-		aid.installGlobalNpm('cordova');  		
+		aid.installGlobalNpmBin('cordova');  		
   	}
   },
 

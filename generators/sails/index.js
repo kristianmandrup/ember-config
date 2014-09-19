@@ -3,7 +3,8 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require ('../../lib/aid');
-var aid, adapter, stack;
+
+var aid, adapter, stack, serverFeature;
 
 var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
@@ -13,7 +14,7 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
     serverFeature 	= aid.containsSelector(this, 'serverFeatures');
   },
 
-  prompting: function () {
+  prompting: {
 
 	newProject: function () {
 	    var done = this.async();
@@ -151,7 +152,6 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 	      name: 'serverInstall',
 	      message: 'Do you wish to install Sails server API blueprints and Ember service?',
 	      default: true
-	    }	    	
 	    }];
 
 	    this.prompt(prompts, function (props) {
@@ -203,11 +203,11 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 			aid.install('Ember Sails adapter', 'ember-data-sails-adapter');
 	},
 	server: function() {
-		if (this.serverFeature('API blueprints')
+		if (this.serverFeature('API blueprints'))
 			// Copy blueprints into api/blueprints
 			this.directory('blueprints/api', this.serverAppDir + '/blueprints/api')
 
-		if (this.serverFeature('Ember service')
+		if (this.serverFeature('Ember service'))
 			// Drop the Ember service from this repository in myproject/api/services		
 			this.copy('server/services/Ember.js', this.serverAppDir + '/api/services/Ember.js');
 	}	

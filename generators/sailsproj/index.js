@@ -11,7 +11,7 @@ var EmberConfigSailsProjGenerator = yeoman.generators.Base.extend({
     aid = helper(this);
   },
 
-  prompting: function () {
+  prompting: {
   	project: function() {
 	    var done = this.async();
 
@@ -27,15 +27,17 @@ var EmberConfigSailsProjGenerator = yeoman.generators.Base.extend({
 	      default: false
 	    },
 	    {
-	      type: 'list',
+	      type: 'checkbox',
 	      name: 'generators',
 	      message: 'Which ember-sails generators do you need to install on your system?',
+	      choices: ['sails-generate-new-ember', 'sails-generate-frontend-ember', 'sails-generate-backend-ember'],
 	      default: []
 	    }]
 
 	    this.prompt(prompts, function (props) {
 	      this.app   		= props.app;
 	      this.generators 	= props.generators;
+	      this.sails 		= props.sails;
 
 	      done();
 	    }.bind(this));
@@ -44,20 +46,20 @@ var EmberConfigSailsProjGenerator = yeoman.generators.Base.extend({
   configuring: {
   	sails: function () {
   		if (this.sails)
-  			self.installGlobalNpm(name.humanize(), name);
+  			aid.installGlobal('Sails', 'sails');
   	},
   	generators: function() {
-	  	var self = this;
+	  	aid.info('Installing Sails w Ember generators:')
 	  	this.generators.forEach(function(name) {
-	  		self.installGlobalNpm(name.humanize(), name);
+	  		aid.installGlobal(name.spacify().humanize(), name);
 	  	});  		
   	}
-  }
+  },
 
   writing: function() {
   	aid.info('Configuring Sails blueprints for client/server app');
   	this.copy('sailsrc.json', '.sailsrc');
-  }
+  },
   install: function () {
   	aid.info('Creating client/server app');
 
