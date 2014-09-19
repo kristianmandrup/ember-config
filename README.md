@@ -75,8 +75,8 @@ Additionally, the following configurators are available:
 - Adapters (firebase, emberfire, fireplace)
 - Fonts (awesome, ...)
 - Components 
-	- libs (ember, bootstrap)
-	- individual (pagination, forms, ...)
+	- libs (ember, bootstrap, forms)
+	- individual (pagination, , ...)
 - Mobile (cordova, ratchet, appjs)
 - Auth (simple-auth)
 - Addons (i18n, validation, ...)
@@ -84,7 +84,7 @@ Additionally, the following configurators are available:
 - ES6 harmony (esnext)
 - Animations (liquid-fire, velocity)
 - Gestures (hammer, touchy, ... )
-- Upload (droplet)
+- Upload (uploader, droplet, ...)
 - Sails full stack app :)
 
 The App config generator will invoke a sub-generator for each.
@@ -95,10 +95,10 @@ your configuration and selections ;)
 
 Installs a javascript precompiler of your choice.
 
-- javascript (+ esnext option)
-- coffeescript
-- livescript
-- emberscript (experimental!)
+- Javascript (+ ESnext option)
+- Coffeescript
+- Livescript
+- Emberscript (experimental)
 
 ### CSS precompilers
 
@@ -133,7 +133,7 @@ Installs a layout framework of your choice
 - Flat UI (bootstrap theme)
 - Brick (web components!?)
 
-(TODO)
+(TODO ?)
 - UI-kit
 - Bootflat
 - Cascade
@@ -152,20 +152,20 @@ Note: You are most welcome to add your own layout generator and invoke it from h
 
 *Components*
 
-- date picker
-- list view
-- radio buttons
-- table
+- Date picker
+- List view
+- Radio buttons
+- Table
 
 ### Adapters
 
 Adds and configures an adapter for data storage/retrieval
 
-- firebase
-    + emberfire
-    + fireplace
-- local storage
-- sync (offline)
+- Firebase
+    + Emberfire
+    + Fireplace
+- Local storage
+- Sync (offline)
 
 ### Auth
 
@@ -208,10 +208,13 @@ See demo @ https://github.com/ef4/ember-animation-demo
 - Notify
 - Data factory
 - Validations
+- Moment
 
-## Upload
+## Uploaders
 
-- droplet
+- Uploader
+- Droplet
+- Upload (experimental)
 
 ### Full stack integrations
 

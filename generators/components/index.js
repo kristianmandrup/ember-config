@@ -26,7 +26,7 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'components',
       message: 'Choose individual components',
-      choices: ['date picker', 'list view', 'radio buttons', 'table'],
+      choices: ['date picker', 'list view', 'radio buttons', 'table', 'pagination'],
       default: ['date picker']
     }];
 
@@ -60,7 +60,10 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
         aid.install('radio buttons', 'ember-radio-buttons');
 
       if (selected('date picker')) 
-        aid.install('date picker', 'ember-cli-datepicker');    
+        aid.install('date picker', 'ember-cli-datepicker');  
+
+      if (selected('pagination'))        
+        aid.install('pagination');              
     }       
   },
   end: {
