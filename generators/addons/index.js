@@ -41,10 +41,10 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       message: 'Which addons would you like to add?',
 
       // TODO: split up into categoreis: Model, View, Util
-      choices: ['i18n', 'pagination', 
+      choices: ['i18n', 'moment', 'pagination', 
         'auto-properties', 'data-factory', 'validations', 
         'date helpers', 'notify'],
-      default: ['i18n']
+      default: ['i18n', 'moment']
     }];
 
     this.prompt(prompts, function (props) {
@@ -60,6 +60,12 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
   install: function() {
     if (selected('i18n'))    
       aid.install('i18n', 'ember-i18n');
+
+    if (selected('moment'))
+      aid.install('moment');    
+
+    if (selected('pagination'))        
+      aid.install('pagination');    
 
     if (selected('auto-properties'))    
       aid.install('auto-properties', 'ember-auto');
@@ -77,8 +83,6 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
     if (selected('notify'))          
       aid.install('notify', 'ember-notify');
 
-    if (selected('pagination'))        
-      aid.install('pagination');    
   },
   end: function() {
     aid.info('Please also add support for ember-easyForms ;)')
