@@ -22,7 +22,7 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'adapters',
       message: 'Choose your db/storage adapters',
-      choices: ['firebase', 'localstorage'],
+      choices: ['firebase', 'localstorage', 'sync'],
       default: ['localstorage']
     }];
 
@@ -31,8 +31,6 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
 
       done();
     }.bind(this));
-
-
   },
 
   // TODO: ???
@@ -44,7 +42,11 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
       if (!selected('localstorage')) return;
       
       aid.installBow('localstorage', 'ember-localstorage-adapter');
-    }  
+    },npm install --save ember-sync
+    sync: function () {
+      if (!selected('sync')) return;      
+      this.composeWith('ember-config:sync');      
+    },  
   },
 
   end: {

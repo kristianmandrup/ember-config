@@ -119,8 +119,8 @@ Installs a templating framework of your choice
 
 Installs a layout framework of your choice
 
-- Twitter Bootstrap
-- Zurb Foundation
+- Twitter Bootstrap 3.2 (css, sass)
+- Zurb Foundation 5.4 (css, sass)
 - Ink
 - Pure
 - Gumby
@@ -163,7 +163,8 @@ Adds and configures an adapter for data storage/retrieval
 - firebase
     + emberfire
     + fireplace
-- local storage (TODO)
+- local storage
+- sync (offline)
 
 ### Auth
 
@@ -206,6 +207,10 @@ See demo @ https://github.com/ef4/ember-animation-demo
 - Notify
 - Data factory
 - Validations
+
+### Full stack integrations
+
+- Sails
 
 ## Design
 
