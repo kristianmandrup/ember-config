@@ -53,9 +53,13 @@ var EmberConfigBrickGenerator = yeoman.generators.Base.extend({
   },
   install: function () {
     aid.installBower('brick');
-    aid.info('https://github.com/mozbrick/brick');
-    aid.success('Brick successfully installed :)');
   },
+  end: function() {
+    aid.success('Brick successfully installed :)');
+    aid.thickline();
+    aid.info('https://github.com/mozbrick/brick');
+  }
+
 });
 
 module.exports = EmberConfigBrickGenerator;

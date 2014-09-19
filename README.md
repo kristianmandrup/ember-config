@@ -84,6 +84,7 @@ Additionally, the following configurators are available:
 - ES6 harmony (esnext)
 - Animations (liquid-fire, velocity)
 - Gestures (hammer, touchy, ... )
+- Upload (droplet)
 - Sails full stack app :)
 
 The App config generator will invoke a sub-generator for each.
@@ -207,6 +208,10 @@ See demo @ https://github.com/ef4/ember-animation-demo
 - Notify
 - Data factory
 - Validations
+
+## Upload
+
+- droplet
 
 ### Full stack integrations
 
