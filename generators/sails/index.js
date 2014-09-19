@@ -7,9 +7,10 @@ var aid, adapter, stack;
 
 var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-    aid 	= helper(this);
-    stack 	= aid.eqSelector(this, 'stackEnd');
-    adapter = aid.eqSelector(this, 'adapter');
+    aid 			= helper(this);
+    stack 			= aid.eqSelector(this, 'stackEnd');
+    adapter 		= aid.eqSelector(this, 'adapter');
+    serverFeature 	= aid.containsSelector(this, 'serverFeatures');
   },
 
   prompting: function () {
@@ -110,12 +111,23 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 	      name: 'appRoot',
 	      message: 'Confirm you are standing in the project root and want to configure the Sails server app?',
 	      default: true
-	    }];
+	    }, {
+	      type: 'input',
+	      name: 'clientAppDir',
+	      message: 'What is the name of your Ember (client) app folder?',
+	      default: 'client'
+	    }, {
+	      type: 'input',
+	      name: 'serverAppDir',
+	      message: 'What is the name of your Sails (server) app folder?',
+	      default: 'server'
+	    }
+	    ];
 
 	    this.prompt(prompts, function (props) {
-	      this.appRoot = props.appRoot;
-	      serverInstall
-	      
+	      this.appRoot 		= props.appRoot;
+	      this.clientAppDir = props.clientAppDir;
+	      this.serverAppDir = props.serverAppDir;
 	      done();
 	    }.bind(this));
 
@@ -129,14 +141,22 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 	    var done = this.async();		
 	    
 	    var prompts = [{
+	      type: 'checkbox',
+	      name: 'serverFeatures',
+	      message: 'What server features do you wish to install?',
+	      choices: ['API blueprints', 'Ember service'],
+	      default: ['API blueprints']
+	    }, {
 	      type: 'confirm',
 	      name: 'serverInstall',
-	      message: 'Do you wish to install sails server API blueprints and an Ember service?',
+	      message: 'Do you wish to install Sails server API blueprints and Ember service?',
 	      default: true
+	    }	    	
 	    }];
 
 	    this.prompt(prompts, function (props) {
-	      this.serverInstall = props.serverInstall;
+	      this.serverInstall 	= props.serverInstall;
+	      this.serverFeatures	= props.serverFeatures;
 	      	      
 	      done();
 	    }.bind(this));
@@ -151,7 +171,7 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 
 		if (adapter('with custom serializer')) {
 			this.copy('client/vendor/rest-serializer.js', 'client/app/serializers/sails-rest.js');		
-			this.copy('client/vendor/sails-adapter.js', 'client/app/adapters/sails.js');				
+			this.copy(this.clientAppDir + '/vendor/sails-adapter.js', 'client/app/adapters/sails.js');				
 		} 
   	},
   	server: function() {
@@ -165,8 +185,8 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 		};
 
 		// In myproject/config/blueprints.js set pluralize: true		  		
-		fileConfigurator('server/config/blueprints.js', function() {
-			return this.first(/pluralize:\s*\w+/).replaceWith('true');
+		fileConfigurator(this.serverAppDir + '/config/blueprints.js', function() {
+			return this.first(/pluralize:\s*\w+/).replaceWith('pluralize : true');
 		}).write();		
   	}
   },
@@ -183,11 +203,13 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 			aid.install('Ember Sails adapter', 'ember-data-sails-adapter');
 	},
 	server: function() {
-		// Copy blueprints into api/blueprints
-		this.directory('blueprints/api', 'server/blueprints/api')
+		if (this.serverFeature('API blueprints')
+			// Copy blueprints into api/blueprints
+			this.directory('blueprints/api', this.serverAppDir + '/blueprints/api')
 
-		// Drop the Ember service from this repository in myproject/api/services		
-		this.copy('server/services/Ember.js', 'server/api/services/Ember.js');
+		if (this.serverFeature('Ember service')
+			// Drop the Ember service from this repository in myproject/api/services		
+			this.copy('server/services/Ember.js', this.serverAppDir + '/api/services/Ember.js');
 	}	
   },
   end: function() {
