@@ -32,24 +32,20 @@ var EmberConfigSyncGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  // TODO: ???
-  writing: {
+  writing: function() {
   	this.template('initializers/ember-sync.js');
   	this.template('initializers/online-store.js');
   	this.template('routes/application.js');
   },
 
   install: {
-    sync: function () {
-      if (!selected('sync')) return;
-      
+    sync: function () {      
       aid.install('Ember sync', 'ember-sync');
     },  
   },
 
   end: function () {
   	aid.info('For more info, please see: https://github.com/kurko/ember-sync');
-    }
   }
 });
 
