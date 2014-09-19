@@ -14,7 +14,6 @@ var EmberConfigSyncGenerator = yeoman.generators.Base.extend({
     selected = aid.containsSelector(this, 'adapters');
   },
 
-  // Choose test framework
   prompting: function () {
     var done = this.async();
 

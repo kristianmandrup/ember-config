@@ -43,7 +43,7 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       // TODO: split up into categoreis: Model, View, Util
       choices: ['i18n', 'moment', 'pagination', 
         'auto-properties', 'data-factory', 'validations', 
-        'date helpers', 'notify'],
+        'date helpers', 'notify', 'pre-render'],
       default: ['i18n', 'moment']
     }];
 
@@ -82,6 +82,11 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
     // https://www.npmjs.org/package/ember-notify
     if (selected('notify'))          
       aid.install('notify', 'ember-notify');
+
+    if (selected('pre-render'))          
+      aid.install('prerender', 'ember-prerender');
+
+
 
   },
   end: function() {
