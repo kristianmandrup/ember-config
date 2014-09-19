@@ -12,28 +12,69 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var sm = require('string-mutator');
-var broc_file = require ('../../lib/broc_file');
+// var broc_file = require ('../../lib/broc_file');
 require('sugar');
 
 var helper    = require('../../lib/aid');
-var sass_file = require('../../lib/sass_file');
-var aid;
-var selected;
+// var sass_file = require('../../lib/sass_file');
+
+var aid, selected;
 
 // https://github.com/JDillon522/ember-foundation-fun
 var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     this.brocFileContent = aid.fileContent('Brocfile.js');
+    selected = aid.eqSelector(this, 'cssType');
 
     // ember-cli convention ;)
-    this.appName = 'App'; // for use in templates
+    this.appName = 'App';
+  },
+
+  prompting: {
+    stylesheeter: function () {
+      var done = this.async();
+
+      // TODO: should detect app is using sass and change default!
+      var prompts = [{
+        type: 'list',
+        name: 'cssType',
+        message: 'Which styling language for foundation would you like?',
+        choices: ['css', 'sass'],
+        default: 'css'
+      }]
+
+      this.prompt(prompts, function (props) {
+        this.cssType = props.cssType;
+
+        done();
+      }.bind(this));
+    },
+    addViews: function () {
+      var done = this.async();
+
+      // TODO: should detect app is using sass and change default!
+      var prompts = [{
+        type: 'confirm',
+        name: 'addViews',
+        message: 'Do you wish to add Ember views for Foundation?',
+        default: false
+      }];
+
+      this.prompt(prompts, function (props) {
+        this.addView = props.addView;
+
+        done();
+      }.bind(this));
+    }
   },
 
   writing: {
     // https://coderwall.com/p/azjwaq
     // see mfeckie
     configureAppView: function () {
+      if (!this.addView) return;
+
       var appView = 'app/views/application.js';
 
       // TODO: allow overwrite option
@@ -44,6 +85,8 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
       this.copy('views/application.js', appView);
     },
     configureIndexView: function () {
+      if (!this.addViews) return;
+
       var indexView = 'app/views/index.js';
       if (!aid.fileExists(indexView)) {
         aid.info(indexView + ' already exists (skipped)');
@@ -53,16 +96,34 @@ var EmberConfigFoundationGenerator = yeoman.generators.Base.extend({
     }
   },
 
-  install: function () {
-    aid.install('foundation', 'ember-foundation');
+  install: {
+    // ember-cli-foundation-sass --save-dev
+    // ember g foundation-sass
+    css: function () {
+      if (selected('css'))
+        aid.install('foundation', 'ember-foundation');
+    },
+    sass: function () {
+      if (!selected('sass')) return;
+      aid.install('foundation');
+      
+      aid.info('Now run: ember g foundation-sass');
+    },
   },
   end: function() {
     aid.success('Zurb Foundation successfully installed :)');
     aid.thickline();
+
     this.log('https://github.com/joshforisha/ember-foundation');
     this.log('See: https://github.com/JDillon522/ember-foundation-fun');
-    aid.info('Running ember-foundation blueprint...');
-    aid.blueprint('ember-foundation');
+
+    if (selected('sass'))
+      aid.generate('ember', ['foundation-sass']);
+
+    if (selected('css')) {
+      aid.info('Running ember-foundation blueprint...');
+      aid.blueprint('ember-foundation');      
+    }
   }
 });
 

@@ -14,7 +14,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     selected    = aid.containsSelector(this, 'features');
-    cssSelected = aid.containsSelector(this, 'cssType'); 
+    cssSelected = aid.eqSelector(this, 'cssType'); 
     this.brocFileContent = aid.fileContent('Brocfile.js');
 
     this.bowerDir = aid.bowerDir(); // for templates
@@ -30,7 +30,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
       name: 'cssType',
       message: 'Which styling language for bootstrap would you like?',
       choices: ['less', 'sass'],
-      default: ['css']
+      default: 'css'
     }, {
       type: 'checkbox',
       name: 'features',
