@@ -23,7 +23,7 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
       type: 'list',
       name: 'auth',
       message: 'Choose your auth framework:',
-      choices: ['simple-auth', 'simple-auth-token', 'torii-auth'],
+      choices: ['simple-auth', 'simple-auth-token', 'torii', 'simple-auth-torii'],
       default: 'simple-auth'
     }];
 
@@ -71,6 +71,16 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
       if (!selected('torii')) return;
       aid.installBower('torii');
       aid.install('torii');
+    },
+
+    simpleAuthTorii: function() {
+      if (!selected('simple-auth-torii')) return;
+      aid.install('simple-auth-torii')
+    }  
+  },
+  end: {
+    simpleAuthTorii: function() {
+      aid.generate('ember', ['ember-cli-simple-auth-torii']); 
     }
   }
 });
