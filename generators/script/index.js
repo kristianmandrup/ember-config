@@ -49,6 +49,9 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
+    aid.info("Please not that EmberScript for CLI is still experimental.")
+    aid.log('http://emberscript.com/');
+
     var prompts = [{
       type: 'list',
       name: 'script',
@@ -167,12 +170,19 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
       aid.thinline();
       switch (this.script) {
         case 'emberscript':
+          this.bold('http://emberscript.com/');
           this.log('See: https://github.com/ghempton/ember-script/');
           aid.thinline();
           this.log('Emberscript editor support:');
           this.log('https://github.com/asux/sublime-ember-script');
           aid.thinline();
-          aid.bold('* Please donate to (or help) with EmberScript to advance the project *');
+
+          aid.log(' - https://github.com/kristianmandrup/ember-cli-emberscript')
+          aid.log(' - https://github.com/ghempton/ember-script/issues/44');
+          aid.thinline();
+          aid.info'Technical details:');
+          aid.log(' - https://github.com/kristianmandrup/ember-script/blob/multicompile/Script-Fragmentation.md')
+
           break;
         case 'livescript':
           this.log('See: livescript.net');
