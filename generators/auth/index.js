@@ -4,34 +4,61 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require('../../lib/aid');
 var aid;
-var selected;
+var selected, provider;
 var index_file = require('../../lib/index_file');
 
 var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);   
-    selected = aid.eqSelector(this, 'auth'); 
+    selected = aid.matchSelector(this, 'auth'); 
+    provider = aid.containsSelector(this, 'provider');
   },
 
   // Choose Auth framework
-  prompting: function () {
-    var done = this.async();
+  prompting: {
+    lib: function () {
+      var done = this.async();
 
-    // https://github.com/jpadilla/ember-cli-simple-auth-token
+      // https://github.com/jpadilla/ember-cli-simple-auth-token
 
-    var prompts = [{
-      type: 'list',
-      name: 'auth',
-      message: 'Choose your auth framework:',
-      choices: ['simple-auth', 'simple-auth-token', 'torii', 'simple-auth-torii'],
-      default: 'simple-auth'
-    }];
+      var prompts = [{
+        type: 'list',
+        name: 'auth',
+        message: 'Choose your auth framework:',
+        choices: ['simple-auth', 'torii'],
+        default: 'simple-auth'
+      }];
 
-    this.prompt(prompts, function (props) {
-      this.auth = props.auth;
+      this.prompt(prompts, function (props) {
+        this.auth = props.auth;
 
-      done();
-    }.bind(this));
+        done();
+      }.bind(this));
+    },
+
+    providers: {
+      simpleAuth: function() {
+        if (!selected('simple-auth')) return;
+        var done = this.async();
+
+        // https://github.com/jpadilla/ember-cli-simple-auth-token
+
+        var prompts = [{
+          type: 'checkbox',
+          name: 'provider',
+          message: "Choose your auth providers for simple auth:",
+          choices: ['oauth2', 'token', 'torii'],
+          default: ['oauth2']
+        }];
+
+        this.prompt(prompts, function (props) {
+          this.auth = props.auth;
+          this.provider = props.provider;
+
+          done();
+        }.bind(this));
+      }
+    }
   },
 
   writing: {
@@ -61,26 +88,31 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
 
       aid.install('simple-auth');
     },
-    simpleAuthToken: function () {
-      if (!selected('simple-auth-token')) return;
+    providers: function () {
+      if (!selected('simple-auth')) return;
 
-      aid.install('simple-auth-token');
+      if (provider('token'))
+        aid.install('simple-auth-token');
+
+      if (provider('oauth2'))
+        aid.install('simple-auth-oauth2');                  
+
+      if (provider('torii'))
+        aid.install('simple-auth-torii')
     },
 
     toriiAuth: function () {
       if (!selected('torii')) return;
       aid.installBower('torii');
       aid.install('torii');
-    },
-
-    simpleAuthTorii: function() {
-      if (!selected('simple-auth-torii')) return;
-      aid.install('simple-auth-torii')
-    }  
+    }
   },
   end: {
-    simpleAuthTorii: function() {
-      aid.generate('ember', ['ember-cli-simple-auth-torii']); 
+    generators: function() {
+      if (provider('torii')) return;
+        aid.generate('ember', ['ember-cli-simple-auth-torii']); 
+
+      // more to follow...
     }
   }
 });
