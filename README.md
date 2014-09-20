@@ -16,6 +16,8 @@ Use this generator to quickly setup your *ember-cli* based *Ember* project :)
 
 _Please help out improve/add sub-generators!_
 
+[your feedback](https://groups.google.com/forum/#!forum/ember-config-generator)
+
 ### Install Yeoman
 
 ![](http://i.imgur.com/JHaAlBJ.png)

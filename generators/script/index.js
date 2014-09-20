@@ -49,7 +49,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    aid.info("Please not that EmberScript for CLI is still experimental.")
+    aid.info("Please note that EmberScript for CLI is still experimental.")
     aid.log('http://emberscript.com/');
 
     var prompts = [{
