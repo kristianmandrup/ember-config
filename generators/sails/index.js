@@ -16,28 +16,29 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 
   prompting: {
 
-	newProject: function () {
-	    var done = this.async();
+  	// TODO: Skip if coming from Sails proj generator!
+		newProject: function () {
+		    var done = this.async();
 
-  		// TODO: If coming from Sails project generator, pass argument to skip this step!
-  		// ===============================================================================
-	    var prompts = [{
-	      type: 'confirm',
-	      name: 'project',
-	      message: 'Do you want to create a new Sails + Ember client/server project?',
-	      choices: ['client', 'server'],
-	      default: false
-	    }];
+	  		// TODO: If coming from Sails project generator, pass argument to skip this step!
+	  		// ===============================================================================
+		    var prompts = [{
+		      type: 'confirm',
+		      name: 'project',
+		      message: 'Do you want to create a new Sails + Ember client/server project?',
+		      choices: ['client', 'server'],
+		      default: false
+		    }];
 
-	    this.prompt(prompts, function (props) {
-	      this.project   	= props.project;
+		    this.prompt(prompts, function (props) {
+		      this.project   	= props.project;
 
-	      if (this.project)
-	      	this.composeWith('ember-config:sailsproj');
+		      if (this.project)
+		      	this.composeWith('ember-config:sailsproj');
 
-	      done();
-	    }.bind(this));		
-	},	
+		      done();
+		    }.bind(this));		
+		},	
 
   	clientOrServer: function() {
 	    var done = this.async();
@@ -194,31 +195,31 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
   // TODO: Should Sails adapter install be moved/integrated with adapters generator!?
   install: {
   	client: function () {
-		if (!stack('client')) return;
-		
-		if (this.blueprints)
-			aid.install('Sails Ember blueprints', 'sails-ember-blueprints');
+			if (!stack('client')) return;
+			
+			if (this.blueprints)
+				aid.install('Sails Ember blueprints', 'sails-ember-blueprints');
 
-		if (this.useAdapter)
-			aid.install('Ember Sails adapter', 'ember-data-sails-adapter');
-	},
-	server: function() {
-		if (this.serverFeature('API blueprints'))
-			// Copy blueprints into api/blueprints
-			this.directory('blueprints/api', this.serverAppDir + '/blueprints/api')
+			if (this.useAdapter)
+				aid.install('Ember Sails adapter', 'ember-data-sails-adapter');
+		},
+		server: function() {
+			if (this.serverFeature('API blueprints'))
+				// Copy blueprints into api/blueprints
+				this.directory('blueprints/api', this.serverAppDir + '/blueprints/api')
 
-		if (this.serverFeature('Ember service'))
-			// Drop the Ember service from this repository in myproject/api/services		
-			this.copy('server/services/Ember.js', this.serverAppDir + '/api/services/Ember.js');
-	}	
+			if (this.serverFeature('Ember service'))
+				// Drop the Ember service from this repository in myproject/api/services		
+				this.copy('server/services/Ember.js', this.serverAppDir + '/api/services/Ember.js');
+		}	
   },
   end: function() {
-	// TODO: ensure only executed when install is complete
-	// aid.info('Please use generator: ember generate cordova-init ' + this.revDomain);	
-	aid.success('Congratz! You have successfully installed Sails with Ember :)');
-	aid.thickline();
-//	this.log('For info on dealing with nested resources:');
-//	this.log('http://answersresource.wordpress.com/tag/sails-js-and-ember-js-nested-associations/');	
+		// TODO: ensure only executed when install is complete
+		// aid.info('Please use generator: ember generate cordova-init ' + this.revDomain);	
+		aid.success('Congratz! You have successfully installed Sails with Ember :)');
+		aid.thickline();
+		//	this.log('For info on dealing with nested resources:');
+		//	this.log('http://answersresource.wordpress.com/tag/sails-js-and-ember-js-nested-associations/');	
   }
 });
 
