@@ -5,8 +5,7 @@ var yeoman = require('yeoman-generator');
 require('sugar');
 
 var helper = require ('../../lib/aid');
-var aid;
-var selected;
+var aid, selected;
 
 var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
   initializing: function () {
@@ -15,26 +14,47 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
   },
 
   // Choose test framework
-  prompting: function () {
-    var done = this.async();
+  prompting: {
+    adapters: function () {
+      var done = this.async();
 
-    var prompts = [{
-      type: 'checkbox',
-      name: 'adapters',
-      message: 'Choose your db/storage adapters',
-      choices: ['firebase', 'localstorage', 'sync'],
-      default: ['localstorage']
-    }];
+      var prompts = [{
+        type: 'checkbox',
+        name: 'adapters',
+        message: 'Choose your db/storage adapters',
+        choices: ['firebase', 'localstorage', 'sync'],
+        default: ['localstorage']
+      }];
 
-    this.prompt(prompts, function (props) {
-      this.adapters = props.adapters;
+      this.prompt(prompts, function (props) {
+        this.adapters = props.adapters;
 
-      done();
-    }.bind(this));
+        done();
+      }.bind(this));
+    },
+    namespace: function() {
+      var done = this.async();
+
+      var prompts = [{
+        type: 'input',
+        name: 'namespace',
+        message: 'What is your local storage namespace',
+        default: 'my-local-storage'
+      }];
+
+      this.prompt(prompts, function (props) {
+        this.namespace = props.namespace;
+
+        done();
+      }.bind(this));
+    }
   },
 
   // TODO: ???
   writing: {
+    localstorage: function() {
+      this.copy('localstorage/application.js', 'app/adapters/application.js');
+    }
   },
 
   install: {
@@ -42,25 +62,20 @@ var EmberConfigAdapterGenerator = yeoman.generators.Base.extend({
       if (!selected('localstorage')) return;
       
       aid.installBow('localstorage', 'ember-localstorage-adapter');
-    },npm install --save ember-sync
-    sync: function () {
-      if (!selected('sync')) return;      
-      this.composeWith('ember-config:sync');      
-    },  
+    }
   },
 
   end: {
+    sync: function () {
+      if (!selected('sync')) return;      
+
+      this.composeWith('ember-config:sync');      
+    },  
     firebase: function () {
       if (!selected('firebase')) return;
       
       this.composeWith('ember-config:firebase');
-
-    },
-    localStorage: function () {
-      if (!selected('localstorage')) return;
-      aid.info('no localstorage pkg integrated');
-      // this.composeWith('ember-config:localstorage');
-    }  
+    }
   }
 });
 
