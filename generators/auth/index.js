@@ -3,6 +3,7 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require('../../lib/aid');
+var broc_file = require ('../../lib/broc_file');
 var aid;
 var selected, provider;
 var index_file = require('../../lib/index_file');
@@ -98,7 +99,20 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
       index_file(function() {
         return this.last(envMatchExpr).append(authorizeJs);
       }).write();      
-    }    
+    },
+
+    authorization: function() {
+      if (!authorization('permit-authorize')) return;
+      
+      var jsImport = "app.import('" + this.bowerDir + "/permit-authorize/permit-authorize.js');";   
+
+      if (this.brocFileContent.has(jsImport)) return;
+
+      broc_file(function() {
+        return this.last('module.exports').prepend(jsImport + '\n');  
+      }).write();
+      aid.info('Permit Authorize javascript configured');
+
   },
 
   install: {
@@ -124,6 +138,11 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
       if (!selected('torii')) return;
       aid.installBower('torii');
       aid.install('torii');
+    },
+    authorization: function() {
+      if (!authorization('permit-authorize')) return;
+      aid.installBower('permit-authorize');
+      aid.info('See: https://www.npmjs.org/package/permit-authorize');      
     }
   },
   end: {
@@ -134,8 +153,7 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
     },
     authorization: function() {
       aid.bold('Authorization:');
-      aid.info(' - lib:     https://www.npmjs.org/package/permit-authorize');
-      aid.info(' - helpers: http://livsey.org/blog/2012/10/16/writing-a-helper-to-check-permissions-in-ember-dot-js/');
+      this.log(' - helpers: http://livsey.org/blog/2012/10/16/writing-a-helper-to-check-permissions-in-ember-dot-js/');
     }
   }
 });
