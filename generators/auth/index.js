@@ -10,8 +10,9 @@ var index_file = require('../../lib/index_file');
 var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);   
-    selected = aid.matchSelector(this, 'auth'); 
-    provider = aid.containsSelector(this, 'provider');
+    selected      = aid.matchSelector(this, 'auth'); 
+    provider      = aid.containsSelector(this, 'provider');
+    authorization = aid.eqSelector(this, 'authorization');
   },
 
   // Choose Auth framework
@@ -56,7 +57,27 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
 
         done();
       }.bind(this));
-    }
+    },
+
+    authorization: function() {
+      var done = this.async();
+
+      // https://github.com/jpadilla/ember-cli-simple-auth-token
+
+      var prompts = [{
+        type: 'list',
+        name: 'authorization',
+        message: "Choose your authorization library",
+        choices: ['none', 'permit-authorize'],
+        default: 'none'
+      }];
+
+      this.prompt(prompts, function (props) {
+        this.authorization = props.authorization;
+
+        done();
+      }.bind(this));
+    }    
   },
 
   writing: {
@@ -109,8 +130,12 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
     generators: function() {
       if (provider('torii')) return;
         aid.generate('ember', ['ember-cli-simple-auth-torii']); 
-
       // more to follow...
+    },
+    authorization: function() {
+      aid.bold('Authorization:');
+      aid.info(' - lib:     https://www.npmjs.org/package/permit-authorize');
+      aid.info(' - helpers: http://livsey.org/blog/2012/10/16/writing-a-helper-to-check-permissions-in-ember-dot-js/');
     }
   }
 });
