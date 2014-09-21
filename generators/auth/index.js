@@ -142,6 +142,9 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
     authorization: function() {
       if (!authorization('permit-authorize')) return;
       aid.installBower('permit-authorize');
+
+      this.copy('authorize/can-helper.js', 'helpers/can-helper.js');
+
       aid.info('See: https://www.npmjs.org/package/permit-authorize');      
     }
   },
