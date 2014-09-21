@@ -5,8 +5,8 @@ import Ember from 'ember';
 var get = Ember.get; 
 var normalizePath = Ember.Handlebars.normalizePath;
 
-// Ability is exposed by permit-authorizer
-import Ability from 'permit-authorizer';
+// Ability should be exposed by permit-authorizer as ES6 module
+// import Ability from 'permit-authorizer-es6';
 
 var ability = (user) ->
   new Ability(user)
