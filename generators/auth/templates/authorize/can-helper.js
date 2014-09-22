@@ -8,10 +8,25 @@ var normalizePath = Ember.Handlebars.normalizePath;
 // Ability should be exposed by permit-authorizer as ES6 module
 // import Ability from 'permit-authorizer-es6';
 
+// SimpleAuth example here
+// http://ember-simple-auth.simplabs.com/ember-simple-auth-api-docs.html#SimpleAuth-Session    
+// http://stackoverflow.com/questions/24319186/custom-authenticator-with-ember-simple-auth-ember-cli
+// http://log.simplabs.com/post/53016599611/authentication-in-ember-js
+
+// https://gist.github.com/ivanvanderbyl/4560416
+
+App.Permission = Ember.Object.extend({
+  content: null,
+  // one-way bind to changes in App.currentUser (see authorize/initializers.js)
+  currentUserBinding: Ember.Binding.oneWay("App.currentUser");
+});
+
+
 var ability = (user) ->
   new Ability(user)
 
-var currentAbility = ability(currentUser);
+// define currentUser
+var currentAbility = ability(App.Permission.currentUser);
 
 userCan = (accessRequest) ->
   currentAbility.can accessRequest
