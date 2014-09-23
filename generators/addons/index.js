@@ -41,9 +41,17 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       message: 'Which addons would you like to add?',
 
       // TODO: split up into categoreis: Model, View, Util
-      choices: ['i18n', 'moment', 
-        'auto-properties', 'data-factory', 'validations', 
-        'date helpers', 'notify', 'pre-render'],
+      choices: [
+        'i18n', 
+        'moment', 
+        'auto-properties', 
+        'data-factory', 
+        'validations', 
+        'validatable', 
+        'date helpers', 
+        'notify', 
+        'pre-render'
+      ],
       default: ['i18n', 'moment']
     }];
 
@@ -71,8 +79,11 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       aid.install('data-factory', 'ember-data-factory');
 
     if (selected('validations'))    
-      aid.install('validations', 'ember-validations');
+      aid.install('ember-validations');
 
+    if (selected('validatable'))    
+      aid.install('validatable', 'ember-validatable');
+        
     if (selected('date helpers'))          
       aid.install('dates');
 
