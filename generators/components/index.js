@@ -26,8 +26,21 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'components',
       message: 'Choose individual components',
-      choices: ['date picker', 'list view', 'radio buttons', 'table', 'pagination'],
-      default: ['date picker']
+      choices: [
+        'date picker',         
+        'list view', 
+        'radio buttons', 
+        'table', 
+        'pagination',
+        'gravatar',
+        'color picker',
+        'tooltip',
+        'split view',
+        "drag'n drop",
+        'spinner',
+        'weather icons'
+      ],
+      default: ['date picker', 'list view']
     }];
 
     this.prompt(prompts, function (props) {
@@ -63,7 +76,40 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
         aid.install('date picker', 'ember-cli-datepicker');  
 
       if (selected('pagination'))        
-        aid.install('pagination');              
+        aid.install('pagination');       
+
+      if (selected('tooltip'))        
+        aid.install('tooltip');       
+
+      if (selected('spinner'))        
+        aid.install('spinjs'); 
+
+      if (selected('split view')) {
+        aid.install('split view', 'ember-split-view'); 
+
+        aid.info(' - info @ https://www.npmjs.org/package/ember-split-view');
+        aid.bold(' - demo @ http://bryanhunt.github.io/ember-split-view/vertical');        
+      }        
+
+      if (selected("drag'n drop"))        
+        aid.install("drag'n drop", 'ember-cli-dnd');       
+
+      if (selected('weather icons'))        
+        aid.install('weather-icons');
+
+      if (selected('code snippet'))        
+        aid.install('code snippet', 'ember-code-snippet');
+      
+      if (selected('gravatar')) {
+        aid.installBow('md5', 'JavaScript-MD5'); 
+        aid.install('gravatar');
+        aid.info('https://www.npmjs.org/package/ember-cli-gravatar');      
+      }
+
+      if (selected('color picker')) {
+        aid.install('color picker', 'ember-colpick');
+        aid.info('https://www.npmjs.org/package/ember-colpick');
+      }               
     }       
   },
   end: {

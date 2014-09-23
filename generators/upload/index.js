@@ -24,7 +24,7 @@ var EmberConfigUploadGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'uploaders',
       message: 'Choose one or more uploader addons',
-      choices: ['uploader', 'droplet', 'upload'],
+      choices: ['uploader', 'droplet', 'upload', 's3-publisher'],
       default: ['uploader']
     }];
 
@@ -75,7 +75,11 @@ var EmberConfigUploadGenerator = yeoman.generators.Base.extend({
     	if (!selected('uploader')) return;
     	// bower install ember-uploader --save	
     	aid.installBow('Uploader', 'ember-uploader');   
-    }    
+    },
+
+    s3: function() {
+      aid.install('s3-publisher', 'ember-publisher');
+    }        
   },
   end: {
     droplet: function() {

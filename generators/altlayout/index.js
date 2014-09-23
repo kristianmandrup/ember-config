@@ -20,7 +20,7 @@ var EmberConfigAltLayoutGenerator = yeoman.generators.Base.extend({
         name: 'layout',
         message: 'Choose an alternative layout framework',
         // TODO: 'ui-kit', 'bootflat' , 'cascade', 'skeleton'
-        choices: ['flat-ui', 'brick'], 
+        choices: ['flat-ui', 'brick', 'topcoat'], 
         default: 'flat-ui'
       }];  
 
@@ -39,6 +39,11 @@ var EmberConfigAltLayoutGenerator = yeoman.generators.Base.extend({
   },
 
   install: {
+    topcoat: function() {
+      if (!this.layout == 'topcoat') return;
+      aid.install('topcoat', 'ember-cli-topcoat');
+    }
+    
   },
   end: function () {
     switch (this.layout) {
@@ -50,7 +55,9 @@ var EmberConfigAltLayoutGenerator = yeoman.generators.Base.extend({
         break;   
       case 'brick':
         this.composeWith('ember-config:brick');
-        break;                   
+        break;     
+      case 'topcoat':                      
+        break;
       default:        
         aid.info('Sorry! generator for layout framework ' + this.layout + ' not yet implemented...');
     }    

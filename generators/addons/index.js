@@ -44,13 +44,15 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       choices: [
         'i18n', 
         'moment', 
-        'auto-properties', 
-        'data-factory', 
+        'moment timezone',
+        'auto properties', 
+        'data factory', 
         'validations', 
         'validatable', 
         'date helpers', 
         'notify', 
-        'pre-render'
+        'pre-render',
+        'ic ajax'
       ],
       default: ['i18n', 'moment']
     }];
@@ -70,13 +72,16 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       aid.install('i18n', 'ember-i18n');
 
     if (selected('moment'))
-      aid.install('moment');    
+      aid.install('moment');  
 
-    if (selected('auto-properties'))    
-      aid.install('auto-properties', 'ember-auto');
+    if (selected('moment timezone'))
+      aid.install('moment-timezone');  
 
-    if (selected('data-factory'))    
-      aid.install('data-factory', 'ember-data-factory');
+    if (selected('auto properties'))    
+      aid.install('auto properties', 'ember-auto');
+
+    if (selected('data factory'))    
+      aid.install('data factory', 'ember-data-factory');
 
     if (selected('validations'))    
       aid.install('ember-validations');
@@ -91,11 +96,11 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
     if (selected('notify'))          
       aid.install('notify', 'ember-notify');
 
+    if (selected('ic ajax'))          
+      aid.install('ic-ajax');
+
     if (selected('pre-render'))          
       aid.install('prerender', 'ember-prerender');
-
-
-
   },
   end: function() {
     aid.info('Please also add support for ember-easyForms ;)')

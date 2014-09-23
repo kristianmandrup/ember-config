@@ -119,6 +119,7 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
       if (!selected('simple-auth')) return;
 
       aid.install('simple-auth');
+      aid.install('simple-auth-testing');
     },
     providers: function () {
       if (!selected('simple-auth')) return;
