@@ -17,15 +17,15 @@ var EmberConfigGesturesGenerator = yeoman.generators.Base.extend({
 
     var prompts = [
     {
-      type: 'list',
-      name: 'framworks',
+      type: 'checkbox',
+      name: 'frameworks',
       message: 'Which gesture frameworks would you like?',
       choices: ['Quo', 'Hammer', 'touchy', 'touch swipe', 'jester', 'thumbs'],
       default: ['Hammer']
     }];
 
     this.prompt(prompts, function (props) {
-      this.framworks    = props.framworks;
+      this.frameworks    = props.frameworks;
 
       done();
     }.bind(this));
@@ -37,21 +37,18 @@ var EmberConfigGesturesGenerator = yeoman.generators.Base.extend({
   install: {
   	hammer:  function() {
   		if (!selected('Hammer')) return;          	
-  		// this.install('hammer', 'hammerjs');
-  		this.installBower('hammer', 'hammerjs');  		
+  		aid.installBow('hammer', 'hammerjs');  		
 
-  		this.copy('templates/hammer/hammer-link.js', 'app/views/reopen/hammer-view'); // view  		
-  		this.copy('templates/hammer/hammer-swipe.js', 'app/views/reopen/hammer-swipe');
-  		this.copy('templates/hammer/hammer-link.js', 'app/views/reopen/hammer-link'); // view
-  		this.copy('templates/hammer/hammer-event-dispatcher.js', 'app/events/reopen/hammer-event-dispatcher');
+  		this.copy('hammer/hammer-link.js', 'app/views/reopen/hammer-view'); // view  		
+  		this.copy('hammer/hammer-swipe.js', 'app/views/reopen/hammer-swipe');
+  		this.copy('hammer/hammer-link.js', 'app/views/reopen/hammer-link'); // view
+  		this.copy('hammer/hammer-event-dispatcher.js', 'app/events/reopen/hammer-event-dispatcher');
 
   		aid.info('See http://hammerjs.github.io/');
-  	},
-  	: 
-  	
-	quo:  function() {
+  	},  	
+	  quo:  function() {
   		if (!selected('Quo')) return;          	
-  		this.install('QuoJS', 'QuoJS');
+  		aid.install('QuoJS', 'QuoJS');
   		aid.info('See http://quojs.tapquo.com/');
   	},
 
@@ -66,14 +63,14 @@ var EmberConfigGesturesGenerator = yeoman.generators.Base.extend({
   		aid.info('See http://touchyjs.org');
   	},
   	touchSwipe: function() {
-		if (!selected('touch swipe')) return;        
+		  if (!selected('touch swipe')) return;        
   		aid.installBower('Touch Swipe', 'jquery-touchswipe');
   		aid.info('See http://labs.rampinteractive.co.uk/touchSwipe/demos');
   	},  	
     jester: function() {
-      	if (!selected('jester')) return;        
-		this.copy('vendor/jester.js', this.bowerDir + '/jester/jester.js');
-		aid.info('See https://github.com/plainview/Jester');
+      if (!selected('jester')) return;        
+		  this.copy('vendor/jester.js', this.bowerDir + '/jester/jester.js');
+		  aid.info('See https://github.com/plainview/Jester');
     },
   },
   end: function () {

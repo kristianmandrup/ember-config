@@ -5,7 +5,7 @@ var yeoman = require('yeoman-generator');
 var helper = require('../../lib/aid');
 var broc_file = require ('../../lib/broc_file');
 var aid;
-var selected, provider;
+var selected, authorization, provider;
 var index_file = require('../../lib/index_file');
 
 var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
@@ -53,7 +53,6 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
       }];
 
       this.prompt(prompts, function (props) {
-        this.auth = props.auth;
         this.provider = props.provider;
 
         done();
@@ -106,13 +105,13 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
       
       var jsImport = "app.import('" + this.bowerDir + "/permit-authorize/permit-authorize.js');";   
 
-      if (this.brocFileContent.has(jsImport)) return;
+      if (aid.brocFileContent().has(jsImport)) return;
 
       broc_file(function() {
         return this.last('module.exports').prepend(jsImport + '\n');  
       }).write();
       aid.info('Permit Authorize javascript configured');
-
+    }
   },
 
   install: {
@@ -151,7 +150,7 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
   end: {
     generators: function() {
       if (provider('torii')) return;
-        aid.generate('ember', ['ember-cli-simple-auth-torii']); 
+      aid.generate('ember', ['ember-cli-simple-auth-torii']); 
       // more to follow...
     },
     authorization: function() {

@@ -180,7 +180,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
           aid.log(' - https://github.com/kristianmandrup/ember-cli-emberscript')
           aid.log(' - https://github.com/ghempton/ember-script/issues/44');
           aid.thinline();
-          aid.info'Technical details:');
+          aid.info('Technical details:');
           aid.log(' - https://github.com/kristianmandrup/ember-script/blob/multicompile/Script-Fragmentation.md')
 
           break;

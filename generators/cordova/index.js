@@ -65,6 +65,6 @@ var EmberConfigCordovaGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = EmberConfigMobileGenerator;
+module.exports = EmberConfigCordovaGenerator;
 
 

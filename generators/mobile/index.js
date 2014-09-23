@@ -3,7 +3,7 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require ('../../lib/aid');
-var aid, selected;
+var aid, selected, selFeatures;
 
 var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
   initializing: function () {
@@ -49,16 +49,16 @@ var EmberConfigMobileGenerator = yeoman.generators.Base.extend({
   },
 
   install: {
-    ratchet: {
+    ratchet: function() {
       if (!selected('ratchet')) return;        
       this.composeWith('ember-config:ratchet');
     },
-    kikApp: {
+    appJs: function()  {
       if (!selected('app.js')) return;        
       this.composeWith('ember-config:kikapp');
     }    
   },
-  end: function () {
+  end: {
     cordova: function () {
       if (!this.cordova) return;
       this.composeWith('ember-config:cordova');

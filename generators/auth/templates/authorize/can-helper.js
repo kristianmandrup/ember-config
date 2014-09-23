@@ -2,9 +2,6 @@
 
 import Ember from 'ember';
 
-var get = Ember.get; 
-var normalizePath = Ember.Handlebars.normalizePath;
-
 // Ability should be exposed by permit-authorizer as ES6 module
 // import Ability from 'permit-authorizer-es6';
 
@@ -15,21 +12,32 @@ var normalizePath = Ember.Handlebars.normalizePath;
 
 // https://gist.github.com/ivanvanderbyl/4560416
 
+// ember-cli: Non-AMD assets cannot be accessed as an ES6 module, you simply access them through the global variable that they export.
+
+// permitAuthorize should 
+import { Ability  } from 'permit-authorize';
+
+var Ability   = permitAuthorize.Ability;
+var permitFor = permitAuthorize.permitFor
+
 App.Permission = Ember.Object.extend({
-  content: null,
   // one-way bind to changes in App.currentUser (see authorize/initializers.js)
-  currentUserBinding: Ember.Binding.oneWay("App.currentUser");
+  currentUserBinding: Ember.Binding.oneWay("App.currentUser"),
+
+  _ability: null,  
+  ability: function (user) {
+    return new Ability(user)
+  },
+  currentAbility: function() {
+    this._ability = this._ability || this.ability(this.currentUser)
+    return this._ability
+  },
+  userCan: function (accessRequest) {
+    return currentAbility().can(accessRequest);
+  }
 });
 
 
-var ability = (user) ->
-  new Ability(user)
-
-// define currentUser
-var currentAbility = ability(App.Permission.currentUser);
-
-userCan = (accessRequest) ->
-  currentAbility.can accessRequest
 
 // if userCan action: 'read', subject: book
 
@@ -40,13 +48,19 @@ userCan = (accessRequest) ->
 
 Handlebars.registerHelper('can', function(action, subject, options){
   options = options || {}
+
+  // use routing info as context
+  // contains information about the current Ember route including its context (read: model), 
+  // it also contains similar information for all parent routes
+  var ctx = Ember.merge(App.Router.router.currentHandlerInfos, options);
   var accessRequest = Ember.merge({
     action: action, 
-    subject: subject
-  }, options);
+    subject: subject,
+    ctx: ctx
+  });
 
   // find & create the permission with the supplied attributes
-  permission = userCan(accessRequest)
+  permission = App.Permission.userCan(accessRequest)
 
   // bind it all together and kickoff the observers
   return Ember.Handlebars.helpers.boundIf.call(permission, "can", options);

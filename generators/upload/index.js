@@ -24,7 +24,7 @@ var EmberConfigUploadGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'uploaders',
       message: 'Choose one or more uploader addons',
-      choices: ['uploader', 'droplet', 'upload']
+      choices: ['uploader', 'droplet', 'upload'],
       default: ['uploader']
     }];
 
@@ -66,7 +66,7 @@ var EmberConfigUploadGenerator = yeoman.generators.Base.extend({
     	this.copy('uploader/s3-uploader.js', 'app/components/s3-uploader.js');
     }
   },
-  install: 
+  install: {
   	droplet: function () {
   		if (!selected('droplet')) return;
     	aid.installBow('Droplet', 'ember-droplet');   
@@ -78,12 +78,12 @@ var EmberConfigUploadGenerator = yeoman.generators.Base.extend({
     }    
   },
   end: {
-  	droplet: function() {
+    droplet: function() {
 	  	if (!selected('droplet')) return;
 	    aid.success('Droplet successfully installed :)');  	
 	    aid.thickline();
 	    aid.info(' - https://github.com/Wildhoney/EmberDroplet');		    
-	},
+    },
     upload: function () {
 		if (!selected('upload')) return;		    	
     	aid.log('Please see https://github.com/kelonye/ember-upload')
@@ -91,17 +91,17 @@ var EmberConfigUploadGenerator = yeoman.generators.Base.extend({
     	aid.warning('currently no installer...');
     },
 
-	uploader: function() {
-	  	if (!selected('uploader')) return;		
-		aid.info('https://github.com/benefitcloud/ember-uploader');
-	}
-	general: function() {
-		aid.thinline();
-		this.log(' - http://spin.atomicobject.com/2014/01/15/client-side-file-processing-ember-js/');
-		this.log(' - https://medium.com/@ryakh/drag-and-drop-file-uploads-with-ember-js-e5483e1544d');
-	    this.log(' - https://github.com/workmanw/embernati-upload-demo');
-	    this.log(' - https://www.youtube.com/watch?v=7Z3HCTFFCKc'); 
-	}
+  	uploader: function() {
+  	  	if (!selected('uploader')) return;		
+  		aid.info('https://github.com/benefitcloud/ember-uploader');
+  	},
+  	general: function() {
+  		aid.thinline();
+  		this.log(' - http://spin.atomicobject.com/2014/01/15/client-side-file-processing-ember-js/');
+      this.log(' - https://medium.com/@ryakh/drag-and-drop-file-uploads-with-ember-js-e5483e1544d');
+      this.log(' - https://github.com/workmanw/embernati-upload-demo');
+      this.log(' - https://www.youtube.com/watch?v=7Z3HCTFFCKc'); 
+  	}
   }
 });
 
