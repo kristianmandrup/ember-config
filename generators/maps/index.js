@@ -34,8 +34,9 @@ var EmberConfigMapsGenerator = yeoman.generators.Base.extend({
   install: {
     leaflet: function () {      
       if (!selected('leaflet')) return;
-      aid.install('Leaflet', 'ember-leaflet');
+      aid.install('ember-leaflet');
       aid.info('http://leafletjs.com/');
+      aid.log('https://www.devmynd.com/blog/2014-1-using-emberleaflet-with-google-maps')
     },  
   },
 

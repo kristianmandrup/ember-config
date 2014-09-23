@@ -38,6 +38,7 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
         'split view',
         "drag'n drop",
         'spinner',
+        'star rating',
         'weather icons'
       ],
       default: ['date picker', 'list view']
@@ -79,7 +80,10 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
         aid.install('pagination');       
 
       if (selected('tooltip'))        
-        aid.install('tooltip');       
+        aid.install('tooltip'); 
+
+      if (selected('star rating'))        
+        aid.install('star-rating'); 
 
       if (selected('spinner'))        
         aid.install('spinjs'); 

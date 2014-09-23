@@ -18,7 +18,7 @@ var EmberConfigRoutingGenerator = yeoman.generators.Base.extend({
 
     var prompts = [{
       type: 'checkbox',
-      name: 'maps',
+      name: 'routing',
       message: 'Select your map library',
       choices: [
         'auto router',
