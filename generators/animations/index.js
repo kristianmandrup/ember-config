@@ -16,15 +16,15 @@ var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
 
     var prompts = [
     {
-      type: 'list',
-      name: 'framworks',
+      type: 'checkbox',
+      name: 'frameworks',
       message: 'Which animation frameworks would you like?',
-      choices: ['liquidfire', 'velocity'],
-      default: ['liquidfire']
+      choices: ['liquid fire', 'velocity'],
+      default: ['liquid fire']
     }];
 
     this.prompt(prompts, function (props) {
-      this.framworks    = props.framworks;
+      this.frameworks    = props.frameworks;
 
       done();
     }.bind(this));
@@ -34,14 +34,14 @@ var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
   },
 
   install: {
-    velocity: {
+    velocity: function() {
       if (!selected('velocity')) return;        
       aid.install('velocity');
     },
-    liquidFire: {
-      if (!selected('kik app')) return;        
+    liquidFire: function() {
+      if (!selected('liquid fire')) return;        
       // this.composeWith('ember-config:liquidfire');
-      aid.install('liquid-fire', 'liquid-fire');
+      aid.install('liquid fire', 'liquid-fire');
       aid.bold('See http://ef4.github.io/liquid-fire');
     }    
   },
