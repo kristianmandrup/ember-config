@@ -54,6 +54,8 @@ var EmberConfigChartsGenerator = yeoman.generators.Base.extend({
   },
 
   end: function () {    
+    aid.thinline();
+    aid.log('more Ember chart tips: http://heyjinjs.us/post/57158250642/reusable-d3-charts-with-ember-js-components');    
   }
 });
 
