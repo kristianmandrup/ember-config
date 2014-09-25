@@ -18,13 +18,14 @@ var EmberConfigChartsGenerator = yeoman.generators.Base.extend({
 
     aid.info('chart:  - https://www.npmjs.org/package/ember-cli-chart');
     aid.info('charts: - https://github.com/Addepar/ember-charts');
+    aid.info('dc:     - https://github.com/andrewreedy/ember-dc');
 
     var prompts = [{
       type: 'checkbox',
       name: 'charts',
       message: 'Select your chart libraries',
-      choices: ['chart', 'charts'],
-      default: ['chart']
+      choices: ['chart', 'charts', 'dc'],
+      default: ['chart', 'dc']
     }];
 
     this.prompt(prompts, function (props) {
@@ -44,7 +45,12 @@ var EmberConfigChartsGenerator = yeoman.generators.Base.extend({
     charts: function () {      
       if (!selected('charts')) return;
       aid.installBow('charts', 'ember-charts');
-    }     
+    },
+
+    dc: function () {      
+      if (!selected('dc')) return;
+      aid.installBow('dc', 'ember-dc');
+    }    
   },
 
   end: function () {    
