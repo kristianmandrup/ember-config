@@ -95,16 +95,26 @@ Additionally, the following configurators are available:
 - Adapters (firebase, emberfire, fireplace)
 - Fonts (awesome, ...)
 - Components 
-	- libs (ember, bootstrap, forms)
-	- individual (pagination, , ...)
+	- libs (ember, bootstrap)
+	- individual (pagination, ...)
 - Mobile (cordova, ratchet, appjs)
 - Auth (simple-auth)
+- Forms (easyForms, forms, ...)
+- Validation (validations, validatable, ...)
+- Routing (auto routes, ...)
+- Templating (emblem)
+
 - Addons (i18n, validation, ...)
 - Libs (pour-over, ...)
 - ES6 harmony (esnext)
+
 - Animations (liquid-fire, velocity)
 - Gestures (hammer, touchy, ... )
 - Upload (uploader, droplet, ...)
+- Charts (charts, dc-D3)
+- Maps (leaflet)
+- Time (moment, moment timezone, date helpers, ...)
+
 - Sails full stack app :)
 
 The App config generator will invoke a sub-generator for each.
