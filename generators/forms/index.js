@@ -10,8 +10,7 @@ var aid, selected;
 var EmberConfigFormsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    form       = aid.containsSelector(this, 'forms');
-    validation = aid.containsSelector(this, 'validations');
+    selected   = aid.containsSelector(this, 'forms');
   },
 
   prompting: { 
@@ -24,7 +23,7 @@ var EmberConfigFormsGenerator = yeoman.generators.Base.extend({
         message: 'Select your forms library',
         choices: [
           'easy forms', 
-          'forms',
+          'forms'
         ],
         default: ['easy forms']
       }];
@@ -35,52 +34,20 @@ var EmberConfigFormsGenerator = yeoman.generators.Base.extend({
         done();
       }.bind(this));
     },
-    // TODO: separate generator initiated from here?
-    validations: function () {
-      var done = this.async();
-
-      var prompts = [{
-        type: 'checkbox',
-        name: 'validations',
-        message: 'Select your validations library',
-        choices: [
-          'easy validations'
-          'validations', 
-          'validatable',         
-        ],
-        default: ['easy validations']
-      }];
-
-      this.prompt(prompts, function (props) {
-        this.validations = props.validations;
-
-        done();
-      }.bind(this));
-    }
   },
 
   install: {
     forms: function () {      
-      if (form('easy forms'))      
+      if (selected('easy forms'))      
         aid.install('easy forms', 'ember-easyforms-cli');
 
-      if (form('forms'))
+      if (selected('forms'))
         aid.installBow('forms', 'ember-forms');
-    },
-    validations: function () {      
-      if (validation('easy validations'))
-        aid.install('easy validations', 'ember-validations-cli');
-
-      if (selected('validations'))    
-        aid.install('ember-validations');
-
-      if (selected('validatable'))    
-        aid.install('validatable', 'ember-validatable');
-
-    }    
+    }
   },
 
   end: function () {    
+    this.composeWith('ember-config:validations');
   }
 });
 
