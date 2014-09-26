@@ -20,7 +20,7 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'componentLibs',
       message: 'Choose your components framework',
-      choices: ['bootstrap for ember', 'ember components', 'forms'],
+      choices: ['bootstrap for ember', 'ember components'],
       default: ['ember components']
     }, {
       type: 'checkbox',
@@ -57,10 +57,7 @@ var EmberConfigComponentsGenerator = yeoman.generators.Base.extend({
       if (libSelected('bootstrap for ember'))
         aid.install('bootstrap');
       if (libSelected('ember components'))
-        aid.install('components');  
-
-    if (selected('forms'))
-      aid.installBow('forms', 'ember-forms');
+        aid.install('components');        
     },
     components: function() {
       // TODO: For some reason these are not yet published on npm ;()

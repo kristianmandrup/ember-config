@@ -43,18 +43,12 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       // TODO: split up into categoreis: Model, View, Util
       choices: [
         'i18n', 
-        'moment', 
-        'moment timezone',
         'auto properties', 
-        'data factory', 
-        'validations', 
-        'validatable', 
-        'date helpers', 
         'notify', 
         'pre-render',
         'ic ajax'
       ],
-      default: ['i18n', 'moment']
+      default: ['i18n']
     }];
 
     this.prompt(prompts, function (props) {
@@ -71,27 +65,9 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
     if (selected('i18n'))    
       aid.install('i18n', 'ember-i18n');
 
-    if (selected('moment'))
-      aid.install('moment');  
-
-    if (selected('moment timezone'))
-      aid.install('moment-timezone');  
-
     if (selected('auto properties'))    
       aid.install('auto properties', 'ember-auto');
-
-    if (selected('data factory'))    
-      aid.install('data factory', 'ember-data-factory');
-
-    if (selected('validations'))    
-      aid.install('ember-validations');
-
-    if (selected('validatable'))    
-      aid.install('validatable', 'ember-validatable');
         
-    if (selected('date helpers'))          
-      aid.install('dates');
-
     // https://www.npmjs.org/package/ember-notify
     if (selected('notify'))          
       aid.install('notify', 'ember-notify');

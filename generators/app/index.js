@@ -10,7 +10,7 @@ var selected;
 var availableConfigs = [
   'script', 'css', 'templating', 'layout', 'routing', 'test', 'sails', 'adapters', 
   'mobile', 'forms', 'fonts', 'components', 'auth', 'addons', 'libs', 'animations', 
-  'upload', 'charts', 'maps'];
+  'upload', 'charts', 'maps', 'time'];
 
 var endScripts = {};
 availableConfigs.forEach(function(config) {

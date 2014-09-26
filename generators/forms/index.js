@@ -10,44 +10,77 @@ var aid, selected;
 var EmberConfigFormsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
-    selected = aid.containsSelector(this, 'forms');
+    form       = aid.containsSelector(this, 'forms');
+    validation = aid.containsSelector(this, 'validations');
   },
 
-  prompting: function () {
-    var done = this.async();
+  prompting: { 
+    forms: function () {
+      var done = this.async();
 
-    var prompts = [{
-      type: 'checkbox',
-      name: 'forms',
-      message: 'Select your map library',
-      choices: ['easy forms', 'validations'],
-      default: ['easy forms', 'validations']
-    }];
+      var prompts = [{
+        type: 'checkbox',
+        name: 'forms',
+        message: 'Select your forms library',
+        choices: [
+          'easy forms', 
+          'forms',
+        ],
+        default: ['easy forms']
+      }];
 
-    this.prompt(prompts, function (props) {
-      this.maps = props.maps;
+      this.prompt(prompts, function (props) {
+        this.forms = props.forms;
 
-      done();
-    }.bind(this));
+        done();
+      }.bind(this));
+    },
+    // TODO: separate generator initiated from here?
+    validations: function () {
+      var done = this.async();
+
+      var prompts = [{
+        type: 'checkbox',
+        name: 'validations',
+        message: 'Select your validations library',
+        choices: [
+          'easy validations'
+          'validations', 
+          'validatable',         
+        ],
+        default: ['easy validations']
+      }];
+
+      this.prompt(prompts, function (props) {
+        this.validations = props.validations;
+
+        done();
+      }.bind(this));
+    }
   },
 
   install: {
-    easyForms: function () {      
-      if (!selected('easy forms')) return;
-      aid.install('easy forms', 'ember-easyforms-cli');
+    forms: function () {      
+      if (form('easy forms'))      
+        aid.install('easy forms', 'ember-easyforms-cli');
+
+      if (form('forms'))
+        aid.installBow('forms', 'ember-forms');
     },
     validations: function () {      
-      if (!selected('validations')) return;
-      aid.install('validations', 'ember-validations-cli');
+      if (validation('easy validations'))
+        aid.install('easy validations', 'ember-validations-cli');
+
+      if (selected('validations'))    
+        aid.install('ember-validations');
+
+      if (selected('validatable'))    
+        aid.install('validatable', 'ember-validatable');
+
     }    
   },
 
   end: function () {    
-    // aid.info('Ember google maps: https://gist.github.com/ZogStriP/5684983');
-    // aid.info('Ember map demo app: https://github.com/samwich/ember-map-demo');
-    // aid.thinline();
-    // aid.log('Writing Ember google maps component: http://strongpoint.io/blog/2014/07/28/ember-js-writing-google-maps-component-part-1');
-    // aid.log('http://strongpoint.io/blog/2014/08/27/ember-js-writing-google-maps-component-part-2');
   }
 });
 
