@@ -15,4 +15,9 @@ App.SailsRESTAdapter = DS.SailsRESTAdapter.example({
   }
 });
 
-export default App.SailsRESTAdapter;
+export default DS.RESTAdapter.extend({
+  coalesceFindRequests: true,   // these blueprints support coalescing (reduces the amount of requests)
+  namespace: '/',               // same as API prefix in Sails config
+  host: 'http://localhost:1337' // Sails server
+});
+
