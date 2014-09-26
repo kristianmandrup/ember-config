@@ -4,13 +4,13 @@
 
 ## Getting Started
 
-Use this generator to quickly setup your *ember-cli* based *Ember* project :)
+Use this generator to quickly setup your *ember-cli* based *Ember* project:
 
-*Limit*
+*Limit having to:*
 
-- Copy/paste to configure your project for asset compilers etc.
-- Having to hunt down which `npm` or `bower` commands to execute
-- Having to manually link all the pieces correctly together in various files
+- copy/paste configure your project for asset compilers etc.
+- discover which install commands to execute when choosing a library
+- manually link all the pieces correctly together
 
 *Configure and Enjoy!!*
 
@@ -19,8 +19,6 @@ _Please help out improve/add sub-generators!_
 [your feedback](https://groups.google.com/forum/#!forum/ember-config-generator)
 
 ### Install Yeoman
-
-![](http://i.imgur.com/JHaAlBJ.png)
 
 ```bash
 npm install -g yo
@@ -38,6 +36,18 @@ Start the generator!
 yo ember-config
 ```
 
+See which sub-generators are available
+
+```bash
+yo ember-config --help
+```
+
+Start a sub-generator of your choice
+
+```bash
+yo ember-config:mobile
+```
+
 To use the the generator directly from github, do the following:
 
 ```bash
@@ -46,7 +56,15 @@ cd ember-config
 npm link
 ```
 
-Note: This approach is also useful when you want to contribute to _ember-config_, however in that case you should use your own forked version.
+In your root project folder:
+
+```bash
+npm link ember-config 
+```
+Your project will now link directly to the local repo clone of *ember-config*. 
+Now play around with ember-config and any changes will be directly available in your project when you execute `yo ember-config`;)
+
+This *npm link* approach is also useful when you want to contribute to _ember-config_. In that case you should use your own forked version so you can make pull requests.
 
 ### Getting To Know Yeoman
 
