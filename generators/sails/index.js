@@ -6,6 +6,12 @@ var helper = require ('../../lib/aid');
 
 var aid, adapter, stack, serverFeature;
 
+var fileConfigurator = function(file, fun) {
+  var fm = require('string-mutator').file;
+  return fm.readFile(file).perform(fun).write();
+};
+
+
 var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid 			= helper(this);
@@ -123,13 +129,19 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
       name: 'serverAppDir',
       message: 'What is the name of your Sails (server) app folder?',
       default: 'server'
-    }
+    }, {
+      type: 'confirm',
+      name: 'createWithUser',
+      message: 'Do you wish to ssociate newly created records with the current user?',
+      default: false
+    }    
     ];
 
     this.prompt(prompts, function (props) {
       this.appRoot 		= props.appRoot;
       this.clientAppDir = props.clientAppDir;
       this.serverAppDir = props.serverAppDir;
+      this.createWithUser = props.createWithUser;
       done();
     }.bind(this));
 	},	    
@@ -178,11 +190,6 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 
 			var blueprintsConfig = aid.FileContent('server/config/blueprints.js');
 			
-			var fileConfigurator = function(file, fun) {
-				var fm = require('string-mutator').file;
-		   	return fm.readFile(file).perform(fun).write();
-			};
-
 			// requires lodash and pluralize as well ;)
 			aid.install('lodash', 'lodash');
 			aid.install('pluralize', 'pluralize');
@@ -191,7 +198,41 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 			fileConfigurator(this.serverAppDir + '/config/blueprints.js', function() {
 				return this.first(/pluralize:\s*\w+/).replaceWith('pluralize : true');
 			}).write();		
-  	}
+  	},
+
+    serverCopy: function() {
+      if (!stack('server')) return;
+
+      if (this.serverFeature('API blueprints'))
+        // Copy blueprints into api/blueprints
+        this.directory('server/blueprints', this.serverAppDir + '/blueprints/api')
+
+      if (this.serverFeature('Ember service'))
+        // Drop the Ember service from this repository in myproject/api/services    
+        this.copy('server/services/Ember.js', this.serverAppDir + '/api/services/Ember.js');
+    }, 
+
+    // If you have logged in users and you always want to associate newly created records with the current user, 
+    // take a look at blueprints/create.js lines 25-31 and uncomment the code if it fits your needs.
+    configUserCreate: function() {
+      if (!this.createWithUser) return;
+
+      // remove comments:
+      var startExpr = /(\/\*)\s*if/
+      var endExpr = /}\s*(\*\/)/
+
+      var createFile = this.serverAppDir + '/blueprints/create.js';
+
+      // In myproject/config/blueprints.js set pluralize: true          
+      fileConfigurator(createFile, function() {
+        return this.first(startExpr).replaceWith('');
+      }).write();   
+
+      fileConfigurator(createFile, function() {
+        return this.first(endExpr).replaceWith('');
+      }).write();   
+
+    }
   },
 
   // TODO: Should Sails adapter install be moved/integrated with adapters generator!?
@@ -205,17 +246,6 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 			if (this.useAdapter)
 				aid.install('Ember Sails adapter', 'ember-data-sails-adapter');
 		},
-		server: function() {
-			if (!stack('server')) return;
-
-			if (this.serverFeature('API blueprints'))
-				// Copy blueprints into api/blueprints
-				this.directory('blueprints/api', this.serverAppDir + '/blueprints/api')
-
-			if (this.serverFeature('Ember service'))
-				// Drop the Ember service from this repository in myproject/api/services		
-				this.copy('server/services/Ember.js', this.serverAppDir + '/api/services/Ember.js');
-		}	
   },
   end: {
   	any: function() {

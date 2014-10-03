@@ -37,7 +37,7 @@ var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
     impulse: function() {
       if (!selected('impulse')) return;   
 
-      aid.installBower('impulse', 'impulse');
+      aid.installBower('impulse');
       aid.bold('See https://github.com/luster-io/impulse');
     },
 
