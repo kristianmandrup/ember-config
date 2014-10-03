@@ -9,7 +9,7 @@ var selected;
 
 var availableConfigs = [
   'script', 'css', 'templating', 'layout', 'routing', 'test', 'sails', 'adapters', 
-  'mobile', 'forms', 'fonts', 'components', 'auth', 'addons', 'libs', 'animations', 
+  'mobile', 'forms', 'fonts', 'components', 'auth', 'famo.us', 'addons', 'libs', 'animations', 
   'upload', 'charts', 'maps', 'time'];
 
 var endScripts = {};

@@ -1,0 +1,48 @@
+{{#fa-engine}}
+
+  {{#fa-header-footer-layout}}
+
+    {{#fa-header-footer-layout-header fa-height=50}}
+      {{#fa-surface class="main-navigation" fa-color='white'}}
+        <ul>
+          <li>
+            {{#link-to 'application'}}
+              Home
+            {{/link-to}}
+          </li>
+          <li>
+            {{#link-to 'randomsquares'}}
+              Random Squares
+            {{/link-to}}
+          </li>
+          <li>
+            {{#link-to 'flexiblelayout'}}
+              Mixed Layouts (Databinding demo) Flexible, Sequential and Grid
+            {{/link-to}}
+          </li>
+          <li>
+            {{#link-to 'gridlayout'}}
+              Grid layout
+            {{/link-to}}
+          </li>
+          <li>
+            {{#link-to 'sequentiallayout'}}
+              Sequential layout
+            {{/link-to}}
+          </li>
+          <li>
+            {{#link-to 'headerfooterlayout'}}
+              Header Footer layout
+            {{/link-to}}
+          </li>
+        </ul>
+      {{/fa-surface}}
+    {{/fa-header-footer-layout-header}}
+
+    {{#fa-header-footer-layout-content}}
+        {{ outlet }}
+    {{/fa-header-footer-layout-content}}
+
+  {{/fa-header-footer-layout}}
+
+{{/fa-engine}}

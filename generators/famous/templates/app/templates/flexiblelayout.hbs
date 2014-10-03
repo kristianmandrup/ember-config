@@ -1,0 +1,55 @@
+{{#fa-view}}
+
+  {{#fa-flexible-layout fa-ratio="[true, 1, true, true, 1, true]"}}
+
+    {{#fa-surface fa-color='red' fa-width=200}}
+      Left
+    {{/fa-surface}}
+
+    {{#fa-grid-layout fa-cols=4 fa-rows=2}}
+
+      {{#each element in controller}}
+
+        {{#fa-surface classNames="samplesquare" fa-color=element.color}}
+
+          {{element.name}}
+
+          {{input value=element.name }}
+
+        {{/fa-surface}}
+
+      {{/each}}
+
+    {{/fa-grid-layout}}
+
+    {{#fa-surface fa-color='blue' fa-width=100}}
+      right
+    {{/fa-surface}}
+
+    {{#fa-surface fa-color='red' fa-width=100}}
+      Left
+    {{/fa-surface}}
+
+    {{#fa-sequential-layout fa-direction=1}}
+
+      {{#each element in controller}}
+
+        {{#fa-surface classNames="samplesquare" fa-color=element.color fa-height=100}}
+
+          {{element.name}}
+
+          {{input value=element.name }}
+
+        {{/fa-surface}}
+
+      {{/each}}
+
+    {{/fa-sequential-layout}}
+
+    {{#fa-surface fa-color='blue' fa-width=200}}
+      right
+    {{/fa-surface}}
+
+  {{/fa-flexible-layout}}
+
+{{/fa-view}}

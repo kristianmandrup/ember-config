@@ -1,0 +1,19 @@
+{{#fa-view}}
+
+  {{#fa-sequential-layout fa-direction=0}}
+
+    {{#each element in controller}}
+
+      {{#fa-surface classNames="samplesquare" fa-color=element.color fa-width=100}}
+
+        {{element.name}}
+
+        {{input value=element.name }}
+
+      {{/fa-surface}}
+
+    {{/each}}
+
+  {{/fa-sequential-layout}}
+
+{{/fa-view}}

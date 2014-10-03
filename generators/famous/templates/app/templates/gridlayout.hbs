@@ -1,0 +1,22 @@
+{{#fa-view}}
+
+  {{#fa-modifier}}
+
+    {{#fa-grid-layout fa-cols=4 fa-rows=2}}
+
+      {{#each element in controller}}
+
+        {{#fa-surface classNames="samplesquare" fa-color=element.color}}
+
+          {{element.name}}
+
+          {{input value=element.name }}
+
+        {{/fa-surface}}
+
+      {{/each}}
+
+    {{/fa-grid-layout}}
+  {{/fa-modifier}}
+
+{{/fa-view}}

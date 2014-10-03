@@ -1,0 +1,17 @@
+{{#fa-engine}}
+
+  {{#fa-scrollview}}
+    <div id="ember403foo">
+      {{#each element in controller}}
+
+        {{#fa-surface color=element.color fa-height=50}}
+
+          {{element.name}}
+
+        {{/fa-surface}}
+
+      {{/each}}
+    </div>
+  {{/fa-scrollview}}
+
+{{/fa-engine}}
