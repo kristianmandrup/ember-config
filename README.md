@@ -108,6 +108,7 @@ Additionally, the following configurators are available:
 - Libs (pour-over, ...)
 - ES6 harmony (esnext)
 
+
 - Animations (liquid-fire, velocity)
 - Gestures (hammer, touchy, ... )
 - Upload (uploader, droplet, ...)
@@ -116,6 +117,7 @@ Additionally, the following configurators are available:
 - Time (moment, moment timezone, date helpers, ...)
 
 - Sails full stack app :)
+- Famo.us integration (via Hefam)
 
 The App config generator will invoke a sub-generator for each.
 Some of these sub-generators in turn invokes more sub-generators depending on
@@ -214,7 +216,7 @@ Adds font libraries
 ### Test
 
 - Qunit
-- others (TODO: when alternative test adapters are available)
+- others (TODO)
 
 ### Mobile
 
@@ -224,8 +226,9 @@ Adds font libraries
 
 ### Animations
 
-- LiquidFire
+- Liquid Fire
 - Velocity
+- Impulse
 
 See demo @ https://github.com/ef4/ember-animation-demo
 
@@ -249,6 +252,7 @@ See demo @ https://github.com/ef4/ember-animation-demo
 ### Full stack integrations
 
 - Sails
+- Famo.us
 
 ## Design
 

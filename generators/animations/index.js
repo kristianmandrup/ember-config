@@ -44,7 +44,7 @@ var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
     velocity: function() {
       if (!selected('velocity')) return; 
 
-      aid.install('velocity');
+      aid.installBower('velocity');
       aid.bold('See https://github.com/julianshapiro/velocity');
     },
     liquidFire: function() {
