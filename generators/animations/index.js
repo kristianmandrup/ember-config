@@ -19,7 +19,7 @@ var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'frameworks',
       message: 'Which animation frameworks would you like?',
-      choices: ['liquid fire', 'velocity'],
+      choices: ['liquid fire', 'velocity', 'impulse'],
       default: ['liquid fire']
     }];
 
@@ -34,13 +34,22 @@ var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
   },
 
   install: {
+    impulse: function() {
+      if (!selected('impulse')) return;   
+
+      aid.installBower('impulse', 'impulse');
+      aid.bold('See https://github.com/luster-io/impulse');
+    },
+
     velocity: function() {
-      if (!selected('velocity')) return;        
+      if (!selected('velocity')) return; 
+
       aid.install('velocity');
+      aid.bold('See https://github.com/julianshapiro/velocity');
     },
     liquidFire: function() {
-      if (!selected('liquid fire')) return;        
-      // this.composeWith('ember-config:liquidfire');
+      if (!selected('liquid fire')) return; 
+
       aid.install('liquid fire', 'liquid-fire');
       aid.bold('See http://ef4.github.io/liquid-fire');
     }    
