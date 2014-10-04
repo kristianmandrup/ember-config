@@ -39,8 +39,11 @@ var EmberConfigValidationsGenerator = yeoman.generators.Base.extend({
 
   install: {
     validations: function () {      
-      if (selected('easy validations'))
-        aid.install('easy validations', 'ember-validations-cli');
+      if (selected('easy validations')) {
+        aid.installBow('easy validations', "ember-easyform=kristianmandrup/ember-easyForm");
+        aid.install('easy validations', 'ember-validations-cli=kristianmandrup/ember-validations-cli');
+        aid.info("See https://github.com/kristianmandrup/ember-validations-cli");
+      }
 
       if (selected('validations'))    
         aid.install('ember-validations');

@@ -38,8 +38,11 @@ var EmberConfigFormsGenerator = yeoman.generators.Base.extend({
 
   install: {
     forms: function () {      
-      if (selected('easy forms'))      
-        aid.install('easy forms', 'ember-easyforms-cli');
+      if (selected('easy forms')) {
+        aid.installBow('easy forms', "ember-easyform=kristianmandrup/ember-easyForm");
+        aid.install('easy forms', 'ember-easyform-cli=kristianmandrup/ember-easyform-cli');
+        aid.info("See https://github.com/kristianmandrup/ember-easyform-cli");
+      }
 
       if (selected('forms'))
         aid.installBow('forms', 'ember-forms');
