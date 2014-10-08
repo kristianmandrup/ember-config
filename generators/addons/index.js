@@ -63,7 +63,7 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
 
   install: function() {
     if (selected('i18n'))    
-      aid.install('i18n', 'ember-i18n');
+      aid.install('i18n', 'chrmod/ember-i18n'); // chrmod/ember-i18n
 
     if (selected('auto properties'))    
       aid.install('auto properties', 'ember-auto');

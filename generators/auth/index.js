@@ -3,10 +3,8 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var helper = require('../../lib/aid');
-var broc_file = require ('../../lib/broc_file');
 var aid;
 var selected, authorization, provider;
-var index_file = require('../../lib/index_file');
 
 var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
   initializing: function () {
@@ -95,22 +93,19 @@ var EmberConfigAuthGenerator = yeoman.generators.Base.extend({
 
       var authorizeJs = this.read('authorizer.js');
       var envMatchExpr = /window\..* = .*ENV;/
-      index_file(function() {
+
+      var indexFile = require('../../lib/index_file');
+
+      indexFile(function() {
         return this.last(envMatchExpr).append(authorizeJs);
       }).write();      
     },
 
+    // TODO: Use latest permit authorize that works
     authorization: function() {
       if (!authorization('permit-authorize')) return;
       
-      var jsImport = "app.import('" + this.bowerDir + "/permit-authorize/permit-authorize.js');";   
-
-      if (aid.brocFileContent().has(jsImport)) return;
-
-      broc_file(function() {
-        return this.last('module.exports').prepend(jsImport + '\n');  
-      }).write();
-      aid.info('Permit Authorize javascript configured');
+      aid.installComponent('permit-authorize', 'permit-authorize/permit-authorize.js');
     }
   },
 

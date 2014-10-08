@@ -5,21 +5,41 @@ var yeoman = require('yeoman-generator');
 var helper = require ('../../lib/aid');
 var aid, selected;
 
+var links = {
+  'impulse': 'https://github.com/luster-io/impulse',
+  'velocity': 'https://github.com/julianshapiro/velocity',
+  'liquid fire': 'http://ef4.github.io/liquid-fire'
+};
+
+
+var info = {
+  'impulse': 'Animations -..',
+  'velocity': 'Animations...',
+  'liquid fire': 'Animations bla bla'
+};
+
+// TODO: Should use a config file for each generator to handle most settings such as main choices, info, links, what type of
+// library/component, names/alias etc.
+
 var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     aid = helper(this);
     selected = aid.containsSelector(this, 'frameworks');
+
+    this.choices = ['liquid fire', 'velocity', 'impulse'];
   },
 
   prompting: function () {
     var done = this.async();
+
+    aid.displayInfo(this.choices, info, links);
 
     var prompts = [
     {
       type: 'checkbox',
       name: 'frameworks',
       message: 'Which animation frameworks would you like?',
-      choices: ['liquid fire', 'velocity', 'impulse'],
+      choices: this.choices,
       default: ['liquid fire']
     }];
 
@@ -34,27 +54,26 @@ var EmberConfigAnimationsGenerator = yeoman.generators.Base.extend({
   },
 
   install: {
+    // TODO: set bower path
     impulse: function() {
       if (!selected('impulse')) return;   
 
-      aid.installBower('impulse');
-      aid.bold('See https://github.com/luster-io/impulse');
+      aid.installComponent('impulse', '...');
     },
 
     velocity: function() {
-      if (!selected('velocity')) return; 
+      if (!selected('velocity')) return;
+      aid.installComponent('velocity', '...');
 
-      aid.installBower('velocity');
-      aid.bold('See https://github.com/julianshapiro/velocity');
     },
+    // installs cli addon
     liquidFire: function() {
-      if (!selected('liquid fire')) return; 
-
+      if (!selected('liquid fire')) return;
       aid.install('liquid fire', 'liquid-fire');
-      aid.bold('See http://ef4.github.io/liquid-fire');
     }    
   },
-  end: function () {    
+  end: function () {
+    aid.displayLinks(links, this.selected);
   }
 });
 

@@ -2,8 +2,6 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var brocFile = require ('../../lib/broc_file');
-var sassFile = require('../../lib/sass_file');
 require('sugar');
 
 var helper    = require('../../lib/aid');
@@ -66,42 +64,18 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
     configureWithSass: function () {          
       if (!cssSelected('sass')) return;
 
-      // http://www.octolabs.com/blogs/octoblog/2014/05/10/ember-cli-broccoli-bootstrap-sass-part-2/
-      var sassFileContent = aid.fileContent('app/styles/app.scss');
-
-      var importSass = "@import '" + this.bowerDir + "/bootstrap-sass-official/assets/stylesheets/bootstrap'";
-      if (sassFileContent.has(importSass)) return;
-
-      sassFile.app(function() {
-        this.prependTxt(importSass);
-      });
-      aid.info('Bootstrap SASS configured');
+      this.sassImport('bootstrap', 'bootstrap');
     },
     configureCss: function () {                
       if (cssSelected('sass')) return;
 
-      var cssImport = "app.import('" + this.bowerDir + "/bootstrap/dist/css/bootstrap.css');";
-
-      if (this.brocFileContent.has(cssImport)) return;
-
-      brocFile(function() {
-        return this.last('module.exports').prepend(cssImport + '\n');
-      }).write();
-
-      aid.info('Bootstrap CSS configured');
+      aid.installComponent('bootstrap', 'bootstrap/dist/css/bootstrap.css', 'css');
     },
 
     configureJs: function () {  
       if (!selected('javascript')) return;
       
-      var jsImport= "app.import('" + this.bowerDir + "/bootstrap/dist/js/bootstrap.js');";   
-
-      if (this.brocFileContent.has(jsImport)) return;
-
-      brocFile(function() {
-        return this.last('module.exports').prepend(jsImport + '\n');  
-      }).write();
-      aid.info('Bootstrap javascript configured');
+      aid.installComponent('bootstrap', 'bootstrap/dist/js/bootstrap.js');
     },
 
     // TODO: Move to fonts generator as an option 
@@ -115,7 +89,7 @@ var EmberConfigBootstrapGenerator = yeoman.generators.Base.extend({
 
       if (this.brocFileContent.has(replaceStr)) return;
 
-      brocFile(function() {
+      aid.brocFile(function() {
         if (this.result.match('exports = mergeTrees')) {
           return this.last(/module\.exports = mergeTrees\(.*\);/).replaceWith(replaceStr + '\n');  
         } else if (this.result.match('exports = app')) {          
