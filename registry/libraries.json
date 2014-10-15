@@ -1,9 +1,6 @@
 {
   "libraries": {
     "bower": {
-      "localstorage": {
-        "files": ["ember-localstorage-adapter"]
-      },
       "ember-i18n": {
         "files": ["lib/i18n.js"]
       },
@@ -12,61 +9,79 @@
         "files": ["ember-auto.js"]
       },
       "torii": {
+        "files": ["dist/torii.amd.js"]
       },
       "ember-charts": {
-        "files": [""]
+        "files": ["dist/ember-charts.js", "dist/ember-charts.css "]
       },
       "ember-dc": {
-        "files": [""]
+        "files": ["ember-dc.js", "ember-dc.css"]
       },
       "md5": {
         "files": [""]
       },
       "firebase-simple-login": {
-        "files": [""]
+        "files": ["firebase-simple-login.js"]
       },
       "flat-ui": {
-        "files": [""]
+        "use-main": true,
       },
       "ember-forms": {
-        "files": [""]
+        "type": "amd",
+        "files": ["dist/amd/main.js"]
       },
       "jquery-touchswipe": {
-        "files": [""]
+        "files": ["jquery.touchSwipe.js"]
       },
       "gumby": {
-        "files": [""]
+        "use-main": true,
+        "files": ["js/libs/gumby.js", "css/gumby.css"]
+      },
+      "gumbyui-extras": {
+        "use-main": true
       },
       "pure": {
-        "files": [""]
+        "use-main": true,
+        "files": ["build/pure.css"]
       },
       "ink": {
-        "files": [""]
+        "use-main": true,
+        "files": ["dist/js/ink-all.js"]
       },
       "sugar": {
-        "files": [""]
+        "use-main": true,
+        "files": ["release/sugar.min.js"]
       },
-      "pour over": {
-        "repo": "git://github.com/NYTimes/pourover.git"
-        "files": [""]
+      "pour-over": {
+        "repo": "git://github.com/NYTimes/pourover.git",
+        "files": ["pourover.js"]
       },
       "hammerjs": {
-        "files": [""]
-      },
-      "ratchet": {
-        "files": [""]
+        "files": ["hammer.js"]
       },
       "ember-animated-outlet": {
-        "files": [""]
+        "use-main": true,
+        "files": ["dist/ember-animated-outlet.js"]
+      },
+      "ember-animate": {
+        "use-main": true,
+        "files": ["ember-animate.js"]
       },
       "semantic": {
-        "files": [""]
+        "use-main": true
       },
       "ember-droplet": {
-        "files": [""]
+        "files": ["dist/ember-droplet.js"]
       },
       "ember-uploader": {
-        "files": [""]
+        "files": ["dist/ember-uploader.js"]
+      },
+      "bower-quojs": {
+        "use-main": true,
+        "files": ["quo.js"]
+      },
+      "ember-cloaking": {
+        "files": ["ember-cloaking.js"]
       }
     },
     "npm": {
@@ -94,7 +109,7 @@
       "pagination":       "ember-cli-pagination",
       "tooltip":          "ember-cli-tooltip",
       "star-rating":      "ember-cli-star-rating",
-      "spinner":          "spinjs",
+      "spinner":          "ember-cli-spinjs",
       "split view":       "ember-split-view",
       "dragn drop":       "ember-cli-dnd",
       "weather-icons":    "ember-cli-weather-icons",
@@ -105,7 +120,6 @@
       "font-awesome":     "ember-cli-font-awesome",
       "foundation":       "ember-cli-foundation",
       "foundation-sass": "ember-cli-foundation-sass"
-      "QuoJS":            "QuoJS",
       "ember-leaflet":    "ember-cli-ember-leaflet",
       "auto-router":      "ember-cli-auto-router",
       "coffeescript":     "ember-cli-coffeescript",
@@ -145,7 +159,6 @@
       "components":         "ember-cli-components",
       "datepicker":         "ember-cli-datepicker",
       "code-highlight":     "ember-cli-eg-code-highlight",
-
       "ember-admin-bootstrap":  "ember-admin-bootstrap",
       "fs-ember-cli-typeahead": "fs-ember-cli-typeahead",
       "fireplace":          "fireplace",
@@ -161,6 +174,7 @@
       "lightbox":           "ember-cli-lightbox",
       "less":               "ember-cli-less",
       "knob":               "ember-cli-knob",
+      "ratchet":            "ember-cli-ratchet",
       "jstransform":        "ember-cli-jstransform",
       "json-pretty":        "ember-cli-json-pretty",
       "jquery-ui":          "ember-cli-jquery-ui",
@@ -173,7 +187,8 @@
       "ember-select-2":     "ember-select-2",
       "un-calendar":        "un-calendar",
       "ember-cpm":          "ember-cpm",
-      "ember-sprite":       "ember-sprite"
+      "ember-sprite":       "ember-sprite",
+      "localstorage-adapter": "ember-localstorage-adapter"
 
     },
     "component": {
