@@ -104,12 +104,13 @@
       "emberfire":        "ember-cli-emberfire",
       "font-awesome":     "ember-cli-font-awesome",
       "foundation":       "ember-cli-foundation",
+      "foundation-sass": "ember-cli-foundation-sass"
       "QuoJS":            "QuoJS",
-      "ember-leaflet":    "ember-leaflet",
+      "ember-leaflet":    "ember-cli-ember-leaflet",
       "auto-router":      "ember-cli-auto-router",
       "coffeescript":     "ember-cli-coffeescript",
       "livescript":       "ember-cli-livescript",
-      "emberscript":      "ember-cli-emberscript",
+      "emberscript":      "ember-cli-ember-script",
       "ember-sync":       "ember-sync",
       "emblem":           "ember-cli-emblem",
       "ember-data-factory": "ember-data-factory",
@@ -117,16 +118,63 @@
       "moment-timezone":  "ember-cli-moment-timezone",
       "dates":            "ember-cli-dates",
       "ember-publisher":  "ember-publisher",
-      "ember-cli-validations": {
+      "ember-validations": {
         "repo": "kristianmandrup/ember-cli-validations"
       },
-      "ember-cli-easyforms": {
+      "ember-easyforms": {
         "repo": "kristianmandrup/ember-cli-easyforms"
       },
-      "ember-cli-list-view": {
+      "ember-list-view": {
         "repo": "kristianmandrup/ember-cli-list-view"
       },
-      "validatable":       "ember-validatable"
+      "validatable":        "ember-validatable",
+      "bricks-ui":          "bricks-ui",
+      "ember-waypoints":    "ember-waypoints",
+      "ember-autoresize":   "ember-autoresize",
+      "activemodel-adapter": "ember-cli-activemodel-adapter",
+      "auto-register-helpers": "ember-cli-auto-register-helpers",
+      "big-text":              "ember-cli-big-text",
+      "autoprefixer":        "ember-cli-autoprefixer",
+      "bootstrap-offscreen": "ember-cli-bootstrap-offscreen",
+      "bourbon":            "ember-cli-bourbon",
+      "broccoli-compass":   "ember-cli-broccoli-compass",
+      "cal":                "ember-cli-cal",
+      "calendar":           "ember-cli-calendar",
+      "clock":              "ember-cli-clock",
+      "compass-bootstrap":  "ember-cli-compass-bootstrap",
+      "components":         "ember-cli-components",
+      "datepicker":         "ember-cli-datepicker",
+      "code-highlight":     "ember-cli-eg-code-highlight",
+
+      "ember-admin-bootstrap":  "ember-admin-bootstrap",
+      "fs-ember-cli-typeahead": "fs-ember-cli-typeahead",
+      "fireplace":          "fireplace",
+      "ember-velocity-mixin": "ember-velocity-mixin",
+      "ember-social":       "ember-social",
+      "ember-frost":        "ember-frost",
+      "ember-code-snippet": "ember-code-snippet",
+      "zero-clipboard":     "ember-cli-zero-clipboard",
+      "select":             "ember-cli-select",
+      "multiselect":        "ember-cli-multiselect",
+      "map":                "ember-cli-map",
+      "loading-slider":     "ember-cli-loading-slider",
+      "lightbox":           "ember-cli-lightbox",
+      "less":               "ember-cli-less",
+      "knob":               "ember-cli-knob",
+      "jstransform":        "ember-cli-jstransform",
+      "json-pretty":        "ember-cli-json-pretty",
+      "jquery-ui":          "ember-cli-jquery-ui",
+      "inplace-edit":       "ember-cli-inplace-edit",
+      "ember-data-sails":   "ember-data-sails",
+      "ember-multiselect-checkboxes": "ember-multiselect-checkboxes",
+      "ember-resize-mixin": "ember-resize-mixin",
+      "rest-rap":           "rest-rap",
+      "ember-rl-year-picker": "ember-rl-year-picker",
+      "ember-select-2":     "ember-select-2",
+      "un-calendar":        "un-calendar",
+      "ember-cpm":          "ember-cpm",
+      "ember-sprite":       "ember-sprite"
+
     },
     "component": {
       "ember-mongoose": {
