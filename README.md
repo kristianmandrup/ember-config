@@ -18,6 +18,13 @@ _Please help out improve/add sub-generators!_
 
 [your feedback](https://groups.google.com/forum/#!forum/ember-config-generator)
 
+### Registry
+
+This Generator is in the process of being integrated with [Libraries](https://github.com/kristianmandrup/libraries), your 
+library manager for Ember CLI.
+
+Currently a registry of recommended libraries is under development... see the `registry/libraries.json` file. 
+
 ### Install Yeoman
 
 ```bash

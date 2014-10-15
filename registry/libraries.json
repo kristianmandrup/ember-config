@@ -1,0 +1,138 @@
+{
+  "libraries": {
+    "bower": {
+      "localstorage": {
+        "files": ["ember-localstorage-adapter"]
+      },
+      "ember-i18n": {
+        "files": ["lib/i18n.js"]
+      },
+      "ember-auto": {
+        "repo": "gunn/ember-auto",
+        "files": ["ember-auto.js"]
+      },
+      "torii": {
+      },
+      "ember-charts": {
+        "files": [""]
+      },
+      "ember-dc": {
+        "files": [""]
+      },
+      "md5": {
+        "files": [""]
+      },
+      "firebase-simple-login": {
+        "files": [""]
+      },
+      "flat-ui": {
+        "files": [""]
+      },
+      "ember-forms": {
+        "files": [""]
+      },
+      "jquery-touchswipe": {
+        "files": [""]
+      },
+      "gumby": {
+        "files": [""]
+      },
+      "pure": {
+        "files": [""]
+      },
+      "ink": {
+        "files": [""]
+      },
+      "sugar": {
+        "files": [""]
+      },
+      "pour over": {
+        "repo": "git://github.com/NYTimes/pourover.git"
+        "files": [""]
+      },
+      "hammerjs": {
+        "files": [""]
+      },
+      "ratchet": {
+        "files": [""]
+      },
+      "ember-animated-outlet": {
+        "files": [""]
+      },
+      "semantic": {
+        "files": [""]
+      },
+      "ember-droplet": {
+        "files": [""]
+      },
+      "ember-uploader": {
+        "files": [""]
+      }
+    },
+    "npm": {
+      "ember-mongoose":   "ember-mongoose",
+      "ember-notify":     "ember-notify",
+      "ic-ajax":          "ember-cli-ic-ajax",
+      "prerender":        "ember-prerender",
+      "ember admin":      "ember-admin",
+      "liquid-fire":      "liquid-fire",
+      "simple-auth":      "simple-auth",
+
+      "simple-auth-testing":  "simple-auth-testing",
+      "simple-auth-token":    "simple-auth-token",
+      "simple-auth-oauth2":   "simple-auth-oauth2",
+      "simple-auth-torii":    {
+        "name":           "simple-auth-torii",
+        "generator":      "ember-cli-simple-auth-torii"
+      },
+      "torii":            "torii",
+      "bootstrap-sass":   "bootstrap-sass-official",
+      "bootstrap":        "ember-cli-bootstrap",
+      "chart":            "ember-cli-chart",
+      "radio buttons":    "ember-radio-buttons",
+      "date picker":      "ember-cli-datepicker",
+      "pagination":       "ember-cli-pagination",
+      "tooltip":          "ember-cli-tooltip",
+      "star-rating":      "ember-cli-star-rating",
+      "spinner":          "spinjs",
+      "split view":       "ember-split-view",
+      "dragn drop":       "ember-cli-dnd",
+      "weather-icons":    "ember-cli-weather-icons",
+      "code snippet":     "ember-code-snippet",
+      "gravatar":         "ember-cli-gravatar",
+      "color picker":     "ember-colpick",
+      "emberfire":        "ember-cli-emberfire",
+      "font-awesome":     "ember-cli-font-awesome",
+      "foundation":       "ember-cli-foundation",
+      "QuoJS":            "QuoJS",
+      "ember-leaflet":    "ember-leaflet",
+      "auto-router":      "ember-cli-auto-router",
+      "coffeescript":     "ember-cli-coffeescript",
+      "livescript":       "ember-cli-livescript",
+      "emberscript":      "ember-cli-emberscript",
+      "ember-sync":       "ember-sync",
+      "emblem":           "ember-cli-emblem",
+      "ember-data-factory": "ember-data-factory",
+      "moment":           "ember-cli-moment",
+      "moment-timezone":  "ember-cli-moment-timezone",
+      "dates":            "ember-cli-dates",
+      "ember-publisher":  "ember-publisher",
+      "ember-cli-validations": {
+        "repo": "kristianmandrup/ember-cli-validations"
+      },
+      "ember-cli-easyforms": {
+        "repo": "kristianmandrup/ember-cli-easyforms"
+      },
+      "ember-cli-list-view": {
+        "repo": "kristianmandrup/ember-cli-list-view"
+      },
+      "validatable":       "ember-validatable"
+    },
+    "component": {
+      "ember-mongoose": {
+        "repo" : "kelonye/ember-mongoose",
+        "files": ["lib/client/index.js"]
+      }
+    }
+  }
+}
