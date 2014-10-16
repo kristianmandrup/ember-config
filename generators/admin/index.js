@@ -35,7 +35,6 @@ var EmberConfigAdminGenerator = yeoman.generators.Base.extend({
     leaflet: function () {      
       if (!selected('admin')) return;
       aid.install('admin', 'ember-admin');
-      aid.info('https://www.npmjs.org/package/ember-admin');
     },  
   },
 

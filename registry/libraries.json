@@ -2,78 +2,100 @@
   "libraries": {
     "bower": {
       "ember-i18n": {
+        "categories": ["i18n"],
         "files": ["lib/i18n.js"]
       },
       "ember-auto": {
+        "categories": ["routes"],
         "repo": "gunn/ember-auto",
         "files": ["ember-auto.js"]
       },
       "torii": {
+        "categories": ["authenticate", "authorize", "security"],
         "files": ["dist/torii.amd.js"]
       },
       "ember-charts": {
+        "categories": ["ui", "charts"],
         "files": ["dist/ember-charts.js", "dist/ember-charts.css "]
       },
       "ember-dc": {
+        "categories": ["ui", "charts"],
         "files": ["ember-dc.js", "ember-dc.css"]
       },
-      "md5": {
-        "files": [""]
+      "blueimp-md5": {
+        "categories": ["security"],
+        "files": ["js/md5.js"]
       },
       "firebase-simple-login": {
+        "categories": ["data", "adapter"],
         "files": ["firebase-simple-login.js"]
       },
       "flat-ui": {
+        "categories": ["ui", "layout"],
         "use-main": true,
       },
       "ember-forms": {
         "type": "amd",
+        "categories": ["ui", "forms", "components"],
         "files": ["dist/amd/main.js"]
       },
       "jquery-touchswipe": {
+        "categories": ["touch"],
         "files": ["jquery.touchSwipe.js"]
       },
       "gumby": {
         "use-main": true,
+        "categories": ["ui", "layout"],
         "files": ["js/libs/gumby.js", "css/gumby.css"]
       },
       "gumbyui-extras": {
+        "categories": ["layout", "ui"],
         "use-main": true
       },
       "pure": {
         "use-main": true,
+        "categories": ["layout", "ui"],
         "files": ["build/pure.css"]
       },
       "ink": {
         "use-main": true,
+        "categories": ["layout", "ui"],
         "files": ["dist/js/ink-all.js"]
       },
       "sugar": {
+        "categories": ["util"],
         "use-main": true,
         "files": ["release/sugar.min.js"]
       },
       "pour-over": {
+        "categories": ["util", "data", "filter"],
         "repo": "git://github.com/NYTimes/pourover.git",
         "files": ["pourover.js"]
       },
       "hammerjs": {
+        "categories": ["touch"],
         "files": ["hammer.js"]
       },
       "ember-animated-outlet": {
+        "categories": ["animation"],
         "use-main": true,
         "files": ["dist/ember-animated-outlet.js"]
       },
       "ember-animate": {
+        "categories": ["animation"],
         "use-main": true,
         "files": ["ember-animate.js"]
       },
       "semantic": {
+        "categories": ["layout", "ui"],
         "use-main": true
       },
       "ember-droplet": {
+        "categories": ["upload"],
         "files": ["dist/ember-droplet.js"]
       },
       "ember-uploader": {
+        "categories": ["upload"],
         "files": ["dist/ember-uploader.js"]
       },
       "bower-quojs": {
@@ -81,114 +103,392 @@
         "files": ["quo.js"]
       },
       "ember-cloaking": {
+        "categories": ["ui"],
         "files": ["ember-cloaking.js"]
       }
     },
     "npm": {
-      "ember-mongoose":   "ember-mongoose",
-      "ember-notify":     "ember-notify",
-      "ic-ajax":          "ember-cli-ic-ajax",
-      "prerender":        "ember-prerender",
-      "ember admin":      "ember-admin",
-      "liquid-fire":      "liquid-fire",
-      "simple-auth":      "simple-auth",
+      "mongoose adapter":   {
+        "categories": ["data", "adapter"],
+        "name": "ember-mongoose"
+      },
+      "notify":     {
+        "categories": ["ui"],
+        "addon": "ember-notify"
+      },
+      "ic-ajax":          {
+        "categories": ["data"],
+        "addon": "ember-cli-ic-ajax"
+      },
+      "prerender":        {
+        "categories": ["ui"],
+        "addon": "ember-prerender"
+      },
+      "admin":      {
+        "categories": ["ui", "admin"],
+        "addon": "ember-admin"
+      },
 
-      "simple-auth-testing":  "simple-auth-testing",
-      "simple-auth-token":    "simple-auth-token",
-      "simple-auth-oauth2":   "simple-auth-oauth2",
+      "liquid-fire": {
+        "categories": ["ui", "animation"],
+        "addon": "liquid-fire"
+      },
+      "simple-auth": {
+        "categories": ["authenticate", "authorize", "security"],
+        "addon": "ember-cli-simple-auth"
+      },
+
+      "simple-auth-testing":  {
+        "categories": ["authenticate", "authorize", "security", "test"],
+        "addon": "ember-cli-simple-auth-testing"
+      },
+      "simple-auth-token":    {
+        "categories": ["authenticate", "authorize", "security"],
+        "addon": "ember-cli-simple-auth-token"
+      },
+      "simple-auth-oauth2":   {
+        "categories": ["authenticate", "authorize", "security"],
+        "addon": "ember-cli-simple-auth-oauth2"
+      },
       "simple-auth-torii":    {
-        "name":           "simple-auth-torii",
+        "categories": ["authenticate", "authorize", "security"],
+        "addon": "ember-cli-simple-auth-torii",
         "generator":      "ember-cli-simple-auth-torii"
       },
-      "torii":            "torii",
-      "bootstrap-sass":   "bootstrap-sass-official",
-      "bootstrap":        "ember-cli-bootstrap",
-      "chart":            "ember-cli-chart",
-      "radio buttons":    "ember-radio-buttons",
-      "date picker":      "ember-cli-datepicker",
-      "pagination":       "ember-cli-pagination",
-      "tooltip":          "ember-cli-tooltip",
-      "star-rating":      "ember-cli-star-rating",
-      "spinner":          "ember-cli-spinjs",
-      "split view":       "ember-split-view",
-      "dragn drop":       "ember-cli-dnd",
-      "weather-icons":    "ember-cli-weather-icons",
-      "code snippet":     "ember-code-snippet",
-      "gravatar":         "ember-cli-gravatar",
-      "color picker":     "ember-colpick",
-      "emberfire":        "ember-cli-emberfire",
-      "font-awesome":     "ember-cli-font-awesome",
-      "foundation":       "ember-cli-foundation",
-      "foundation-sass": "ember-cli-foundation-sass"
-      "ember-leaflet":    "ember-cli-ember-leaflet",
-      "auto-router":      "ember-cli-auto-router",
-      "coffeescript":     "ember-cli-coffeescript",
-      "livescript":       "ember-cli-livescript",
-      "emberscript":      "ember-cli-ember-script",
-      "ember-sync":       "ember-sync",
-      "emblem":           "ember-cli-emblem",
-      "ember-data-factory": "ember-data-factory",
-      "moment":           "ember-cli-moment",
-      "moment-timezone":  "ember-cli-moment-timezone",
-      "dates":            "ember-cli-dates",
-      "ember-publisher":  "ember-publisher",
+      "csauth":                {
+        "categories": ["authenticate", "authorize", "security"],
+        "addon": "ember-cli-csauth"
+      },
+      "bootstrap-sass":   {
+        "categories": ["ui", "layout", "sass"],
+        "addon": "ember-cli-bootstrap-sass"
+      },
+      "bootstrap":        {
+        "categories": ["ui", "layout", "components"],
+        "addon": "ember-cli-bootstrap"
+      },
+      "chart":            {
+        "categories": ["ui", "charts"],
+        "addon": "ember-cli-chart"
+      },
+      "radio buttons":    {
+        "categories": ["ui", "forms"],
+        "addon": "ember-radio-buttons"
+      },
+      "date picker":      {
+        "categories": ["ui", "forms"],
+        "addon": "ember-cli-datepicker"
+      },
+      "pagination":       {
+        "categories": ["ui", "forms"],
+        "addon": "ember-cli-pagination"
+      },
+      "tooltip":          {
+        "categories": ["ui"],
+        "addon": "ember-cli-tooltip"
+      },
+      "star-rating":      {
+        "categories": ["ui"],
+        "addon": "ember-cli-star-rating"
+      },
+      "spinner":          {
+        "categories": ["ui"],
+        "addon": "ember-cli-spinjs"
+      },
+      "split view":       {
+        "categories": ["ui"],
+        "addon": "ember-split-view"
+      },
+      "dragn drop":       {
+        "categories": ["ui"],
+        "addon": "ember-cli-dnd"
+      },
+      "weather-icons":    {
+        "categories": ["ui"],
+        "addon": "ember-cli-weather-icons"
+      },
+      "code snippet":     {
+        "categories": ["ui", "code"],
+        "addon": "ember-code-snippet"
+      },
+      "gravatar":         {
+        "categories": ["ui", "social"],
+        "addon": "ember-cli-gravatar"
+      },
+      "color picker":     {
+        "categories": ["ui"],
+        "addon": "ember-colpick"
+      },
+      "emberfire":        {
+        "categories": ["ui", "data", "adapter"],
+        "addon": "ember-cli-emberfire"
+      },
+      "font-awesome":     {
+        "categories": ["ui", "layout", "fonts"],
+        "addon": "ember-cli-font-awesome"
+      },
+      "foundation":       {
+        "categories": ["ui", "layout"],
+        "addon": "ember-cli-foundation"
+      },
+      "foundation-sass": {
+        "categories": ["ui", "layout", "sass"],
+        "addon": "ember-cli-foundation-sass"
+      },
+      "ember-leaflet":    {
+        "categories": ["ui", "maps"],
+        "addon": "ember-cli-ember-leaflet"
+      },
+      "auto-router":      {
+        "categories": ["ui", "routing"],
+        "addon": "ember-cli-auto-router"
+      },
+      "coffeescript":     {
+        "categories": ["script"],
+        "addon": "ember-cli-coffeescript"
+      },
+      "livescript":       {
+        "categories": ["script"],
+        "addon": "ember-cli-livescript"
+      },
+      "emberscript":      {
+        "categories": ["script"],
+        "addon": "ember-cli-ember-script"
+      },
+      "ember-sync":       {
+        "categories": ["data", "adapter"],
+        "addon": "ember-sync"
+      },
+      "emblem":           {
+        "categories": ["templating"],
+        "addon": "ember-cli-emblem"
+      },
+      "ember-data-factory": {
+        "categories": ["data", "test"],
+        "addon": "ember-data-factory"
+      },
+      "moment":           {
+        "categories": ["time"],
+        "addon": "ember-cli-moment"
+      },
+      "moment-timezone":  {
+        "categories": ["time"],
+        "addon": "ember-cli-moment-timezone"
+      },
+      "dates":            {
+        "categories": ["dates", "calendar"],
+        "addon": "ember-cli-dates"
+      },
+      "ember-publisher":  {
+        "categories": ["cloud", "data"],
+        "addon": "ember-publisher"
+      },
       "ember-validations": {
-        "repo": "kristianmandrup/ember-cli-validations"
+        "categories": ["data", "validation", "forms"],
+        "repo": "kristianmandrup/ember-cli-validations",
+        "addon": "ember-cli-validations"
       },
       "ember-easyforms": {
-        "repo": "kristianmandrup/ember-cli-easyforms"
+        "categories": ["ui", "forms"],
+        "repo": "kristianmandrup/ember-cli-easyforms",
+        "addon": "ember-cli-easyforms"
       },
       "ember-list-view": {
-        "repo": "kristianmandrup/ember-cli-list-view"
+        "categories": ["data", "ui"],
+        "repo": "kristianmandrup/ember-cli-list-view",
+        "addon": "ember-cli-list-view"
       },
-      "validatable":        "ember-validatable",
-      "bricks-ui":          "bricks-ui",
-      "ember-waypoints":    "ember-waypoints",
-      "ember-autoresize":   "ember-autoresize",
-      "activemodel-adapter": "ember-cli-activemodel-adapter",
-      "auto-register-helpers": "ember-cli-auto-register-helpers",
-      "big-text":              "ember-cli-big-text",
-      "autoprefixer":        "ember-cli-autoprefixer",
-      "bootstrap-offscreen": "ember-cli-bootstrap-offscreen",
-      "bourbon":            "ember-cli-bourbon",
-      "broccoli-compass":   "ember-cli-broccoli-compass",
-      "cal":                "ember-cli-cal",
-      "calendar":           "ember-cli-calendar",
-      "clock":              "ember-cli-clock",
-      "compass-bootstrap":  "ember-cli-compass-bootstrap",
-      "components":         "ember-cli-components",
-      "datepicker":         "ember-cli-datepicker",
-      "code-highlight":     "ember-cli-eg-code-highlight",
-      "ember-admin-bootstrap":  "ember-admin-bootstrap",
-      "fs-ember-cli-typeahead": "fs-ember-cli-typeahead",
-      "fireplace":          "fireplace",
-      "ember-velocity-mixin": "ember-velocity-mixin",
-      "ember-social":       "ember-social",
-      "ember-frost":        "ember-frost",
-      "ember-code-snippet": "ember-code-snippet",
-      "zero-clipboard":     "ember-cli-zero-clipboard",
-      "select":             "ember-cli-select",
-      "multiselect":        "ember-cli-multiselect",
-      "map":                "ember-cli-map",
-      "loading-slider":     "ember-cli-loading-slider",
-      "lightbox":           "ember-cli-lightbox",
-      "less":               "ember-cli-less",
-      "knob":               "ember-cli-knob",
-      "ratchet":            "ember-cli-ratchet",
-      "jstransform":        "ember-cli-jstransform",
-      "json-pretty":        "ember-cli-json-pretty",
-      "jquery-ui":          "ember-cli-jquery-ui",
-      "inplace-edit":       "ember-cli-inplace-edit",
-      "ember-data-sails":   "ember-data-sails",
-      "ember-multiselect-checkboxes": "ember-multiselect-checkboxes",
-      "ember-resize-mixin": "ember-resize-mixin",
-      "rest-rap":           "rest-rap",
-      "ember-rl-year-picker": "ember-rl-year-picker",
-      "ember-select-2":     "ember-select-2",
-      "un-calendar":        "un-calendar",
-      "ember-cpm":          "ember-cpm",
-      "ember-sprite":       "ember-sprite",
-      "localstorage-adapter": "ember-localstorage-adapter"
+      "validatable":        {
+        "categories": ["data", "validation"],
+        "addon": "ember-validatable"
+      },
+      "bricks-ui":          {
+        "categories": ["ui", "layout"],
+        "addon": "bricks-ui"
+      },
+      "ember-waypoints":    {
+        "addon": "ember-waypoints"
+      },
+      "ember-autoresize":   {
+        "categories": ["ui"],
+        "addon": "ember-autoresize"
+      },
+      "activemodel-adapter": {
+        "categories": ["data", "adapter"],
+        "addon": "ember-cli-activemodel-adapter"
+      },
+      "auto-register-helpers": {
+        "categories": ["util"],
+        "addon": "ember-cli-auto-register-helpers"
+      },
+      "big-text":            {
+        "categories": ["ui", "forms"],
+        "addon": "ember-cli-big-text"
+      },
+      "autoprefixer":        {
+        "categories": ["util"],
+        "addon": "ember-cli-autoprefixer"
+      },
+      "bootstrap-offscreen": {
+        "categories": ["ui", "layout"],
+        "addon": "ember-cli-bootstrap-offscreen"
+      },
+      "bourbon":            {
+        "categories": ["ui", "layout"],
+        "addon": "ember-cli-bourbon"
+      },
+      "broccoli-compass":   {
+        "categories": ["ui", "layout"],
+        "addon": "ember-cli-broccoli-compass"
+      },
+      "cal":                {
+        "categories": ["dates", "calendar", "ui"],
+        "addon": "ember-cli-cal"
+      },
+      "calendar":           {
+        "categories": ["dates", "calendar", "ui"],
+        "addon": "ember-cli-calendar"
+      },
+      "clock":              {
+        "categories": ["time", "ui"],
+        "addon": "ember-cli-clock"
+      },
+      "compass-bootstrap":  {
+        "categories": ["ui", "layout"],
+        "addon": "ember-cli-compass-bootstrap"
+      },
+      "components":         {
+        "categories": ["ui", "components"],
+        "addon": "ember-cli-components"
+      },
+      "datepicker":         {
+        "categories": ["dates", "calendar", "ui"],
+        "addon": "ember-cli-datepicker"
+      },
+      "code-highlight":     {
+        "categories": ["ui", "code"],
+        "addon": "ember-cli-eg-code-highlight"
+      },
+      "ember-admin-bootstrap":  {
+        "categories": ["ui", "admin"],
+        "addon": "ember-admin-bootstrap"
+      },
+      "fs-ember-cli-typeahead": {
+        "categories": ["ui", "forms"],
+        "addon": "fs-ember-cli-typeahead"
+      },
+      "fireplace":          {
+        "categories": ["data", "adapter"],
+        "addon": "fireplace"
+      },
+      "ember-velocity-mixin": {
+        "categories": ["ui", "animation"],
+        "addon": "ember-velocity-mixin"
+      },
+      "ember-social":       {
+        "categories": ["ui", "animation"],
+        "addon": "ember-social"
+      },
+      "ember-frost":        {
+        "categories": ["ui", "components"],
+        "addon": "ember-frost"
+      },
+      "ember-code-snippet": {
+        "categories": ["ui", "code"],
+        "addon": "ember-code-snippet"
+      },
+      "zero-clipboard":     {
+        "categories": ["ui"],
+        "addon": "ember-cli-zero-clipboard"
+      },
+      "select":             {
+        "categories": ["ui", "forms"],
+        "addon": "ember-cli-select"
+      },
+      "multiselect":        {
+        "categories": ["ui", "forms"],
+        "addon": "ember-cli-multiselect"
+      },
+      "map":                {
+        "categories": ["ui", "maps"],
+        "addon": "ember-cli-map"
+      },
+      "loading-slider":     {
+        "categories": ["ui", "data"],
+        "addon": "ember-cli-loading-slider"
+      },
+      "lightbox":           {
+        "categories": ["ui", "layout"],
+        "addon": "ember-cli-lightbox"
+      },
+      "less":               {
+        "categories": ["ui", "layout"],
+        "addon": "ember-cli-less"
+      },
+      "knob":               {
+        "categories": ["ui", "forms"],
+        "addon": "ember-cli-knob"
+      },
+      "ratchet":            {
+        "categories": ["ui", "layout"],
+        "addon": "ember-cli-ratchet"
+      },
+      "jstransform":        {
+        "categories": ["broccoli", "script"],
+        "addon": "ember-cli-jstransform"
+      },
+      "json-pretty":        {
+        "categories": ["util"],
+        "addon": "ember-cli-json-pretty"
+      },
+      "jquery-ui":          {
+        "categories": ["ui", "forms"],
+        "addon": "ember-cli-jquery-ui"
+      },
+      "inplace-edit":       {
+        "categories": ["ui", "forms"],
+        "addon": "ember-cli-inplace-edit"
+      },
+      "ember-data-sails":   {
+        "categories": ["data", "api", "adapter"],
+        "addon": "ember-data-sails"
+      },
+      "ember-multiselect-checkboxes": {
+        "categories": ["ui", "forms"],
+        "addon": "ember-multiselect-checkboxes"
+      },
+      "ember-resize-mixin": {
+        "categories": ["ui"],
+        "addon": "ember-resize-mixin"
+      },
+      "rest-rap":           {
+        "categories": ["data", "api"],
+        "addon": "rest-rap"
+      },
+      "ember-rl-year-picker": {
+        "categories": ["ui", "dates", "calendar"],
+        "addon": "ember-rl-year-picker"
+      },
+      "ember-select-2":     {
+        "categories": ["ui", "forms"],
+        "addon": "ember-select-2"
+      },
+      "un-calendar":        {
+        "categories": ["ui", "dates", "calendar"],
+        "addon": "un-calendar"
+      },
+      "ember-cpm":          {
+        "categories": ["util"],
+        "addon": "ember-cpm"
+      },
+      "ember-sprite":       {
+        "categories": ["util", "broccoli", "sprites"],
+        "addon": "ember-sprite"
+      },
+      "localstorage-adapter": {
+        "categories": ["data", "adapter"],
+        "addon": "ember-localstorage-adapter"
+      }
 
     },
     "component": {

@@ -79,7 +79,6 @@ var EmberConfigAddonsGenerator = yeoman.generators.Base.extend({
       aid.install('prerender', 'ember-prerender');
   },
   end: function() {
-    aid.info('Please also add support for ember-easyForms ;)')
   }
 });
 
