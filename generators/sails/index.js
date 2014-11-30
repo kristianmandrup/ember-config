@@ -43,8 +43,8 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 	      	this.composeWith('ember-config:sailsproj');
 
 	      done();
-	    }.bind(this));		
-		},	
+	    }.bind(this));
+		},
 
   	clientOrServer: function() {
 	    var done = this.async();
@@ -59,37 +59,38 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 
 	    this.prompt(prompts, function (props) {
 	      this.stackEnd   	= props.stackEnd;
-	      	      
+
 	      done();
 	    }.bind(this));
 		},
   	client: function() {
-  		if(!stack('client')) return;
+      if (!stack('client')) return;
 
-	    var done = this.async();
+      var done = this.async();
 
-	    var prompts = [{
-	      type: 'confirm',
-	      name: 'blueprints',
-	      message: 'Install Ember blueprints for Sails?',
-	      default: true
-	    }, {
-	      type: 'confirm',
-	      name: 'useAdapter',
-	      message: 'Do you want to install an Ember Sails ember-data adapter?',
-	      default: true
-	    }];
+      var prompts = [{
+        type: 'confirm',
+        name: 'blueprints',
+        message: 'Install Ember blueprints for Sails?',
+        default: true
+      }, {
+        type: 'confirm',
+        name: 'useAdapter',
+        message: 'Do you want to install an Ember Sails ember-data adapter?',
+        default: true
+      }];
 
-	    this.prompt(prompts, function (props) {
-	      this.useAdapter   = props.useAdapter;
-	      	      
-	      done();
-	    }.bind(this));		
-	},	    
+      this.prompt(prompts, function (props) {
+        this.useAdapter = props.useAdapter;
+
+        done();
+      }.bind(this));
+    }
+	},
 
 	adapter: function() {
 		if (!this.useAdapter) return;
-	    
+
     var prompts = [{
       type: 'list',
       name: 'adapter',
@@ -100,9 +101,9 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.adapter   = props.adapter;
-      	      
+
       done();
-    }.bind(this));		
+    }.bind(this));
   },
 
 	server: function() {
@@ -134,7 +135,7 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
       name: 'createWithUser',
       message: 'Do you wish to ssociate newly created records with the current user?',
       default: false
-    }    
+    }
     ];
 
     this.prompt(prompts, function (props) {
@@ -144,15 +145,15 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
       this.createWithUser = props.createWithUser;
       done();
     }.bind(this));
-	},	    
-	
+	},
+
 	serverInstall: function() {
 		if(!stack('server')) return;
 
 		if(!this.appRoot) return;
 
-    var done = this.async();		
-    
+    var done = this.async();
+
     var prompts = [{
       type: 'checkbox',
       name: 'serverFeatures',
@@ -169,7 +170,7 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.serverInstall 	= props.serverInstall;
       this.serverFeatures	= props.serverFeatures;
-      	      
+
       done();
     }.bind(this));
   },
@@ -178,26 +179,26 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
   	client: function () {
   		if (!stack('client')) return;
 			if (adapter('standard'))
-				this.copy('client/adapters/application.js', 'client/app/adapters/application.js');		
+				this.copy('client/adapters/application.js', 'client/app/adapters/application.js');
 
 			if (adapter('with custom serializer')) {
-				this.copy('client/vendor/rest-serializer.js', 'client/app/serializers/sails-rest.js');		
-				this.copy(this.clientAppDir + '/vendor/sails-adapter.js', 'client/app/adapters/sails.js');				
-			} 
+				this.copy('client/vendor/rest-serializer.js', 'client/app/serializers/sails-rest.js');
+				this.copy(this.clientAppDir + '/vendor/sails-adapter.js', 'client/app/adapters/sails.js');
+			}
 	  },
 	  server: function() {
 	  	if (!this.serverInstall) return;
 
 			var blueprintsConfig = aid.FileContent('server/config/blueprints.js');
-			
+
 			// requires lodash and pluralize as well ;)
 			aid.install('lodash', 'lodash');
 			aid.install('pluralize', 'pluralize');
 
-			// In myproject/config/blueprints.js set pluralize: true		  		
+			// In myproject/config/blueprints.js set pluralize: true
 			fileConfigurator(this.serverAppDir + '/config/blueprints.js', function() {
 				return this.first(/pluralize:\s*\w+/).replaceWith('pluralize : true');
-			}).write();		
+			}).write();
   	},
 
     serverCopy: function() {
@@ -208,11 +209,11 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
         this.directory('server/blueprints', this.serverAppDir + '/blueprints/api')
 
       if (this.serverFeature('Ember service'))
-        // Drop the Ember service from this repository in myproject/api/services    
+        // Drop the Ember service from this repository in myproject/api/services
         this.copy('server/services/Ember.js', this.serverAppDir + '/api/services/Ember.js');
-    }, 
+    },
 
-    // If you have logged in users and you always want to associate newly created records with the current user, 
+    // If you have logged in users and you always want to associate newly created records with the current user,
     // take a look at blueprints/create.js lines 25-31 and uncomment the code if it fits your needs.
     configUserCreate: function() {
       if (!this.createWithUser) return;
@@ -223,14 +224,14 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 
       var createFile = this.serverAppDir + '/blueprints/create.js';
 
-      // In myproject/config/blueprints.js set pluralize: true          
+      // In myproject/config/blueprints.js set pluralize: true
       fileConfigurator(createFile, function() {
         return this.first(startExpr).replaceWith('');
-      }).write();   
+      }).write();
 
       fileConfigurator(createFile, function() {
         return this.first(endExpr).replaceWith('');
-      }).write();   
+      }).write();
 
     }
   },
@@ -239,18 +240,18 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
   install: {
   	client: function () {
 			if (!stack('client')) return;
-			
+
 			if (this.blueprints)
 				aid.install('Sails Ember blueprints', 'sails-ember-blueprints');
 
 			if (this.useAdapter)
 				aid.install('Ember Sails adapter', 'ember-data-sails-adapter');
-		},
+		}
   },
   end: {
   	any: function() {
 			aid.success('Congratz! You have successfully installed Sails with Ember :)');
-			aid.thickline();  		
+			aid.thickline();
   	},
 
   	server: function() {
@@ -258,10 +259,10 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 
 			aid.info('https://github.com/mphasize/sails-generate-ember-blueprints');
 			aid.thinline();
-			aid.bold('Now generate some API resources: sails generate api user');			
+			aid.bold('Now generate some API resources: sails generate api user');
 			aid.thinline();
 			this.log('For info on dealing with nested resources:');
-			this.log('http://answersresource.wordpress.com/tag/sails-js-and-ember-js-nested-associations/');	
+			this.log('http://answersresource.wordpress.com/tag/sails-js-and-ember-js-nested-associations/');
 		}
   }
 });
