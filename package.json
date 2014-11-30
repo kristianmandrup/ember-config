@@ -1,6 +1,6 @@
 {
   "name": "generator-ember-config",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Ember Configurator to facilitate app configuration",
   "license": "MIT",
   "main": "generators/app/index.js",
