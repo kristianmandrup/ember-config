@@ -82,6 +82,7 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 
       this.prompt(prompts, function (props) {
         this.useAdapter = props.useAdapter;
+        this.blueprints = props.blueprints;
 
         done();
       }.bind(this));
@@ -189,7 +190,7 @@ var EmberConfigSailsGenerator = yeoman.generators.Base.extend({
 	  server: function() {
 	  	if (!this.serverInstall) return;
 
-			var blueprintsConfig = aid.FileContent('server/config/blueprints.js');
+			var blueprintsConfig = aid.fileContent('server/config/blueprints.js');
 
 			// requires lodash and pluralize as well ;)
 			aid.install('lodash', 'lodash');
