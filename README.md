@@ -68,10 +68,27 @@ In your root project folder:
 ```bash
 npm link ember-config 
 ```
+
 Your project will now link directly to the local repo clone of *ember-config*. 
 Now play around with ember-config and any changes will be directly available in your project when you execute `yo ember-config`;)
 
 This *npm link* approach is also useful when you want to contribute to _ember-config_. In that case you should use your own forked version so you can make pull requests.
+
+### Development & Debugging
+
+For development and debugging of this project
+
+From `/ember-config` root:
+
+`npm link`
+
+Then from somewhere else in your system:
+
+```bash
+npm link ember-config 
+```
+
+You can then run `yo ember-config` to see the code run and debug from there
 
 ### Getting To Know Yeoman
 
