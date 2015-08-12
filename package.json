@@ -1,6 +1,6 @@
 {
   "name": "generator-ember-config",
-  "version": "0.1.17",
+  "version": "0.2.0",
   "description": "Ember Configurator to facilitate app configuration",
   "license": "MIT",
   "main": "generators/app/index.js",
@@ -16,9 +16,6 @@
   "scripts": {
     "test": "mocha"
   },
-  "files": [
-    "generators"
-  ],
   "keywords": [
     "yeoman-generator",
     "generator",

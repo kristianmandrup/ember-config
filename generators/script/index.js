@@ -9,7 +9,12 @@ var aid;
 require('sugar');
 var avoidWrites;
 
-var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+try {
+  var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+} catch (e) {
+  console.error('No package.json file found. `script` generator must be run in existing Ember project')
+  throw 'package.json read error';
+}
 
 var avoider = function(ctx) {
   return function() {
@@ -25,9 +30,9 @@ var appNamer = function(ctx) {
       name = pjson.name;
       if (!name)
           throw new Error("Missing name in package.json");
-    } 
+    }
     ctx.appname = name;
-    ctx.appName = ctx._.classify(name);      
+    ctx.appName = ctx._.classify(name);
   }
 }
 
@@ -36,11 +41,11 @@ var selected;
 
 var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-    aid = helper(this);    
+    aid = helper(this);
     avoidWrites = avoider(this);
     selected = aid.eqSelector(this, 'script');
 
-    // always use 'App' as per ember-cli convention. 
+    // always use 'App' as per ember-cli convention.
     // Makes it much easier to "play around" with app code ;)
     setAppName = appNamer(this);
     setAppName('App');
@@ -68,16 +73,16 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       var calcFileExt = function(scriptName) {
         switch (scriptName) {
-          case 'coffeescript': 
+          case 'coffeescript':
             return 'coffee';
-          case 'livescript': 
+          case 'livescript':
             return 'ls';
-          case 'emberscript': 
+          case 'emberscript':
             return 'em';
-          default: 
+          default:
             return 'js';
         };
-      };      
+      };
 
       setAppName(props.appname);
       this.script   = props.script;
@@ -116,7 +121,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
 
       if (!app || this.overwrite)
         aid.templateFile('app');
-      if (!router || this.overwrite) 
+      if (!router || this.overwrite)
         aid.templateFile('router');
     }
   },
@@ -124,7 +129,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
 
   default: {
     esNext: function() {
-      if (!selected('javascript')) return;      
+      if (!selected('javascript')) return;
       this.composeWith('ember-config:esnext');
     },
     uninstallOld: function() {
@@ -135,7 +140,7 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
         aid.info("no other script compilers present :)\n");
         return;
       }
-        
+
       aid.bold("Uninstalling other script precompilers");
 
       var uninstallScript = function(name, compiler) {
@@ -144,8 +149,8 @@ var EmberConfigScriptGenerator = yeoman.generators.Base.extend({
       };
 
       sync(function(){
-        uninstallScript('coffeescript');        
-        uninstallScript('livescript');      
+        uninstallScript('coffeescript');
+        uninstallScript('livescript');
         uninstallScript('emberscript', 'broccoli-ember-script');
       });
     },
