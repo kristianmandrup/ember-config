@@ -1,6 +1,8 @@
 generator-ember-config [![Build Status](https://secure.travis-ci.org/kristianmandrup/generator-ember-config.png?branch=master)](https://travis-ci.org/kristianmandrup/generator-ember-config)
 =============================================================================================================================================================================================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/kristianmandrup/ember-config.svg)](https://greenkeeper.io/)
+
 > [Yeoman](http://yeoman.io) generator
 
 ### Important note
